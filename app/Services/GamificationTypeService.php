@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Repositories\GamificationTypeRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
@@ -47,6 +48,8 @@ class GamificationTypeService
                 $this->save($request);
             });
 
+            Helper::removeVersionControlRedisKey();
+
             return true;
 
         } catch (\Exception $e) {
@@ -63,6 +66,8 @@ class GamificationTypeService
                 $gamificationType->update($data);
             });
 
+            Helper::removeVersionControlRedisKey();
+
             return true;
         } catch (\Exception $e) {
             Log::error('Gamification Type Update failed' . $e->getMessage());
@@ -74,13 +79,14 @@ class GamificationTypeService
     {
         $gamificationType = $this->findOne($id);
         $gamificationType->delete();
-
+        Helper::removeVersionControlRedisKey();
         return Response('VAS Product has been successfully deleted');
     }
 
     public function tableSortable($data)
     {
         $this->gamificationTypeRepository->gamificationTypesTableSort($data);
+        Helper::removeVersionControlRedisKey();
         return new Response('Sequence has been successfully update');
     }
 }

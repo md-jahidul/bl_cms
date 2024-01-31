@@ -32,12 +32,12 @@
                                         <input
                                             maxlength="200"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                            data-validation-required-message="Title is required"
-                                            data-validation-regex-message="Title must start with alphabets"
-                                            data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                            data-validation-required-message="Type is required"
+                                            data-validation-regex-message="Type must start with alphabets"
+                                            data-validation-maxlength-message="Type can not be more then 200 Characters"
                                             value="@if(old('type_en')) {{old('type_en')}} @endif" required id="type_en"
                                             type="text" class="form-control @error('type_en') is-invalid @enderror"
-                                            placeholder="Title in English" name="type_en">
+                                            placeholder="Type in English" name="type_en">
                                         <div class="help-block"></div>
                                         @if ($errors->has('type_en'))
                                             <div class="help-block">
@@ -49,11 +49,11 @@
                                         <label for="type_bn" class="required">Type (BN):</label>
                                         <input
                                             maxlength="200"
-                                            data-validation-required-message="Title is required"
-                                            data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                            data-validation-required-message="Type is required"
+                                            data-validation-maxlength-message="Type can not be more then 200 Characters"
                                             value="@if(old('type_bn')) {{old('type_bn')}} @endif" required id="type_bn"
                                             type="text" class="form-control @error('type_bn') is-invalid @enderror"
-                                            placeholder="Title in Bangla" name="type_bn">
+                                            placeholder="Type in Bangla" name="type_bn">
                                         <div class="help-block"></div>
                                         @if ($errors->has('type_bn'))
                                             <div class="help-block">
@@ -70,6 +70,21 @@
                                                         <option value="{{$gamification->id}}">{{$gamification->type}} | {{$gamification->rule_name}} |{{$gamification->content_for}} </option>
                                                     @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                    <!-- Content For -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="content_for">Conponent For: </label>
+                                            <select name="content_for" class="browser-default custom-select" required>
+                                                    <option value="home"> Home </option>
+                                                    <option value="commerce"> Commerce </option>
+                                                    <option value="content"> Content </option>
+                                                    <option value="non_bl"> Non Bl </option>
+                                            </select>
+                                            @if ($errors->has('content_for'))
+                                                <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-6">

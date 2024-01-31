@@ -20,8 +20,9 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="5%">ID</th>
-                            <th width="15%">Type EN</th>
-                            <th width="15%">Type BN</th>
+                            <th width="20%">Type EN</th>
+                            <th width="20%">Type BN</th>
+                            <th width="15%">Content For</th>
                             <th width="15%">Visibility</th>
                             <th class="text-right">Action</th>
                         </tr>
@@ -33,6 +34,8 @@
                                 <td>{{ $gamificationType->id }}</td>
                                 <td>{{ $gamificationType->type_en }}</td>
                                 <td>{{ $gamificationType->type_bn }}</td>
+                                <td>{{ $gamificationType->content_for }}</td>
+
                                 <td>
                                     @if($gamificationType->visibilityStatus())
                                         <span class="badge badge-success">Visible</span>

@@ -17,6 +17,7 @@ class CreateGamificationTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('type_en')->nullable();
             $table->string('type_bn')->nullable();
+            $table->string('content_for')->nullable();
             $table->json('trivia_gamification_ids');
             $table->integer('display_order')->nullable();
             $table->boolean('status')->default(0);

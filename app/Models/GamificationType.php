@@ -14,6 +14,7 @@ class GamificationType extends Model
     protected $fillable = [
         'type_en',
         'type_bn',
+        'content_for',
         'trivia_gamification_ids',
         'display_order',
         'status'

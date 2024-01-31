@@ -60,9 +60,25 @@
                                     <select multiple class="form-control select2" id="trivia_gamification_ids"
                                             name="trivia_gamification_ids[]">
                                             @foreach ($gamifications as $gamification)
-                                                <option value="{{$gamification->id}}" @if(in_array($gamificationType->id, $gamificationType->trivia_gamification_ids)) selected @endif>{{$gamification->type}} | {{$gamification->rule_name}} |{{$gamification->content_for}} </option>
+                                                <option value="{{$gamification->id}}" @if(in_array($gamification->id, $gamificationType->trivia_gamification_ids)) selected @endif>{{$gamification->type}} | {{$gamification->rule_name}} |{{$gamification->content_for}} </option>
                                             @endforeach
                                     </select>
+                                </div>
+                            </div>
+
+                            <!-- Content For -->
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="status_input">Component For: </label>
+                                    <select name="content_for" class="browser-default custom-select" required>
+                                            <option value="home" @if ($gamificationType->content_for == 'home') selected @endif> Home </option>
+                                            <option value="commerce" @if ($gamificationType->content_for == 'commerce') selected @endif> Commerce </option>
+                                            <option value="content" @if ($gamificationType->content_for == 'content') selected @endif> Content </option>
+                                            <option value="non_bl" @if ($gamificationType->content_for == 'non_bl') selected @endif> Non Bl </option>
+                                    </select>
+                                    @if ($errors->has('content_for'))
+                                        <div class="help-block">  {{ $errors->first('content_for') }}</div>
+                                    @endif
                                 </div>
                             </div>
 
