@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Helpers\Helper;
 use App\Repositories\GamificationTypeRepository;
 use App\Traits\CrudTrait;
-use App\Traits\FileTrait;
 use App\Traits\RedisTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\Log;
 class GamificationTypeService
 {
     use CrudTrait;
-    use FileTrait;
     use RedisTrait;
 
     protected $gamificationTypeRepository;
@@ -62,7 +60,7 @@ class GamificationTypeService
     {
         try {
             $gamificationType = $this->findOne($id);
-            DB::transaction(function () use ($data, $id, $gamificationType) {
+            DB::transaction(function () use ($data, $gamificationType) {
                 $gamificationType->update($data);
             });
 
@@ -80,7 +78,7 @@ class GamificationTypeService
         $gamificationType = $this->findOne($id);
         $gamificationType->delete();
         Helper::removeVersionControlRedisKey();
-        return Response('VAS Product has been successfully deleted');
+        return Response('Gamification Type has been successfully deleted');
     }
 
     public function tableSortable($data)
