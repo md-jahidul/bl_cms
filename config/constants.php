@@ -49,5 +49,23 @@ return [
 
     'tnc_types' => [
         'care' => 'Care'
-    ]
+    ],
+
+    'customer_package_list' => [
+        'DeshEkRateDarun' => 1,
+        'Inspire9Postpaid' => 6,
+        'EmployeePhone' => 47,
+        'PlayPrepaid' => 2,
+        'DUMMYPRE' => 35,
+        'DUMMYPOST' => 36,
+        'Retail2Postpaid' => 7,
+        'B2BPost60p10s' => 26,
+        'B2BPreBusinessCnC4' => 15,
+        'CNCSpecial' => 4,
+        'MMDATARETAILER' => 97,
+        'B2BPreMFSCnC' => 18,
+        'M2MADV' => 67,
+    ],
+
+    'channel_name' => 'MobileAppAndroid',
 ];
