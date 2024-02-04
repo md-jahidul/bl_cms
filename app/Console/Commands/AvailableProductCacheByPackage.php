@@ -42,7 +42,7 @@ class AvailableProductCacheByPackage extends Command
     ) {
         try {
 
-            $availableProductsCacheByPackage = $customerAvailableProductsService->getAvailableProductsByCustomer();
+            $availableProductsCacheByPackage = $customerAvailableProductsService->getAvailableProductsByPackage();
             
             Log::info('Available Product cache By package update Success: Successfully Updated');
             return [
