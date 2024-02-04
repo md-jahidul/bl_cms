@@ -24,7 +24,7 @@ class CustomerAvailableProductsService extends BaseService
         return self::CUSTOMER_ENDPOINT . '/product-catalog/' . $customer_package_id . '?channel=' . $channelName;
     }
 
-    public function getAvailableProductsByCustomer()
+    public function getAvailableProductsByPackage()
     {
         try {
             $customerPackageArray = config('constants.customer_package_list');
