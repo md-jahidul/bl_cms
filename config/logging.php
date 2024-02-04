@@ -116,6 +116,12 @@ return [
             'path' => storage_path('logs/apihub-error/apihub-error.log'),
             'days' => 7
         ],
+
+        'available-product-cache-log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/available-product-cache.log'),
+            'level' => 'debug'
+        ],
     ],
 
 ];

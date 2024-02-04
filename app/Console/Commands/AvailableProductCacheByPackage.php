@@ -43,10 +43,14 @@ class AvailableProductCacheByPackage extends Command
         try {
 
             $customerAvailableProductsService->getAvailableProductsByPackage();
-            Log::info('Available Product cache By package update Success: Successfully Updated');
+            Log::channel('available-product-cache-log')->info(
+                'Available Product cache By package update Success: Successfully Updated'
+            );
 
         } catch (\Exception $e) {
-            Log::info('Available Product cache By package update Error:' . $e->getMessage());
+            Log::channel('available-product-cache-log')->info(
+                'Available Product cache By package update Error:' . $e->getMessage()
+            );
         }
     }
 }
