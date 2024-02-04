@@ -49,7 +49,7 @@ class MyblProductEntryController extends Controller
     /**
      * @var CustomerAvailableProductsService
      */
-    public $customerAvailableProductsService;
+    protected $customerAvailableProductsService;
 
     /**
      * MyblProductEntryController constructor.
@@ -248,7 +248,6 @@ class MyblProductEntryController extends Controller
             /**
              * Instead of delete the redis, reseting the redis cache by package
              */
-            // $this->service->resetProductRedisKeys();
             $this->customerAvailableProductsService->getAvailableProductsByPackage();
 
 
@@ -298,12 +297,9 @@ class MyblProductEntryController extends Controller
 
     public function resetRedisProductKey()
     {
-        //dd(in_array(\Carbon\Carbon::now()->format('H'), [0, 1, 2, 3]));
-
         /**
          * Instead of delete the redis, reseting the redis cache by package
          */
-        // $this->service->resetProductRedisKeys();
         $this->customerAvailableProductsService->getAvailableProductsByPackage();
         return redirect()->back()->with('success', 'Redis key reset is successful!');
     }

@@ -29,13 +29,16 @@ class CustomerAvailableProductsService extends BaseService
     public function getAvailableProductsByPackage()
     {
         try {
-            $customerPackageArray = config('constants.customer_package_list');
+            $customerPackageList = config('constants.customer_package_list');
             $channelName = config('constants.channel_name');
 
-            foreach ($customerPackageArray as $packageId) {
-                $this->packageWiseRedisCache($packageId, $channelName);
+            if (empty($customerPackageList)) {
+                throw new \Exception('Customer Package list not configured');
             }
 
+            foreach ($customerPackageList as $packageId) {
+                $this->packageWiseRedisCache($packageId, $channelName);
+            }
         } catch (\Exception $e) {
             Log::channel('available-product-cache-log')->info(
                 'Available Product cache By package update Error:' . $e->getMessage()

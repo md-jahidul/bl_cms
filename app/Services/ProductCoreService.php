@@ -1474,6 +1474,10 @@ class ProductCoreService
         }
     }
 
+    /*
+     * @deprecated
+     * @since 2024-02-04
+     **/
     public function resetProductRedisKeys(): void
     {
         $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
