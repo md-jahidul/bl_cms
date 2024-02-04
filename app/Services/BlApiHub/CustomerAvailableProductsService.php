@@ -37,7 +37,9 @@ class CustomerAvailableProductsService extends BaseService
             }
 
         } catch (\Exception $e) {
-            Log::info('Available Product cache By package update Error:' . $e->getMessage());
+            Log::channel('available-product-cache-log')->info(
+                'Available Product cache By package update Error:' . $e->getMessage()
+            );
         }
     }
 
@@ -59,12 +61,14 @@ class CustomerAvailableProductsService extends BaseService
 
                 Redis::setex('a_p:' . $packageId, 60 * 60 * 24, json_encode($available_products));
             } else {
-                Log::info(
+                Log::channel('available-product-cache-log')->info(
                     "Available Product cache update Failure ({$packageId}): " . json_encode($response)
                 );
             }
         } catch (\Exception $e) {
-            Log::info('Available Product cache By package update Error ('.$packageId.'):' . $e->getMessage());
+            Log::channel('available-product-cache-log')->info(
+                'Available Product cache By package update Error ('.$packageId.'):' . $e->getMessage()
+            );
         }
     }
 
