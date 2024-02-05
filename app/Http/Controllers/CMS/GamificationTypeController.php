@@ -20,11 +20,9 @@ class GamificationTypeController extends Controller
     public function __construct(
         GamificationTypeService $gamificationTypeService,
         TriviaGamificationService $triviaGamificationService
-    )
-    {
+    ) {
         $this->gamificationTypeService = $gamificationTypeService;
         $this->triviaGamificationService = $triviaGamificationService;
-
     }
 
     public function index()
@@ -64,7 +62,6 @@ class GamificationTypeController extends Controller
 
     public function update(GamificationTypeRequest $request, $gamificationTypeId)
     {
-
         if($this->gamificationTypeService->updateGamificationType($request->all(), $gamificationTypeId)) {
             session()->flash('message', 'Gamification Type Updated Successfully');
         } else {
