@@ -47,6 +47,16 @@
                                     {{-- Title Text and Image Component --}}
                                     @if($component->type == "banner_with_button")
                                         <slot id="banner_with_button" data-offer-type="banner_with_button">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
+                                            <div class="form-group col-md-9">
+                                                <label for="editor_en" class="required">Position</label>
+                                                <select name="config[position]" class="form-control">
+                                                    <option value="">--Select Position--</option>
+                                                    <option value="right" {{ $component->config['position'] == "right" ? 'selected' : '' }}>Right</option>
+                                                    <option value="bottom" {{ $component->config['position'] == "bottom" ? 'selected' : '' }}>Bottom</option>
+                                                </select>
+                                            </div>
+
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @include('admin.new-pages.components.common-field.attribute.button')
