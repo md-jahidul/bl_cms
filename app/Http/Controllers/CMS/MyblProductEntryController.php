@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
+use App\Jobs\AvailableProductCacheUpdateByPackage;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Models\TermsAndCondition;
@@ -262,8 +263,9 @@ class MyblProductEntryController extends Controller
             /**
              * Instead of delete the redis, reseting the redis cache by package
              */
-            $this->customerAvailableProductsService->getAvailableProductsByPackage();
-
+            AvailableProductCacheUpdateByPackage::dispatch()
+                // ->onConnection('redis')
+                ->onQueue(config('queue.queue_list.available_product_cache'));
 
             $this->service->syncSearch();
 
@@ -314,7 +316,10 @@ class MyblProductEntryController extends Controller
         /**
          * Instead of delete the redis, reseting the redis cache by package
          */
-        $this->customerAvailableProductsService->getAvailableProductsByPackage();
+        AvailableProductCacheUpdateByPackage::dispatch()
+            // ->onConnection('redis')
+            ->onQueue(config('queue.queue_list.available_product_cache'));
+
         return redirect()->back()->with('success', 'Redis key reset is successful!');
     }
 
