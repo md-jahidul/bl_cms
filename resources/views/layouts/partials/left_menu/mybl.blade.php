@@ -1416,9 +1416,18 @@
                     url: "{{ url('new-cms/verify-token') }}",
                     type:'GET',
                     success: function (result) {
-                        let redirectUrl = result.redirect_url + targetUrl + "?access_token=" + result.access_token + "&redirectUrl=" + targetUrl
-                        window.open(redirectUrl);
+                        if (result.status_code === 200){
+                            let redirectUrl = result.data.redirect_url + targetUrl + "?access_token=" + result.data.access_token + "&redirectUrl=" + targetUrl
+                            window.open(redirectUrl);
+                        }else if (result.status_code === 401) {
+                            location.reload();
+                        }else {
+                            alert("Something went wrong!!")
+                        }
                     },
+                    error: function (result) {
+                        console.log(result)
+                    }
                 });
             })
         })
