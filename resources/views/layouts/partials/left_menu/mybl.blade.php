@@ -969,6 +969,12 @@
                     <i class="la la-gamepad"></i>Gamification
                 </a>
             </li>
+            <li class="{{ is_active_url('gamification-type') . is_active_url('gamification-type')}}">
+                <a class="menu-item" href="{{ route('gamification-type.index') }} "
+                data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-gamepad"></i>Gamification Types
+                </a>
+            </li>
         </ul>
     </li>
 
