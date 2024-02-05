@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ "VAS Product"}}</strong>
+                    <h4 class="pb-1"><strong>{{ "Gamification Types"}}</strong>
                     </h4>
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -82,7 +82,7 @@
 @push('page-js')
     <script>
 
-        let auto_save_url = "{{ url('vas-products/order/update-position') }}";
+        let auto_save_url = "{{ url('gamification-type/order/update-position') }}";
 
         $(document).ready(function () {
             $(document).on('click', '.del', function (e) {

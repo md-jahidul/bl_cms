@@ -1019,10 +1019,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      */
 
      Route::resource('gamification-type', 'CMS\GamificationTypeController');
-     Route::match(['GET', 'POST'],'vas-products/order/update-position', 'CMS\GamificationTypeController@updatePosition');
-     Route::get('vas-products/destroy/{id}', 'CMS\GamificationTypeController@destroy')
-         ->name('vas-product.destroy');
-
+     Route::match(['GET', 'POST'],'gamification-type/order/update-position', 'CMS\GamificationTypeController@updatePosition');
 
 
     // PGW Routes
