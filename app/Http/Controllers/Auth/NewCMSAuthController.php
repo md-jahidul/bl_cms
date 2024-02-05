@@ -46,19 +46,17 @@ class NewCMSAuthController extends Controller
 
         if ($response['status_code'] == 200){
             return [
-                'access_token' => $response['data']['access_token'],
-                'redirect_url' => $newCmsUrl
+                "status" => "SUCCESS",
+                "status_code" => 200,
+                "message" => "Token is Valid",
+                "data" => [
+                    'status_code' => $response['status_code'],
+                    'access_token' => $response['data']['access_token'],
+                    'redirect_url' => $newCmsUrl
+                ]
             ];
         }
-
-//        dd($token);
-//        $response = $this->cUrlRequest($refreshTokenUrl, $token);
-////        dd($response);
-//        $redirectUrl = $baseUrl . "/welcome-new?access_token=" . $response['access_token'] . "&source=" . $baseUrl;
-//        return [
-//            'access_token' => $response['access_token'],
-//            'redirect_url' => $redirectUrl
-//        ];
+        return $response;
     }
 
 //    public function storeAccessTokenForNewCMS($request)
@@ -92,7 +90,8 @@ class NewCMSAuthController extends Controller
         if ($httpCode == 200){
             return $result;
         }
-        Log::error('New CMS Login Error:' . $result);
+
+        Log::error('New CMS Login Error:' . json_encode($result));
         return $result;
     }
 }
