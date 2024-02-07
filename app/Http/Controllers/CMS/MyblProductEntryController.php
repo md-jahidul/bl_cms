@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateMyblProductRequest;
 use App\Jobs\AvailableProductCacheUpdateByPackage;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Models\TermsAndCondition;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
@@ -157,9 +158,11 @@ class MyblProductEntryController extends Controller
             }
         }
 
+        $tnc_keywords = TermsAndCondition::all()->pluck('keyword')->toArray();
+
         return view(
             'admin.my-bl-products.product-details',
-            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText', 'productSpecialTypes')
+            compact('details', 'internet_categories', 'tags', 'disablePinToTop', 'baseMsisdnGroups', 'productSchedulerData', 'productScheduleRunning', 'warningText', 'productSpecialTypes', 'tnc_keywords')
         );
     }
 
@@ -192,6 +195,7 @@ class MyblProductEntryController extends Controller
      */
     public function create()
     {
+        $tnc_keywords = TermsAndCondition::all()->pluck('keyword')->toArray();
         $tags = $this->productTagService
             ->findAll(null, null, ['column' => 'priority', 'direction' => 'asc'])
             ->pluck('title', 'id');
@@ -211,7 +215,8 @@ class MyblProductEntryController extends Controller
                 'internet_categories',
                 'disablePinToTop',
                 'baseMsisdnGroups',
-                'productSpecialTypes'
+                'productSpecialTypes',
+                'tnc_keywords'
             )
         );
     }

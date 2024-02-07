@@ -11,6 +11,7 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Models\ProductTag;
+use App\Models\TermsAndCondition;
 use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
@@ -220,6 +221,7 @@ class ProductCoreService
     public function mapMyBlProduct($excel_path)
     {
         $config = config('productMapping.mybl.columns');
+        $tnc_keywords = TermsAndCondition::all()->pluck('keyword')->toArray();
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
@@ -280,7 +282,11 @@ class ProductCoreService
                                     $core_data[$field] = $flag;
                                     break;
                                 case "tnc_type":
-                                    $core_data [$field] = strtolower($cells[$index]->getValue()) ?? null;
+                                    if (in_array(strtolower($cells[$index]->getValue()), $tnc_keywords)) {
+                                        $core_data [$field] = $cells[$index]->getValue();
+                                    } else {
+                                        $core_data [$field] = null;
+                                    }
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
