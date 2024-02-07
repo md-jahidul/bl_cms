@@ -62,7 +62,7 @@
                                         @endif
                                     </div>
                                     <div class="col-6">
-                                        <div class="form-group">
+                                        <div class="form-group {{ $errors->has('trivia_gamification_ids') ? ' error' : '' }}">
                                             <label for="trivia_gamification_ids" class="required">Gamifications:</label>
                                             <select multiple class="form-control select2" id="trivia_gamification_ids"
                                                     name="trivia_gamification_ids[]">
@@ -70,6 +70,9 @@
                                                         <option value="{{$gamification->id}}">{{$gamification->type}} | {{$gamification->rule_name}} |{{$gamification->content_for}} </option>
                                                     @endforeach
                                             </select>
+                                            @if ($errors->has('trivia_gamification_ids'))
+                                                <div class="help-block">  {{ $errors->first('trivia_gamification_ids') }}</div>
+                                            @endif
                                         </div>
                                     </div>
                                     <!-- Content For -->
