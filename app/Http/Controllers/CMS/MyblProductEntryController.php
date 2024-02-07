@@ -4,11 +4,13 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMyblProductRequest;
+use App\Jobs\AvailableProductCacheUpdateByPackage;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
 use App\Services\BaseMsisdnService;
+use App\Services\BlApiHub\CustomerAvailableProductsService;
 use App\Services\FreeProductPurchaseReportService;
 use App\Services\MyBlProductSchedulerService;
 use App\Services\MyBlSpecialTypeService;
@@ -46,6 +48,11 @@ class MyblProductEntryController extends Controller
     private $freeProductPurchaseReportService;
 
     /**
+     * @var CustomerAvailableProductsService
+     */
+    protected $customerAvailableProductsService;
+
+    /**
      * MyblProductEntryController constructor.
      * @param ProductCoreService $service
      * @param ProductTagService $productTagService
@@ -59,7 +66,8 @@ class MyblProductEntryController extends Controller
         MyBlProductSchedulerRepository $myblProductScheduleRepository,
         MyBlProductSchedulerService $myBlProductSchedulerService,
         MyBlProductRepository $myblProductRepository,
-        MyBlSpecialTypeService $productSpecialTypeService
+        MyBlSpecialTypeService $productSpecialTypeService,
+        CustomerAvailableProductsService $customerAvailableProductsService
     ) {
         $this->middleware('auth');
         $this->service = $service;
@@ -70,6 +78,7 @@ class MyblProductEntryController extends Controller
         $this->myBlProductSchedulerService = $myBlProductSchedulerService;
         $this->myblProductRepository = $myblProductRepository;
         $this->productSpecialTypeService = $productSpecialTypeService;
+        $this->customerAvailableProductsService = $customerAvailableProductsService;
     }
 
     /**
@@ -236,7 +245,14 @@ class MyblProductEntryController extends Controller
              */
             Redis::del('prepaid_popular_pack');
             Redis::del('postpaid_popular_pack');
-            $this->service->resetProductRedisKeys();
+
+            /**
+             * Instead of delete the redis, reseting the redis cache by package
+             */
+            AvailableProductCacheUpdateByPackage::dispatch()
+                ->onConnection('redis')
+                ->onQueue(config('queue.queue_list.available_product_cache'));
+
             $this->service->syncSearch();
 
             $response = [
@@ -283,8 +299,13 @@ class MyblProductEntryController extends Controller
 
     public function resetRedisProductKey()
     {
-        //dd(in_array(\Carbon\Carbon::now()->format('H'), [0, 1, 2, 3]));
-        $this->service->resetProductRedisKeys();
+        /**
+         * Instead of delete the redis, reseting the redis cache by package
+         */
+        AvailableProductCacheUpdateByPackage::dispatch()
+            ->onConnection('redis')
+            ->onQueue(config('queue.queue_list.available_product_cache'));
+
         return redirect()->back()->with('success', 'Redis key reset is successful!');
     }
 
