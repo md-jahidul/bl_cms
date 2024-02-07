@@ -153,6 +153,7 @@
                                             <div class="form-group col-md-9">
                                                 <label for="editor_en" class="required">Position</label>
                                                 <select name="config[slider_action]" class="form-control">
+                                                    <option value="">--Select Position--</option>
                                                     <option value="navigation" {{ $component->config['slider_action'] == "navigation" ? 'selected' : '' }}>Navigation</option>
                                                     <option value="pagination" {{ $component->config['slider_action'] == "pagination" ? 'selected' : '' }}>Pagination</option>
                                                 </select>
