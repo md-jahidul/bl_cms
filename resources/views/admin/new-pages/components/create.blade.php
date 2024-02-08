@@ -35,7 +35,6 @@
                                     @endif
                                 </div>
                                 <div class="col-md-3 ">
-{{--                                    <label>Component Sample Picture</label>--}}
                                     <img class="img-thumbnail" id="componentImg" width="100%">
                                 </div>
                             </div>
