@@ -166,7 +166,8 @@ class BaseService
      */
     protected function makeRequest($ch, $url, $body, $headers)
     {
-        $url = $this->getHost() . $url;
+        $host = (strpos($url, '/customer-information/customer-information/product-catalog/22') === 0) ? 'http://apigateway.banglalink.net:7171' : $this->getHost();
+        $url = $host . $url;
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
