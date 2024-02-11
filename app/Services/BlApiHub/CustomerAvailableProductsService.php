@@ -46,7 +46,7 @@ class CustomerAvailableProductsService extends BaseService
                 Redis::del($this->cacheKeyListForDelete);
 
                 Log::channel('available-product-cache-log')->info(
-                    'Available Product cache By package update: Deleted Keys' . json_encode($this->cacheKeyListForDelete)
+                    'Available Product cache By package update: Deleted Keys'. json_encode($this->cacheKeyListForDelete)
                 );
             }
         } catch (\Exception $e) {
