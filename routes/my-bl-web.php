@@ -131,7 +131,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Slider Image
     /*Route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
-    Route::match(['GET', 'POST'],'myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'myblService/addService/update-position', 'CMS\MyblServiceController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
@@ -1266,6 +1267,29 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('generic-rail-items/store', 'CMS\GenericRailItemController@store')->name('generic-rail.items.store');
     Route::match(['GET', 'POST'],'generic-rail-item/update-position', 'CMS\GenericRailItemController@updatePosition');
     Route::get('generic-rail-item/destroy/{id}', 'CMS\GenericRailItemController@destroy');
+    /**  mybl services
+     *
+     */
+    Route::resource('my-bl-services', 'CMS\MyBlServiceController');
+    Route::get('my-bl-services/destroy/{id}', 'CMS\MyBlServiceController@destroy');
+    Route::get('my-bl-services/{service_id}/items', 'CMS\MyBlServiceItemsController@index')->name('my-bl-services.items.index');
+    Route::get(
+        'my-bl-services/{service_id}/items/create',
+        'CMS\MyBlServiceItemsController@create'
+    )->name('my-bl-services.items.create');
+    Route::post('my-bl-services/items/store', 'CMS\MyBlServiceItemsController@store')->name('my-bl-services.items.store');
+    Route::get('my-bl-services/items/{id}/edit', 'CMS\MyBlServiceItemsController@edit')->name('my-bl-services.items.edit');
+    Route::put(
+        'my-bl-services/items/{id}/update',
+        'CMS\MyBlServiceItemsController@update'
+    )->name('my-bl-services.items.update');
+
+    Route::match(['GET', 'POST'], 'myblService-addService/update-position', 'CMS\MyBlServiceController@updatePosition');
+    Route::delete(
+        'my-bl-services/items/{id}/delete',
+        'CMS\MyBlServiceItemsController@destroy'
+    )->name('my-bl-services.items.destroy');
+    Route::match(['GET', 'POST'], 'my-bl-services/add-items/update-position', 'CMS\MyBlServiceItemsController@updatePosition');
 });
 
 // 4G Map View Route
