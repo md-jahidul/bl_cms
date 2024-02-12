@@ -1253,6 +1253,19 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('generic-component-items.status.update');
     Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
         ->name('generic-component-items.destroy');
+    /**
+     * Generic Rail
+     */
+
+    Route::resource('generic-rail', 'CMS\GenericRailController');
+    Route::get('generic-rail/destroy/{id}', 'CMS\GenericRailController@destroy');
+    Route::get('generic-rail/{rail_id}/items', 'CMS\GenericRailItemController@index')->name('generic-rail.items.index');
+
+    Route::resource('generic-rail-items', 'CMS\GenericRailItemController');
+    Route::get('generic-rail/{rail_id}/items/create', 'CMS\GenericRailItemController@create')->name('generic-rail.items.create');
+    Route::post('generic-rail-items/store', 'CMS\GenericRailItemController@store')->name('generic-rail.items.store');
+    Route::match(['GET', 'POST'],'generic-rail-item/update-position', 'CMS\GenericRailItemController@updatePosition');
+    Route::get('generic-rail-item/destroy/{id}', 'CMS\GenericRailItemController@destroy');
 });
 
 // 4G Map View Route

@@ -169,9 +169,28 @@
                         @endif
                     </div>
                     <div class="col-md-4">
-
+                        <div class="form-group">
+                            <label for="is_highlight">Is Highlight :</label>
+                            <select required class="form-control" value="" name="is_highlight" id="is_highlight">
+                                <option @if(isset($short_cut_info)) @if($short_cut_info->is_highlight==0) selected
+                                        @endif @endif value="0">Inactive
+                                </option>
+                                <option @if(isset($short_cut_info)) @if($short_cut_info->is_highlight==1) selected
+                                        @endif @endif value="1">Active
+                                </option>
+                            </select>
+                        </div>
                     </div>
-
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="deeplink" >Deeplink :</label>
+                            <input
+                                   value="@if(isset($short_cut_info)){{$short_cut_info->deeplink}} @elseif(old("deeplink")) {{old("deeplink")}} @endif"
+                                   type="text" name="deeplink" class="form-control @error('deeplink') is-invalid @enderror"
+                                   id="title_bn" placeholder="Enter Deeplink..">
+                            <small class="text-danger"> @error('deeplink') {{ $message }} @enderror </small>
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <small class="text-danger"> @error('other_info') {{ $message }} @enderror </small>
                         @if(isset($short_cut_info))
