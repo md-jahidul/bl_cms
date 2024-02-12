@@ -23,11 +23,12 @@ class CreatePartnerCallbackEventsTable extends Migration
             $table->string('status')->nullable();
             $table->string('callback_status')->nullable();
             $table->tinyInteger('is_callback_done')->default(0);
-            $table->string('partner_name')->index();
-            $table->string('type')->nullable();
+            $table->string('partner_name');
+            $table->string('type');
             $table->string('reason')->nullable();
             $table->text('remarks')->nullable();
             $table->json('others_data')->nullable();
+            $table->index(['partner_name', 'msisdn']);
             $table->timestamps();
         });
     }
