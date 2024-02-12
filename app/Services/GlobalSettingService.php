@@ -112,6 +112,7 @@ class GlobalSettingService
     public function delGlobalSettingCache($redisKey = 'product-special-types')
     {
         $this->redisDel(GlobalSettingConst::SETTINGS_REDIS_KEY);
+        $this->redisDel('roaming_status_settings');
     }
     public function generateHashBasedOnDataCheck():bool
     {

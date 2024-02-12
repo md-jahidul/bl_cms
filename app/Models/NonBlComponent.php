@@ -15,6 +15,17 @@ class NonBlComponent extends Model
         'title_bn',
         'is_api_call_enable',
         'display_order',
-        'is_eligible'
+        'is_eligible',
+        'android_version_code_min',
+        'android_version_code_max',
+        'ios_version_code_min',
+        'ios_version_code_max',
+        'other_component_id',
+        'cta_name_en',
+        'cta_name_bn',
+        'deeplink',
+        'icon',
+        'is_title_show',
+        'child_ids'
     ];
 }
