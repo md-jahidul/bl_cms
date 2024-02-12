@@ -178,6 +178,19 @@
         </li>
     @endif
 
+    <li class="{{ is_active_match(route('generic-components.index')) }} nav-item"><a href="{{route('generic-components.index')}}"><i
+                class="la la-list"></i>
+            <span class="menu-title">Iscreen</span></a>
+
+        <ul class="menu-content">
+
+            <li class="{{ is_active_match(route('generic-components.index')) }}">
+                <a class="menu-item" href="{{ route('generic-components.index') }}">
+                    <i class="ft-list"></i>Generic Component</a>
+            </li>
+        </ul>
+    </li>
+
     @if( auth()->user()->can_view('MyblPlanProduct') )
         <li class="{{ is_active_url('mybl-plan') }} nav-item"><a href="{{ route('mybl-plan.products') }}"><i
                     class="la la-list"></i>

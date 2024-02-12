@@ -11,6 +11,7 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Models\ProductTag;
+use App\Models\TermsAndCondition;
 use App\Repositories\MyblCashBackProductRepository;
 use App\Repositories\MyBlProductRepository;
 use App\Repositories\MyBlProductSchedulerRepository;
@@ -220,6 +221,7 @@ class ProductCoreService
     public function mapMyBlProduct($excel_path)
     {
         $config = config('productMapping.mybl.columns');
+        $tnc_keywords = TermsAndCondition::all()->pluck('keyword')->toArray();
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
@@ -278,6 +280,13 @@ class ProductCoreService
                                         break;
                                     }
                                     $core_data[$field] = $flag;
+                                    break;
+                                case "tnc_type":
+                                    if (in_array(strtolower($cells[$index]->getValue()), $tnc_keywords)) {
+                                        $core_data [$field] = $cells[$index]->getValue();
+                                    } else {
+                                        $core_data [$field] = null;
+                                    }
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -1108,6 +1117,7 @@ class ProductCoreService
             }
 
             $data_request['show_timer'] = $request->show_timer ?? 0;
+            $data_request['tnc_type'] = $request->tnc_type ?? null;
 
 //            if (isset($data_request['internet_volume_mb'])) {
 //                $data_request['data_volume'] = $data_request['internet_volume_mb'] / 1024;
@@ -1310,6 +1320,7 @@ class ProductCoreService
             }
 
             $data_request['show_timer'] = $request->show_timer ?? 0;
+            $data_request['tnc_type'] = $request->tnc_type ?? null;
 
             $data_request['product_code'] = strtoupper(str_replace(' ', '', $request->product_code));
             $data_request['renew_product_code'] = strtoupper(str_replace(' ', '', $request->auto_renew_code));
@@ -1441,6 +1452,8 @@ class ProductCoreService
                 $insert_data[41] = $product->details->redirection_name_en;
                 $insert_data[42] = $product->details->redirection_name_bn;
                 $insert_data[43] = $product->details->redirection_deeplink;
+                $insert_data[44] = $product->details->tnc_type;
+                $insert_data[45] = $product->details->service_tags;
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
@@ -1467,6 +1480,10 @@ class ProductCoreService
         }
     }
 
+    /*
+     * @deprecated
+     * @since 2024-02-04
+     **/
     public function resetProductRedisKeys(): void
     {
         $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';

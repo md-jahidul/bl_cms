@@ -96,4 +96,8 @@ return [
         'table' => 'failed_jobs',
     ],
 
+    'queue_list' => [
+        'available_product_cache' => 'available-proudct-cache'
+    ]
+
 ];
