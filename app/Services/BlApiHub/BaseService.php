@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Redis;
  */
 class BaseService
 {
+    protected $connectTimeout = 10;
+    protected $requestTimeout = 30;
 
     /**
      * Return BL API Host
@@ -130,6 +132,8 @@ class BaseService
         $headers = $headers ?: $this->makeHeader();
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->requestTimeout);
         static::makeRequest($ch, $url, $body, $headers);
         $result = curl_exec($ch);
 

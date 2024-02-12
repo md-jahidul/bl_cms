@@ -481,6 +481,27 @@
                                         <label for="show_timer">Show Timer</label>
                                     </fieldset>
                                 </div>
+                                <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
+                                    <label for="service_tags">Service Tags</label>
+                                    <input class="form-control" name="service_tags" id="service_tags"
+                                           value="{{ old("service_tags") ? old("service_tags") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('service_tags'))
+                                        <div class="help-block">{{ $errors->first('service_tags') }}</div>
+                                    @endif
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Service Tags should be Comma-separated value. Example: iscreen,toffee</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="tnc_type">C for T&C</label>
+                                        <select name="tnc_type" class="form-control">
+                                            <option value="">Select a option</option>
+                                            @foreach($tnc_keywords as $key => $type)
+                                            <option value="{{$type}}">{{strtoupper($type)}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>Service Product Image</label>
                                     <input type="file" id="input-file-now" name="service_image_url" class="dropify"/>
