@@ -1213,7 +1213,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
     Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
-//
+
 
     /**
      * MyBL Plan Routes
@@ -1233,7 +1233,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
     Route::get('generic-components/destroy/{id}', 'CMS\GenericComponentController@delete');
     Route::get('generic-component/{componentId}/items', 'CMS\GenericComponentItemController@index')->name('generic-component-items-list.index');
-//    Route::get('generic-component-items', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
     Route::get('generic-component-items/edit/{id}', 'CMS\GenericComponentItemController@edit')
         ->name('generic-component-items.edit');
     Route::post('generic-component-items/store', 'CMS\GenericComponentItemController@store')
@@ -1245,10 +1244,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('generic-component-items.status.update');
     Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
         ->name('generic-component-items.destroy');
-    //mybl services
-
+    /**  mybl services
+     *
+     */
     Route::resource('my-bl-services', 'CMS\MyBlServiceController');
-//    Route::resource('generic-slider', 'CMS\GenericSliderController');
     Route::get('my-bl-services/destroy/{id}', 'CMS\MyBlServiceController@destroy');
     Route::get('my-bl-services/{service_id}/items', 'CMS\MyBlServiceItemsController@index')->name('my-bl-services.items.index');
     Route::get(
@@ -1263,11 +1262,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('my-bl-services.items.update');
 
     Route::match(['GET', 'POST'], 'myblService-addService/update-position', 'CMS\MyBlServiceController@updatePosition');
-
-//    Route::put(
-//        'my-bl-services/items/{id}/update',
-//        'CMS\GenericSliderImageController@update'
-//    )->name('generic-slider.images.update');
     Route::delete(
         'my-bl-services/items/{id}/delete',
         'CMS\MyBlServiceItemsController@destroy'
