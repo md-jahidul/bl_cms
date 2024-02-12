@@ -91,7 +91,7 @@
                     },
                     {
                         name: 'transaction_type',
-                        render: function (data, type, row) {;
+                        render: function (data, type, row) {
                             if (row.transaction_type === "ROAMING_ACTIVE") {
                                 return "<span class='badge badge-primary'>" + row.transaction_type + "</span>";
                             } else {
@@ -157,7 +157,7 @@
                     {
                         name: 'payment_complete',
                         render: function (data, type, row) {
-                            let status = row.payment_completed;
+                            let status = row.payment_complete;
                             if (status == 1) {
                                 return "<span class='badge badge-success'>Yes</span>";
                             } else {

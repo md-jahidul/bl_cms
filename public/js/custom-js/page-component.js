@@ -439,10 +439,9 @@
             let config = `
                 <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
                     <label for="editor_en" class="required">Position</label>
-                    <select name="config[position]" class="form-control">
-                        <option value="">--Select Position--</option>
+                    <select name="config[position]" class="form-control required" required>
                         <option value="right">Right</option>
-                        <option value="bottom">Bottom</option>
+                        <option value="bottom" selected>Bottom</option>
                     </select>
                 </div>
             `
@@ -484,8 +483,19 @@
         }else if(componentType === "hiring_now_component"){
             componentData += attributeTitle + attributeTitleSubTitle + attributeImage + doubleButton;
         }else if(componentType === "top_image_card_with_button"){
+            let config = `
+                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en">Position</label>
+                    <select name="config[slider_action]" class="form-control required" required>
+                        <option value="">---Select Position---</option>
+                        <option value="navigation">Navigation</option>
+                    </select>
+                </div>`
+
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
                     attributeTitle +
                     attributeTitleSubTitle +
                     cardLine() +
@@ -567,8 +577,7 @@
                 <div class="form-group col-md-9">
                     <label for="editor_en" class="required">Position</label>
                     <select name="config[position]" class="form-control">
-                        <option value="">--Select Position--</option>
-                        <option value="right">Right</option>
+                        <option value="right" selected>Right</option>
                         <option value="left">Left</option>
                     </select>
                 </div>

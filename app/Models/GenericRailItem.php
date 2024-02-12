@@ -19,6 +19,7 @@ class GenericRailItem extends Model
         'android_version_code_max',
         'ios_version_code_min',
         'ios_version_code_max',
-        'user_type'
+        'user_type',
+        'component_identifier'
     ];
 }

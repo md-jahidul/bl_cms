@@ -247,11 +247,11 @@
                                 </div>
 
 {{--                                <div class="form-group col-md-4">--}}
-{{--                                    <label>Select Product Category</label>--}}
+{{--                                    <label>Select Data Section</label>--}}
 {{--                                    <select multiple--}}
 {{--                                            class="form-control data-section"--}}
 {{--                                            name="offer_section_slug[]" required>--}}
-{{--                                        <option value="">Please Selcet Product Category</option>--}}
+{{--                                        <option value="">Please Select Data Section</option>--}}
 {{--                                            @foreach ($internet_categories as $key => $category)--}}
 {{--                                                <option--}}
 {{--                                                    value="{{ $key }}">  {{$category}}--}}
@@ -378,13 +378,20 @@
                                         <label for="is_rate_cutter_offer">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-
+                                <div class="col-md-2 icheck_minimal skin mt-2">
+                                    <fieldset>
+                                        <input type="checkbox" id="is_favorite" value="1"
+                                               name="is_favorite">
+                                        <label for="is_favorite">Is Favorite</label>
+                                    </fieldset>
+                                </div>
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack">
                                         <label for="is_popular_pack">Is Popular Pack</label>
                                     </fieldset>
                                 </div>
+                                <slot id="lms_tier_slab_info"></slot>
                                 <div class="form-group col-md-4 mb-2" id="cta_action">
                                     <label for="base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
@@ -463,13 +470,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="tag_bgd_color" class="control-label">Background Color</label>
                                         <input type="color" name="tag_bgd_color" class="form-control" placeholder="Background Color" value="'#000000'" required>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="tag_text_color" class="control-label">Text Color</label>
                                         <input type="color" name="tag_text_color" class="form-control" placeholder="Color" value="'#ffffff'" required>
@@ -480,6 +487,35 @@
                                         <input type="checkbox" id="show_timer" value="1" name="show_timer">
                                         <label for="show_timer">Show Timer</label>
                                     </fieldset>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="tnc_type">C for T&C</label>
+                                        <select name="tnc_type" class="form-control">
+                                            <option value="">Select a option</option>
+                                            @foreach(config('constants.tnc_types') as $key => $type)
+                                            <option value="{{$key}}">{{$type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
+                                    <label for="service_tags">Service Tags</label>
+                                    <input class="form-control" name="service_tags" id="service_tags"
+                                           value="{{ old("service_tags") ? old("service_tags") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('service_tags'))
+                                        <div class="help-block">{{ $errors->first('service_tags') }}</div>
+                                    @endif
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Service Tags should be Comma-separated value. Example: iscreen,toffee</span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>LMS Tier Slab</label>
+                                    <input class="form-control" name="lms_tier_slab" id="lms_tier_slab" value="">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('lms_tier_slab'))
+                                        <div class="help-block">{{ $errors->first('lms_tier_slab') }}</div>
+                                    @endif
                                 </div>
                                 <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
                                     <label for="service_tags">Service Tags</label>
@@ -833,10 +869,10 @@
                                 </div>`
 
             offer_types.empty()
+
             console.log(type)
             if (
                 type === 'data' ||
-                type === 'mix' ||
                 type === 'volume request' ||
                 type === 'volume transfer' ||
                 type === 'data loan' ||
@@ -857,7 +893,6 @@
             } else if (type === 'ma loan') {
                 offer_types.empty()
             }
-
             $('.data-section').select2({
                 placeholder: 'Please Select Product Category',
                 maximumSelectionLength: 5,

@@ -138,7 +138,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-        // dd($this->info['offerCategory']->toArray());
+
         return view('admin.product.create', $this->info);
     }
 

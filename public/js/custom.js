@@ -54,7 +54,7 @@
             ]);
         })
         $.ajax({
-            type: "POST",
+            methods: "POST",
             url: auto_save_url,
             data: {
                 update: 1,

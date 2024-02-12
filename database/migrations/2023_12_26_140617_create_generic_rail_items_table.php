@@ -23,6 +23,7 @@ class CreateGenericRailItemsTable extends Migration
             $table->boolean('is_highlight')->default(false);
             $table->string('deeplink')->nullable();
             $table->integer('display_order');
+            $table->string('component_identifier')->nullable();
             $table->string('user_type')->default('all');
             $table->bigInteger('android_version_code_min')->default(0);
             $table->bigInteger('android_version_code_max')->default(999999999);

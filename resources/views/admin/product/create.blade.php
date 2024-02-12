@@ -35,7 +35,10 @@
                                             required data-validation-required-message="Please select offer">
                                         <option data-alias="" value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)
-                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
+                                            @if(strtolower($type) == "prepaid" && \App\Enums\OfferType::POSTPAID_SELECT == $offer->id)
+                                                @php continue @endphp
+                                            @endif
+                                                <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -45,7 +48,7 @@
                                 </div>
 {{--                                @dd($offers)--}}
                                 <div class="form-group col-md-3 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="offer_category_id" class="required">Show In</label>
+                                    <label for="offer_category_id">Show In</label>
                                     <select class="form-control required data-section" name="show_in_multi_cat[]" id="show_in_multi_cat" multiple>
 
                                     </select>
@@ -228,6 +231,11 @@
                                     @include('layouts.partials.products.common-field.product-image')
                                 </slot>
 
+                                <!--Postpaid Select-->
+                                <slot id="postpaid_select" data-offer-type="postpaid_select" style="display: none">
+                                    @include('layouts.partials.products.other.other_detail_field')
+                                </slot>
+
                                 @include('layouts.partials.products.common-field.search-related-field')
 
                                 <div class="form-group col-md-6 {{ $errors->has('icon') ? ' error' : '' }}">
@@ -329,10 +337,10 @@
             offerType.change(function () {
                 let offerTypeVal = $('option:selected', this).attr('data-alias')
                 let productImg = $('.product_details_img');
-                if(offerTypeVal !== "others"){
-                    productImg.show()
-                } else {
+                if(offerTypeVal === "others" || offerTypeVal === "postpaid_select"){
                     productImg.hide()
+                }else {
+                    productImg.show()
                 }
             })
 

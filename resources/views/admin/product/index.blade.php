@@ -72,7 +72,8 @@
                                             $product->offer_category->alias == "others" ||
 //                                            $product->offer_category->alias == 'packages' ||
                                             $product->offer_category->alias == 'new_sim_offer' ||
-                                            $product->offer_category->alias == 'bondho_sim'
+                                            $product->offer_category->alias == 'bondho_sim' ||
+                                            $product->offer_category->alias == 'postpaid_select'
                                         )
                                             <a href="{{ route('section-list', [$type, $product->id]) }}"
                                                 class="btn-sm btn-outline-primary border">Details</a>
