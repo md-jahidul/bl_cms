@@ -328,6 +328,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
     Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
 
+    /**
+     * Roaming Transactions
+     */
+    Route::get('roaming/transactions', 'CMS\RoamingTransactionController@index')->name('roaming.transactions');
+    Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
+    Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
+
     Route::post(
         'mybl/core-product/download',
         'CMS\MyblProductEntryController@downloadMyblProducts'
