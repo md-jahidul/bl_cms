@@ -329,6 +329,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
     Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
 
+    /**
+     * Roaming Transactions
+     */
+    Route::get('roaming/transactions', 'CMS\RoamingTransactionController@index')->name('roaming.transactions');
+    Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
+    Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
+
     Route::post(
         'mybl/core-product/download',
         'CMS\MyblProductEntryController@downloadMyblProducts'
@@ -910,6 +917,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('health-hub-deeplink-analytic-details');
 
 
+
     Route::get('get-feed-data/{cat_id?}', 'CMS\HealthHubController@getFeedsData')->name('feed.data');
 
     // Guest User Tracking Page Wise
@@ -1013,6 +1021,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
+
 
 
     // PGW Routes
@@ -1213,7 +1222,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
     Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
-
+//
 
     /**
      * MyBL Plan Routes
@@ -1233,6 +1242,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
     Route::get('generic-components/destroy/{id}', 'CMS\GenericComponentController@delete');
     Route::get('generic-component/{componentId}/items', 'CMS\GenericComponentItemController@index')->name('generic-component-items-list.index');
+//    Route::get('generic-component-items', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
     Route::get('generic-component-items/edit/{id}', 'CMS\GenericComponentItemController@edit')
         ->name('generic-component-items.edit');
     Route::post('generic-component-items/store', 'CMS\GenericComponentItemController@store')
@@ -1244,6 +1254,19 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('generic-component-items.status.update');
     Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
         ->name('generic-component-items.destroy');
+    /**
+     * Generic Rail
+     */
+
+    Route::resource('generic-rail', 'CMS\GenericRailController');
+    Route::get('generic-rail/destroy/{id}', 'CMS\GenericRailController@destroy');
+    Route::get('generic-rail/{rail_id}/items', 'CMS\GenericRailItemController@index')->name('generic-rail.items.index');
+
+    Route::resource('generic-rail-items', 'CMS\GenericRailItemController');
+    Route::get('generic-rail/{rail_id}/items/create', 'CMS\GenericRailItemController@create')->name('generic-rail.items.create');
+    Route::post('generic-rail-items/store', 'CMS\GenericRailItemController@store')->name('generic-rail.items.store');
+    Route::match(['GET', 'POST'],'generic-rail-item/update-position', 'CMS\GenericRailItemController@updatePosition');
+    Route::get('generic-rail-item/destroy/{id}', 'CMS\GenericRailItemController@destroy');
     /**  mybl services
      *
      */
@@ -1272,7 +1295,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
 
-Route::get('winner-test', function () {
+Route::get( 'winner-test', function() {
     $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
     return $myBlCampaignWinnerSelectionService->processCampaignWinner();
-});
+  });
