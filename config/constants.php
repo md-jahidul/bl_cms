@@ -6,16 +6,6 @@ return [
         'redeemed' => 'redeemed',
         'claimed' => 'claimed',
     ],
-
-    'redis-keys' => [
-        'available_products' => 'available_products'
-    ],
-
-    'status_bootstrap_classes' => [
-        'active' => 'success',
-        'inactive' => 'danger',
-        'completed' => 'info'
-    ],
     'cs_selfcare' => [
         'expired_after' => \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::createFromFormat('d/m/Y',
             env('CS_REFERRAL_END_DATE', '01/01/2022'))),
@@ -26,30 +16,6 @@ return [
         'cs_referral_product_code_postpaid' => env('CS_REFERRAL_PRODUCT_CODE_POSTPAID'),
         'rafm_report_mail' => env('CS_SELFCARE_RAFM_REPORT_MAIL'),
         'cs_report_send_at' => env('CS_REPORT_SEND_AT', '02:00')
-    ],
-
-    'test_msisdn_removal' => [
-        'msisdns' => ['01409900110', '01409900160'],
-
-        'features' => [
-            'customer' => [
-                'title' => 'Customers',
-                'model' => 'customer',
-                'key' => 'msisdn',
-            ],
-            'referAndEarn' => [
-                [
-                    'title' => 'Refer And Earn',
-                    'model' => 'referee',
-                    'key' => 'referee_msisdn',
-                ],
-                [
-                    'title' => 'Refer And Earn',
-                    'model' => 'referrer',
-                    'key' => 'msisdn',
-                ]
-            ]
-        ]
     ],
 
     'sms' => [
@@ -69,8 +35,6 @@ return [
 
     'validityUnits' => ['hours', 'days'],
 
-    'partnerChannelName' => ['bKash', 'Nagad', 'EBL'],
-
     'terms_conditions_feature_names' => [
         'general' => 'General',
         'balance_transfer' => 'Balance Transfer'
@@ -84,10 +48,23 @@ return [
     ],
 
     'tnc_types' => [
-        'content' => 'Content',
-        'care' => 'Care',
-        'commerce' => 'Commerce',
-        'courses' => 'Courses',
-        'community' => 'Community'
-    ]
+        'care' => 'Care'
+    ],
+
+    'customer_package_list' => [
+        1, 2, 3, 4, 5, 6, 7, 8, 9,
+        10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        20, 21, 22, 23, 24, 26, 27, 28,
+        30, 31, 32, 33, 34, 35, 36, 38, 39,
+        40, 42, 44, 46, 47,
+        52, 55, 58,
+        61, 64, 67,
+        70, 73, 76, 79,
+        82, 85, 88,
+        91, 94, 97,
+        100, 103, 106,
+        111, 116,
+    ],
+
+    'channel_name' => 'MobileAppAndroid',
 ];

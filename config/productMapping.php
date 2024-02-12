@@ -49,7 +49,7 @@ return [
             'redirection_name_bn'   => 42,
             'redirection_deeplink' => 43,
             'tnc_type'             => 44,
-            'service_tags' => 45,
+            'service_tags' => 45
         ],
         'download-columns' => [
             'sim_type'              => 0,
@@ -98,7 +98,7 @@ return [
             'redirection_name_bn'   => 42,
             'redirection_deeplink' => 43,
             'tnc_type'             => 44,
-            'service_tags' => 45,
+            'service_tags' => 45
         ],
         'product_schedule_statuses' => [
             0 => 'None',
@@ -106,6 +106,7 @@ return [
             2 => 'To be Hidden',
             3 => 'Completed Schedule',
             4 => 'To be Shown'
+
         ],
         'max_no_of_pin_to_top' => 150
     ],
@@ -198,31 +199,6 @@ return [
             'discount_percentage'   => 17,
             'savings_amount'        => 18,
             'is_active'             => 19,
+            ]
         ]
-    ],
-    // Website My Plan
-    'my_plan' => [
-        'columns' => [
-            'sim_type'              => 0,
-            'content_type'          => 1,
-            'product_code'          => 2,
-            'renew_product_code'    => 3,
-            'recharge_product_code' => 4,
-            'sms_volume'            => 5,
-            'minute_volume'         => 6,
-            'data_volume'           => 7,
-            'data_volume_unit'      => 8,
-            'validity'              => 9,
-            'validity_unit'         => 10,
-            'tag'                   => 11,
-            'display_sd_vat_tax_en' => 12,
-            'display_sd_vat_tax_bn' => 13,
-            'points'                => 14,
-            'market_price'          => 15,
-            'discount_price'        => 16,
-            'discount_percentage'   => 17,
-            'savings_amount'        => 18,
-            'is_active'             => 19,
-        ]
-    ]
 ];

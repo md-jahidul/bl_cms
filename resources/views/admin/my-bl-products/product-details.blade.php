@@ -303,8 +303,8 @@
                                       $details->details->content_type == 'voice' ||
                                       $details->details->content_type == 'volume transfer' ||
                                       $details->details->content_type == 'roam' ||
-                                      $details->details->content_type == 'reactivation'||
-                                      $details->details->content_type == 'scr' ||
+                                      $details->details->content_type == 'scr'||
+                                      $details->details->content_type == 'reactivation' ||
                                       $details->details->content_type == 'service'
                                     )
                                     @php
@@ -472,14 +472,7 @@
                                         <label for="show_in_home">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
-                                <div class="col-md-2 icheck_minimal skin mt-2">
-                                    <fieldset>
-                                        <input type="checkbox" id="is_favorite" value="1"
-                                               name="is_favorite"
-                                               @if($details->is_favorite) checked @endif>
-                                        <label for="is_favorite">Is Favorite</label>
-                                    </fieldset>
-                                </div>
+
                                 <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_popular_pack" value="1" name="is_popular_pack"
@@ -487,17 +480,6 @@
                                         <label for="is_popular_pack">Is Popular Pack</label>
                                     </fieldset>
                                 </div>
-                                @if(strtolower($details->details->content_type) == 'lms')
-                                    <div class="form-group col-md-4">
-                                        <label>LMS Tier Slab</label>
-                                        <input class="form-control" name="lms_tier_slab" id="lms_tier_slab"
-                                               value="{{ $details->details->lms_tier_slab }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('lms_tier_slab'))
-                                            <div class="help-block">{{ $errors->first('lms_tier_slab') }}</div>
-                                        @endif
-                                    </div>
-                                @endif
 
                                 {{--                                <div class="col-md-4">--}}
                                 {{--                                    <div class="form-group">--}}
@@ -571,13 +553,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="cta_bgd_color" class="control-label">Background Color</label>
                                         <input type="color" name="cta_bgd_color" class="form-control" placeholder="Background Color" value="{{ $details->details->cta_bgd_color }}" required>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="cta_text_color" class="control-label">Text Color</label>
                                         <input type="color" name="cta_text_color" class="form-control" placeholder="Color" value="{{ $details->details->cta_text_color }}" required>
@@ -587,12 +569,6 @@
                                     <fieldset>
                                         <input type="checkbox" id="show_timer" value="1" name="show_timer" @if($details->details->show_timer) checked @endif>
                                         <label for="show_timer">Show Timer</label>
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-2 icheck_minimal skin mt-2">
-                                    <fieldset>
-                                        <input type="checkbox" id="show_tnc" value="1" name="show_tnc" @if($details->details->show_tnc) checked @endif>
-                                        <label for="show_tnc">Show Terms & Condition</label>
                                     </fieldset>
                                 </div>
                                 <div class="form-group col-md-4 {{ $errors->has('service_tags') ? ' error' : '' }}">
@@ -610,8 +586,8 @@
                                         <label for="tnc_type">C for T&C</label>
                                         <select name="tnc_type" class="form-control">
                                             <option value="">Select a option</option>
-                                            @foreach(config('constants.tnc_types') as $key => $type)
-                                                <option @if($details->details->tnc_type == $key) selected @endif value="{{$key}}">{{$type}}</option>
+                                            @foreach($tnc_keywords as $key => $type)
+                                                <option @if($details->details->tnc_type == $type) selected @endif value="{{$type}}">{{strtoupper($type)}}</option>
                                             @endforeach
                                         </select>
                                     </div>
