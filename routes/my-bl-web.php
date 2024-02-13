@@ -131,7 +131,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Slider Image
     /*Route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
-    Route::match(['GET', 'POST'],'myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'myblService/addService/update-position', 'CMS\MyblServiceController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
@@ -327,6 +328,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/core-product/create', 'CMS\MyblProductEntryController@create')->name('mybl.product.create');
     Route::post('mybl/core-product/store', 'CMS\MyblProductEntryController@store')->name('mybl.product.store');
     Route::post('mybl/core-product/redis', 'CMS\MyblProductEntryController@resetRedisProductKey')->name('mybl.product.redis');
+
+    /**
+     * Roaming Transactions
+     */
+    Route::get('roaming/transactions', 'CMS\RoamingTransactionController@index')->name('roaming.transactions');
+    Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
+    Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
 
     Route::post(
         'mybl/core-product/download',
@@ -1120,7 +1128,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'generic-slider/images/{id}/delete',
         'CMS\GenericSliderImageController@destroy'
     )->name('generic-slider.images.destroy');
-    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
 
     /*
@@ -1228,6 +1236,60 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
     Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
 
+    /**
+     * I Screen
+     */
+    Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
+    Route::get('generic-components/destroy/{id}', 'CMS\GenericComponentController@delete');
+    Route::get('generic-component/{componentId}/items', 'CMS\GenericComponentItemController@index')->name('generic-component-items-list.index');
+//    Route::get('generic-component-items', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
+    Route::get('generic-component-items/edit/{id}', 'CMS\GenericComponentItemController@edit')
+        ->name('generic-component-items.edit');
+    Route::post('generic-component-items/store', 'CMS\GenericComponentItemController@store')
+        ->name('generic-component-items.store');
+    Route::post('generic-component-items/update', 'CMS\GenericComponentItemController@update')
+        ->name('generic-component-items.update');
+    Route::get('generic-component-items-sort', 'CMS\GenericComponentItemController@componentSort');
+    Route::get('generic-component-items-status-update/{id}', 'CMS\GenericComponentItemController@componentStatusUpdate')
+        ->name('generic-component-items.status.update');
+    Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
+        ->name('generic-component-items.destroy');
+    /**
+     * Generic Rail
+     */
+
+    Route::resource('generic-rail', 'CMS\GenericRailController');
+    Route::get('generic-rail/destroy/{id}', 'CMS\GenericRailController@destroy');
+    Route::get('generic-rail/{rail_id}/items', 'CMS\GenericRailItemController@index')->name('generic-rail.items.index');
+
+    Route::resource('generic-rail-items', 'CMS\GenericRailItemController');
+    Route::get('generic-rail/{rail_id}/items/create', 'CMS\GenericRailItemController@create')->name('generic-rail.items.create');
+    Route::post('generic-rail-items/store', 'CMS\GenericRailItemController@store')->name('generic-rail.items.store');
+    Route::match(['GET', 'POST'],'generic-rail-item/update-position', 'CMS\GenericRailItemController@updatePosition');
+    Route::get('generic-rail-item/destroy/{id}', 'CMS\GenericRailItemController@destroy');
+    /**  mybl services
+     *
+     */
+    Route::resource('my-bl-services', 'CMS\MyBlServiceController');
+    Route::get('my-bl-services/destroy/{id}', 'CMS\MyBlServiceController@destroy');
+    Route::get('my-bl-services/{service_id}/items', 'CMS\MyBlServiceItemsController@index')->name('my-bl-services.items.index');
+    Route::get(
+        'my-bl-services/{service_id}/items/create',
+        'CMS\MyBlServiceItemsController@create'
+    )->name('my-bl-services.items.create');
+    Route::post('my-bl-services/items/store', 'CMS\MyBlServiceItemsController@store')->name('my-bl-services.items.store');
+    Route::get('my-bl-services/items/{id}/edit', 'CMS\MyBlServiceItemsController@edit')->name('my-bl-services.items.edit');
+    Route::put(
+        'my-bl-services/items/{id}/update',
+        'CMS\MyBlServiceItemsController@update'
+    )->name('my-bl-services.items.update');
+
+    Route::match(['GET', 'POST'], 'myblService-addService/update-position', 'CMS\MyBlServiceController@updatePosition');
+    Route::delete(
+        'my-bl-services/items/{id}/delete',
+        'CMS\MyBlServiceItemsController@destroy'
+    )->name('my-bl-services.items.destroy');
+    Route::match(['GET', 'POST'], 'my-bl-services/add-items/update-position', 'CMS\MyBlServiceItemsController@updatePosition');
 });
 
 // 4G Map View Route

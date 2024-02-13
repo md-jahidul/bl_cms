@@ -151,10 +151,11 @@ class Helper
             "TOFFEE_LIVE"             => 'Toffee_Live',
             "DEEN"                    => 'Deen',
             "AMAR_PLAN"               => 'Amar Plan',
-            "AMAR_TUNE"               => 'Amar Tune',
             "SIM_BLOCK"               => 'Sim Block',
+            "AMAR_TUNE"               => 'Amar Tune',
             "SERVICE"                => 'Service',
-            "DEEPLINK"               => 'Deeplink'
+            "DEEPLINK"               => 'Deeplink',
+            "DCB"                     => 'Dcb'
         ];
     }
 
@@ -365,8 +366,21 @@ class Helper
                 'mybl_component_content',
                 'mybl_component_commerce',
                 'mybl_component_nonbl',
-                'mybl_component_lms'
+                'mybl_component_lms',
+                'generic_component_data'
             ]);
         }
+    }
+
+    public static function findCandidateChildComponent($components)
+    {
+        $data = [];
+        foreach ($components as $component) {
+            if (isset($component['type']) && $component['type'] == 'parent') {
+                $data[] = $component;
+            }
+        }
+
+        return $data;
     }
 }
