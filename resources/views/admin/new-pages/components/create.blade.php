@@ -26,7 +26,7 @@
                                             required data-validation-required-message="Please select component type">
                                         <option value="">--Select Component Type--</option>
                                         @foreach($componentTypes as $key => $item)
-                                            <option data-alias="{{ $key }}" value="{{ $key }}">{{ $item['title'] }}</option>
+                                            <option data-alias="{{ $key }}" value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>

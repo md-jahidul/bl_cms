@@ -31,7 +31,7 @@
                                             <option value="">--Select Data Type--</option>
                                             @foreach($componentTypes as $key => $type)
                                                 <option data-alias="{{ $key }}"
-                                                        value="{{ $key }}" {{ ($component->type == $key) ? 'selected' : '' }}>{{ $type['title'] }}</option>
+                                                        value="{{ $key }}" {{ ($component->type == $key) ? 'selected' : '' }}>{{ $type }}</option>
                                             @endforeach
                                         </select>
                                         <input type="hidden" name="component_type" value="{{ $component->type }}">
@@ -401,6 +401,53 @@
                                                     ])
                                                 @endforeach
                                             @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--explore_c--}}
+                                    @if($component->type == "explore_c")
+                                        <slot id="explore_c" data-offer-type="explore_c">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'explore_c',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--explore_services--}}
+                                    @if($component->type == "explore_services")
+                                        <slot id="explore_services" data-offer-type="explore_services">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'explore_services',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--Super App--}}
+                                    @if($component->type == "super_app")
+                                        <slot id="super_app" data-offer-type="super_app">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.play-store-link')
+                                            @include('admin.new-pages.components.common-field.attribute.app-store-link')
                                         </slot>
                                     @endif
 

@@ -93,6 +93,22 @@
             <div class="help-block"></div>
         </div>`
 
+    var attrPlayStoreLink = function (index = 0) {
+        return `<div class="form-group col-md-6">
+            <label for="button_link" >Play Store Link</label>
+            <input type="text" name="attribute[play_store_link][en]"  class="form-control" placeholder="Enter play store link">
+            <div class="help-block"></div>
+        </div>`
+    }
+
+    var attrAppStoreLink = function (index = 0) {
+        return `<div class="form-group col-md-6">
+            <label for="button_link" >App Store Link</label>
+            <input type="text" name="attribute[app_store_link][en]"  class="form-control" placeholder="Enter app store link">
+            <div class="help-block"></div>
+        </div>`
+    }
+
     var singleImage =
         `<div class="form-group col-md-12">
             <label for="alt_text" class="">Image Field</label>
@@ -427,8 +443,8 @@
 
 
     $('#component_type').on('change', function () {
-        var componentTypeImg = this.value + ".png"
-        var fullUrl = "{{ asset('page-component-image') }}/" + componentTypeImg;
+        const componentTypeImg = this.value + ".png";
+        const fullUrl = "{{ asset('page-component-image') }}/" + componentTypeImg;
         $("#componentImg").attr('src', fullUrl)
 
         let componentElementId = $('#component_data');
@@ -695,6 +711,39 @@
                         </div>
                     </div>` +
                 `</slot>`;
+        }else if(componentType === "explore_services"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    redirectLink() +
+                `</slot>`;
+        }else if(componentType === "explore_c"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemButton() +
+                `</slot>`;
+        }else if(componentType === "super_app"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    attributeImage +
+                    attrPlayStoreLink() +
+                    attrAppStoreLink() +
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }
@@ -833,24 +882,42 @@
                     </div>` +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "tab_component_with_image_card_three"){
+        }else if(componentType === "tab_component_with_image_card_three") {
             componentData +=
                 `<slot class="page_component_multi_item">` +
-                    itemCountLine(index + 1, "Tab") +
-                    multiItemTitle(index) +
-                    `<div class="col-md-11 ml-5">
+                itemCountLine(index + 1, "Tab") +
+                multiItemTitle(index) +
+                `<div class="col-md-11 ml-5">
                         <div class="row tab-item">
                             <slot class="tab_item_count" data-tab-id="${index}">
                                 ${
-                                    addTabBtn +
-                                    multiItemFeedback(index, true, 0) +
-                                    imageOne(index, true, 0) +
-                                    itemCountLine('', '')
-                                }
+                    addTabBtn +
+                    multiItemFeedback(index, true, 0) +
+                    imageOne(index, true, 0) +
+                    itemCountLine('', '')
+                }
                             </slot>
                         </div>
                     </div>` +
-                    removeBtn +
+                removeBtn +
+                `</slot>`;
+        }else if(componentType === "explore_services"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1) +
+                imageOne(index) +
+                multiItemTitle(index) +
+                redirectLink(index) +
+                removeBtn +
+                `</slot>`;
+        }else if(componentType === "explore_c"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1) +
+                imageOne(index) +
+                multiItemTitle(index) +
+                multiItemButton(index) +
+                removeBtn +
                 `</slot>`;
         }else{
             console.log('No component found!!')
@@ -867,7 +934,7 @@
         var tab = $(event.target).attr('data-tab');
         var parentId = $(event.target).attr('data-parent');
         if (id){
-            var confirmPopupParams = {
+            const confirmPopupParams = {
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
                 type: 'warning',
@@ -878,11 +945,11 @@
                 confirmButtonText: 'Yes, delete it!'
             };
 
-            var deletePopupParams = {
+            const deletePopupParams = {
                 title: 'Deleted!',
                 text: 'Your item has been deleted.',
                 type: 'success'
-            }
+            };
 
             Swal.fire(confirmPopupParams).then((result) => {
                 if (result.value) {
