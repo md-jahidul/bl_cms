@@ -46,21 +46,27 @@ class PgComponentService
                 $data["attribute"]['image']['bn'] = $imgUrl;
             }
 
-            if (!empty($data['attribute']['button_link'])){
-                $data["attribute"]['button_link']['bn'] = $data["attribute"]['button_link']['bn'] ?? $data["attribute"]['button_link']['en'];
+            foreach ($data["attribute"] as $key => $attrItem){
+                if (!is_object($attrItem) && !isset($attrItem['bn'])){
+                    $data['attribute'][$key]['bn'] = $attrItem['en'];
+                }
             }
 
-            if (!empty($data['attribute']['media_url'])){
-                $data["attribute"]['media_url']['bn'] = $data["attribute"]['media_url']['bn'] ?? $data["attribute"]['media_url']['en'];
-            }
-
-            if (!empty($data['attribute']['button_one_link'])){
-                $data["attribute"]['button_one_link']['bn'] = $data["attribute"]['button_one_link']['bn'] ?? $data["attribute"]['button_one_link']['en'];
-            }
-
-            if (!empty($data['attribute']['button_two_link'])){
-                $data["attribute"]['button_two_link']['bn'] = $data["attribute"]['button_two_link']['bn'] ?? $data["attribute"]['button_two_link']['en'];
-            }
+//            if (!empty($data['attribute']['button_link'])){
+//                $data["attribute"]['button_link']['bn'] = $data["attribute"]['button_link']['bn'] ?? $data["attribute"]['button_link']['en'];
+//            }
+//
+//            if (!empty($data['attribute']['media_url'])){
+//                $data["attribute"]['media_url']['bn'] = $data["attribute"]['media_url']['bn'] ?? $data["attribute"]['media_url']['en'];
+//            }
+//
+//            if (!empty($data['attribute']['button_one_link'])){
+//                $data["attribute"]['button_one_link']['bn'] = $data["attribute"]['button_one_link']['bn'] ?? $data["attribute"]['button_one_link']['en'];
+//            }
+//
+//            if (!empty($data['attribute']['button_two_link'])){
+//                $data["attribute"]['button_two_link']['bn'] = $data["attribute"]['button_two_link']['bn'] ?? $data["attribute"]['button_two_link']['en'];
+//            }
 
             if ($id && !isset($data["attribute"]['image_file'])) {
                 $component = $this->findOne($id);

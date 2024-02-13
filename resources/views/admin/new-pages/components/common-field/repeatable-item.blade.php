@@ -116,6 +116,16 @@
                 @endforeach
             </div>
         </div>
+    @elseif(isset($component_type) && $component_type == "explore_services")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.redirect-link')
+    @elseif(isset($component_type) && $component_type == "explore_c")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.button')
     @else
 
     @endif
