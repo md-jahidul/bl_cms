@@ -42,9 +42,7 @@
                                         class="text-danger">*</small> </label>
                                 <input
                                     maxlength="200"
-                                    data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                     data-validation-required-message="Title is required"
-                                    data-validation-regex-message="Title must start with alphabets"
                                     data-validation-maxlength-message="Title can not be more then 200 Characters"
                                     value="{{old('title_bn')?old('title_bn'):$itemInfo->title_bn}}" required
                                     id="title_bn"
