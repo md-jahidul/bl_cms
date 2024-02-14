@@ -407,9 +407,11 @@
                                     {{--explore_c--}}
                                     @if($component->type == "explore_c")
                                         <slot id="explore_c" data-offer-type="explore_c">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
+                                            @include('admin.new-pages.components.common-field.config.bg-image')
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Info'])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
-                                            @include('admin.new-pages.components.common-field.multi-item.divider')
                                             @if(!empty($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [
@@ -443,6 +445,9 @@
                                     {{--Super App--}}
                                     @if($component->type == "super_app")
                                         <slot id="super_app" data-offer-type="super_app">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
+                                            @include('admin.new-pages.components.common-field.config.bg-image')
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Info'])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.attribute.image')
