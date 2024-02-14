@@ -126,6 +126,12 @@
         @include('admin.new-pages.components.common-field.multi-item.image')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.button')
+    @elseif(isset($component_type) && $component_type == "banner_with_button")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.image')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
+        @include('admin.new-pages.components.common-field.multi-item.button')
     @else
 
     @endif

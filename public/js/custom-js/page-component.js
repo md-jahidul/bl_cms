@@ -1,8 +1,8 @@
 (function () {
     let configBgImage = `
-        <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+        <div class="form-group col-md-4">
             <label for="editor_en">Background Image</label>
-            <select name="config[position]" class="form-control required" required>
+            <select name="config[bg_image]" class="form-control required" required>
                 <option value="yes">Yes</option>
                 <option value="no" selected>No</option>
             </select>
@@ -51,12 +51,12 @@
     var attributeTitle =
         `<div class="form-group col-md-6">
             <label for="title_en">Title Field (English)</label>
-            <input type="text" name="attribute[title][en]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="attribute[title][en]"  class="form-control" placeholder="Enter company name Bangla">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-6">
             <label for="title_en">Title Field (Bangla)</label>
-            <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name Bangla">
             <div class="help-block"></div>
         </div>`
 
@@ -69,7 +69,7 @@
 
         <div class="form-group col-md-6">
             <label for="desc_bn">Description (Bangla)</label>
-            <textarea type="text" name="attribute[desc][bn]"  class="form-control" placeholder="Enter offer details in english" ></textarea>
+            <textarea type="text" name="attribute[desc][bn]"  class="form-control" placeholder="Enter offer details in Bangla" ></textarea>
             <div class="help-block"></div>
         </div>`
 
@@ -94,7 +94,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="button_bn">Button Field (Bangla)</label>
-            <input type="text" name="attribute[button_name][bn]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_name][bn]"  class="form-control" placeholder="Enter button name Bangla">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-4">
@@ -463,7 +463,7 @@
 
         if (componentType === "banner_with_button"){
             let config = `
-                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                     <label for="editor_en" class="required">Position</label>
                     <select name="config[position]" class="form-control required" required>
                         <option value="right">Right</option>
@@ -472,13 +472,18 @@
                 </div>
             `
             componentData +=
-                cardLine('Config') +
-                config +
-                cardLine('Top Section') +
-                attributeTitle +
-                attributeTitleSubTitle +
-                attributeButton +
-                attributeImage;
+                componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Component Info') +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                    multiItemButton() +
+                `</slot>`;
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -491,7 +496,6 @@
                     multiItemTitle() +
                     multiItemDescription() +
                     redirectLink() +
-
                 `</slot>`;
         }else if(componentType === "card_with_bg_color_component"){
             componentData +=
@@ -759,6 +763,18 @@
                     attrPlayStoreLink() +
                     attrAppStoreLink() +
                 `</slot>`;
+        }else if(componentType === "amar_offer"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                `</slot>`;
+        }else if(componentType === "loyalty_offer"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }
@@ -780,7 +796,15 @@
         var componentData = '';
 
         if (componentType === "banner_with_button"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeButton + singleImage;
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    multiItemButton(index) +
+                    removeBtn +
+                `</slot>`;
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -923,6 +947,15 @@
                 imageOne(index) +
                 multiItemTitle(index) +
                 redirectLink(index) +
+                removeBtn +
+                `</slot>`;
+        }else if(componentType === "explore_c"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1) +
+                imageOne(index) +
+                multiItemTitle(index) +
+                multiItemButton(index) +
                 removeBtn +
                 `</slot>`;
         }else if(componentType === "explore_c"){

@@ -135,6 +135,9 @@ class ComponentHelper
             'explore_services' => 'Explore Services',
             'explore_c' => 'Explore C',
             'super_app' => 'Super App',
+            'dashboard' => 'Dashboard (Static Component)',
+            'amar_offer' => 'Offer For You (Static Component)',
+            'loyalty_offer' => 'Loyalty Offer (Static Component)',
         ];
     }
 }
