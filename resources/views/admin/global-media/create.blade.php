@@ -43,9 +43,16 @@
 
     <script>
         function validateImage() {
+            var keyName = document.getElementById('key_name').value;
             var settingsKey = document.getElementById('settings_key').value;
             var selectedFile = document.getElementById('image').files[0];
 
+            // Check if a file was selected
+            if (!keyName) {
+                alert('Please insert the key name.');
+                return;
+            }
+            
             // Check if a file was selected
             if (!selectedFile) {
                 alert('Please select an image.');
