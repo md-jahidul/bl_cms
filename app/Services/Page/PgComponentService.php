@@ -46,9 +46,11 @@ class PgComponentService
                 $data["attribute"]['image']['bn'] = $imgUrl;
             }
 
-            foreach ($data["attribute"] as $key => $attrItem){
-                if (!is_object($attrItem) && !isset($attrItem['bn'])){
-                    $data['attribute'][$key]['bn'] = $attrItem['en'];
+            if (isset($data["attribute"])) {
+                foreach ($data["attribute"] as $key => $attrItem){
+                    if (!is_object($attrItem) && !isset($attrItem['bn'])){
+                        $data['attribute'][$key]['bn'] = $attrItem['en'];
+                    }
                 }
             }
 

@@ -39,12 +39,11 @@
                                     </div>
 
                                     <div class="col-md-3">
-{{--                                        <label>Component Sample Picture</label>--}}
                                         <img src="{{ asset("page-component-image/$component->type.png") }}"
                                              class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
 
-                                    {{-- Title Text and Image Component --}}
+                                    {{-- banner_with_button --}}
                                     @if($component->type == "banner_with_button")
                                         <slot id="banner_with_button" data-offer-type="banner_with_button">
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
@@ -57,10 +56,15 @@
                                                 </select>
                                             </div>
 
-                                            @include('admin.new-pages.components.common-field.attribute.title')
-                                            @include('admin.new-pages.components.common-field.attribute.description')
-                                            @include('admin.new-pages.components.common-field.attribute.button')
-                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'banner_with_button',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
                                         </slot>
                                     @endif
 
@@ -229,7 +233,7 @@
 
                                     {{--text_with_image--}}
                                     @if($component->type == "text_with_image")
-                                        <slot id="galley_masonry" data-offer-type="text_with_image">
+                                        <slot id="text_with_image" data-offer-type="text_with_image">
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
                                             <div class="form-group col-md-9">
                                                 <label for="editor_en" class="required">Position</label>
@@ -453,6 +457,22 @@
                                             @include('admin.new-pages.components.common-field.attribute.image')
                                             @include('admin.new-pages.components.common-field.attribute.play-store-link')
                                             @include('admin.new-pages.components.common-field.attribute.app-store-link')
+                                        </slot>
+                                    @endif
+
+                                    {{--Amar_offer--}}
+                                    @if($component->type == "amar_offer")
+                                        <slot id="amar_offer" data-offer-type="amar_offer">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                        </slot>
+                                    @endif
+
+                                    {{--Loyalty Offer--}}
+                                    @if($component->type == "loyalty_offer")
+                                        <slot id="loyalty_offer" data-offer-type="loyalty_offer">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                         </slot>
                                     @endif
 

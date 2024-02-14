@@ -93,6 +93,7 @@ class PageComponentController extends Controller
         }
 
         $component->component_data_mod = array_values($componentData);
+//        dd($component);
 //        unset($component->componentData);
 //
 //        if ($component->type == "tab_component_with_image_card_one"){
