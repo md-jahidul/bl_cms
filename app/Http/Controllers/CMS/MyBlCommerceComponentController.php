@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\MyBlCommerceComponentService;
 use Illuminate\Contracts\Foundation\Application;
@@ -24,8 +25,9 @@ class MyBlCommerceComponentController extends Controller
     public function index()
     {
         $components = $this->componentService->findAllComponents();
+        $candidateChildes = Helper::findCandidateChildComponent($components);
 
-        return view('admin.commerce.components', compact('components'));
+        return view('admin.commerce.components', compact('components', 'candidateChildes'));
     }
 
     public function store(Request $request)
@@ -63,7 +65,15 @@ class MyBlCommerceComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->editComponent($id);
+        $componentData =  $this->componentService->editComponent($id);
+        $candidateChildes = $this->componentService->findBy(['type' => 'parent']);
+        $routeObj = [
+            'update' => "mybl.commerce.components.update",
+            'componentName' => 'Commerce',
+            'index' => 'mybl.commerce.components'
+        ];
+
+        return view('admin.mybl-home-components.generic-field', compact('componentData', 'candidateChildes', 'routeObj'));
     }
 
     public function update(Request $request)

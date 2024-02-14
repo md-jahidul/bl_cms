@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\MyBlCommerceComponentService;
 use App\Services\NonBlComponentService;
@@ -23,8 +24,9 @@ class NonBlComponentController extends Controller
     public function index()
     {
         $components = $this->componentService->findAllComponents();
+        $candidateChildes = Helper::findCandidateChildComponent($components);
 
-        return view('admin.nonbl.components', compact('components'));
+        return view('admin.nonbl.components', compact('components', 'candidateChildes'));
     }
 
     public function store(Request $request)
@@ -48,7 +50,15 @@ class NonBlComponentController extends Controller
 
     public function edit($id)
     {
-        return $this->componentService->findOne($id);
+        $componentData =  $this->componentService->editComponent($id);
+        $candidateChildes = $this->componentService->findBy(['type' => 'parent']);
+        $routeObj = [
+            'update' => "nonbl.components.update",
+            'componentName' => 'NonBl',
+            'index' => 'nonbl.components'
+        ];
+
+        return view('admin.mybl-home-components.generic-field', compact('componentData', 'candidateChildes', 'routeObj'));
     }
 
     public function update(Request $request)
