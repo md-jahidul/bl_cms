@@ -1237,6 +1237,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
 
     /**
+     * VAS Product
+     */
+
+    Route::resource('vas-products', 'CMS\VasProductController');
+    Route::match(['GET', 'POST'],'vas-products/order/update-position', 'CMS\VasProductController@updatePosition');
+    Route::get('vas-products/destroy/{id}', 'CMS\VasProductController@destroy')
+        ->name('vas-product.destroy');
+
+    /**
      * I Screen
      */
     Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
