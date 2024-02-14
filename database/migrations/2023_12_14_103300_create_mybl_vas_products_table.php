@@ -28,7 +28,7 @@ class CreateMyblVasProductsTable extends Migration
             $table->string('platform')->nullable();
             $table->boolean('is_renewable')->default(0);
             $table->integer('display_order')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(0)->index();
             $table->string('activation_type')->default('Default');
             $table->string('activation_deeplink')->nullable();
             $table->string('deactivation_type')->default('Default');
