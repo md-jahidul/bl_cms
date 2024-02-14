@@ -1,4 +1,14 @@
 (function () {
+    let configBgImage = `
+        <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+            <label for="editor_en">Background Image</label>
+            <select name="config[position]" class="form-control required" required>
+                <option value="yes">Yes</option>
+                <option value="no" selected>No</option>
+            </select>
+        </div>
+    `
+
     var cardLine = function (title = "Card Info") {
         return `<div class="col-md-12">
             <span><h5><strong>${title}</strong></h5></span>
@@ -598,7 +608,6 @@
                     </select>
                 </div>
             `
-
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     cardLine('Config') +
@@ -726,6 +735,9 @@
         }else if(componentType === "explore_c"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    configBgImage +
+                    cardLine('Component Heading') +
                     attributeTitle +
                     attributeTitleSubTitle +
                     cardLine() +
@@ -738,6 +750,9 @@
         }else if(componentType === "super_app"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    configBgImage +
+                    cardLine('Component Info') +
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeImage +
