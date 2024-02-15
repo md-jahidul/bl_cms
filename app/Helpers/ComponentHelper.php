@@ -138,6 +138,7 @@ class ComponentHelper
             'dashboard' => 'Dashboard (Static Component)',
             'amar_offer' => 'Offer For You (Static Component)',
             'loyalty_offer' => 'Loyalty Offer (Static Component)',
+            'digital_world' => 'Digital World',
         ];
     }
 }

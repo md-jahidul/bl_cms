@@ -227,6 +227,17 @@
         </div>`
     }
 
+    var multiItemFreeText = function (index = 0, fieldName, Label) {
+        return `<div class="form-group col-md-6">
+            <label for="title_en">${Label} En</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_en]" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">${Label} Bn</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_bn]" class="form-control">
+        </div>`
+    }
+
     var multiItemFeedback  = function (index = 0, isTab = false, tabIndex = 0) {
         let fieldFeedbackEn = ""
         let fieldFeedbackBn = ""
@@ -809,6 +820,21 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                 `</slot>`;
+        }else if(componentType === "digital_world"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Component Heading') +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                    multiItemButton() +
+                    multiItemFreeText(0, 'date_txt', 'Date');
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }
@@ -1001,6 +1027,17 @@
                 imageOne(index) +
                 multiItemTitle(index) +
                 multiItemButton(index) +
+                removeBtn +
+                `</slot>`;
+        }else if(componentType === "digital_world"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1) +
+                imageOne(index) +
+                multiItemTitle(index) +
+                multiItemDescription(index) +
+                multiItemButton(index) +
+                multiItemFreeText(index, 'date_txt', 'Date') +
                 removeBtn +
                 `</slot>`;
         }else{
