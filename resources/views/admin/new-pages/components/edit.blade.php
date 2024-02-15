@@ -109,7 +109,13 @@
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.image', [
+                                                'label' => "Background Image",
+                                                'fieldName' => "bg_img",
+                                                'dataField' => "bg_image"
+                                            ])
                                             @include('admin.new-pages.components.common-field.attribute.double-button')
+                                            @include('admin.new-pages.components.common-field.attribute.bg-color')
                                         </slot>
                                     @endif
 
@@ -118,11 +124,18 @@
                                         <slot id="top_image_card_with_button"
                                               data-offer-type="top_image_card_with_button">
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
-                                            <div class="form-group col-md-9">
+                                            <div class="form-group col-md-6">
                                                 <label for="editor_en">Position</label>
                                                 <select name="config[slider_action]" class="form-control">
                                                     <option value="">--Select Position--</option>
                                                     <option value="navigation" {{ $component->config['slider_action'] == "navigation" ? 'selected' : '' }}>Navigation</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="editor_en">Component Type</label>
+                                                <select name="config[component_type]" class="form-control">
+                                                    <option value="fixed" {{ $component->config['component_type'] == "fixed" ? 'selected' : '' }}>Fixed Card</option>
+                                                    <option value="slider" {{ $component->config['component_type'] == "slider" ? 'selected' : '' }}>Slider Card</option>
                                                 </select>
                                             </div>
 
@@ -473,6 +486,24 @@
                                         <slot id="loyalty_offer" data-offer-type="loyalty_offer">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                        </slot>
+                                    @endif
+
+                                    {{--digital_world--}}
+                                    @if($component->type == "digital_world")
+                                        <slot id="digital_world" data-offer-type="digital_world">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'digital_world',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
                                         </slot>
                                     @endif
 

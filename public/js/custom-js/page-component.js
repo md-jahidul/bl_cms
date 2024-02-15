@@ -39,14 +39,35 @@
         </div>`
     }
 
-    var attributeImage =
-        `<div class="form-group col-md-12">
-            <label for="alt_text" class="">Image</label>
+    // var attributeImage =
+    //     `<div class="form-group col-md-12">
+    //         <label for="alt_text" class="">Image</label>
+    //         <div class="custom-file">
+    //             <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+    //             <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+    //         </div>
+    //     </div>`
+
+    var attributeImage = function (fieldName = "image_file", label = "Image") {
+        return `
+        <div class="form-group col-md-12">
+            <label for="alt_text" class="">${label}</label>
             <div class="custom-file">
-                <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+                <input type="file" name="attribute[${fieldName}]" class="dropify" data-height="80">
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
             </div>
         </div>`
+    }
+
+    var attributeColor = function (fieldName = "color", label = "Color") {
+        return `
+        <div class="form-group col-md-4">
+            <label for="alt_text" class="">${label}</label>
+            <div class="custom-file">
+                <input type="color" name="attribute[${fieldName}][en]" value="#FFFFFF">
+            </div>
+        </div>`
+    }
 
     var attributeTitle =
         `<div class="form-group col-md-6">
@@ -203,6 +224,17 @@
         <div class="form-group col-md-6">
             <label for="title_en">Description Bn</label>
             <textarea type="text" rows="3" name="${fieldNameBn}" class="form-control ${it_editor ? 'summernote_editor' : '' }"></textarea>
+        </div>`
+    }
+
+    var multiItemFreeText = function (index = 0, fieldName, Label) {
+        return `<div class="form-group col-md-6">
+            <label for="title_en">${Label} En</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_en]" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">${Label} Bn</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_bn]" class="form-control">
         </div>`
     }
 
@@ -511,14 +543,27 @@
                     multiItemButton() +
                 `</slot>`;
         }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeImage + doubleButton;
+            componentData +=
+                attributeTitle +
+                attributeTitleSubTitle +
+                attributeImage() +
+                attributeImage('bg_img', "Background Image") +
+                doubleButton +
+                attributeColor("bg_color", "Background Color");
         }else if(componentType === "top_image_card_with_button"){
             let config = `
-                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
                     <label for="editor_en">Position</label>
                     <select name="config[slider_action]" class="form-control required" required>
                         <option value="">---Select Position---</option>
                         <option value="navigation">Navigation</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en">Component Type</label>
+                    <select name="config[component_type]" class="form-control">
+                        <option value="fixed" selected>Fixed Card</option>
+                        <option value="slider">Slider Card</option>
                     </select>
                 </div>`
 
@@ -526,9 +571,9 @@
                 `<slot class="page_component_multi_item">` +
                     cardLine('Config') +
                     config +
+                    cardLine('Component Info') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
@@ -590,7 +635,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                     cardLine('Breadcrumbs') +
                     addBtn +
                     itemCountLine(1) +
@@ -619,7 +664,7 @@
                     cardLine('Top Section') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                 `</slot>`;
         }else if(componentType === "top_image_bottom_text_component"){
             componentData +=
@@ -759,7 +804,7 @@
                     cardLine('Component Info') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                     attrPlayStoreLink() +
                     attrAppStoreLink() +
                 `</slot>`;
@@ -774,6 +819,21 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
+                `</slot>`;
+        }else if(componentType === "digital_world"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Component Heading') +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                    multiItemButton() +
+                    multiItemFreeText(0, 'date_txt', 'Date');
                 `</slot>`;
         }else{
             console.log('No component found!!')
@@ -825,9 +885,11 @@
                     multiItemButton(index) +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
-        }else if(componentType === "top_image_card_with_button"){
+        }
+        // else if(componentType === "hiring_now_component"){
+        //     componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
+        // }
+        else if(componentType === "top_image_card_with_button"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1) +
@@ -965,6 +1027,17 @@
                 imageOne(index) +
                 multiItemTitle(index) +
                 multiItemButton(index) +
+                removeBtn +
+                `</slot>`;
+        }else if(componentType === "digital_world"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1) +
+                imageOne(index) +
+                multiItemTitle(index) +
+                multiItemDescription(index) +
+                multiItemButton(index) +
+                multiItemFreeText(index, 'date_txt', 'Date') +
                 removeBtn +
                 `</slot>`;
         }else{

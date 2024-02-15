@@ -46,6 +46,13 @@ class PgComponentService
                 $data["attribute"]['image']['bn'] = $imgUrl;
             }
 
+            if (isset($data["attribute"]) && isset($data["attribute"]['bg_img'])) {
+                $imgUrl = $this->fileUpload($data["attribute"]['bg_img']);
+                $data["attribute"]['bg_image']['en'] = $imgUrl;
+                $data["attribute"]['bg_image']['bn'] = $imgUrl;
+            }
+
+//            dd($data["attribute"]);
             if (isset($data["attribute"])) {
                 foreach ($data["attribute"] as $key => $attrItem){
                     if (!is_object($attrItem) && !isset($attrItem['bn'])){
@@ -79,6 +86,15 @@ class PgComponentService
                 }
             }
 
+            if ($id && !isset($data["attribute"]['bg_img'])) {
+                $component = $this->findOne($id);
+                if (isset($component['attribute']['bg_image']['en']) && isset($component['attribute']['bg_image']['bn']))
+                {
+                    $data["attribute"]['bg_image']['en'] = $component['attribute']['bg_image']['en'] ?? null;
+                    $data["attribute"]['bg_image']['bn'] = $component['attribute']['bg_image']['bn'] ?? null;
+                }
+            }
+
             $componentData = [
                 'page_id' => $data['pageId'],
                 'name' => strtoupper(str_replace('_', ' ', $data["component_type"])),
@@ -91,8 +107,9 @@ class PgComponentService
             if (!$id) {
                 $componentData['order'] = $components->count() + 1;
             }
-            unset($componentData['attribute']['image_file']);
 
+            unset($componentData['attribute']['image_file']);
+            unset($componentData['attribute']['bg_img']);
             $componentInfo = $this->componentRepository->createOrUpdate($componentData, $id);
             $componentId = $componentInfo->id;
 
@@ -113,7 +130,6 @@ class PgComponentService
                                 'value_bn' => isset($field['value_bn']) && $field['value_bn'] != null ? $field['value_bn'] : $itemEn,
                                 'group' => $index + 1,
                             ];
-//                            dd($componentDataInfo);
                             $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
                         }
 
