@@ -39,14 +39,35 @@
         </div>`
     }
 
-    var attributeImage =
-        `<div class="form-group col-md-12">
-            <label for="alt_text" class="">Image</label>
+    // var attributeImage =
+    //     `<div class="form-group col-md-12">
+    //         <label for="alt_text" class="">Image</label>
+    //         <div class="custom-file">
+    //             <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+    //             <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+    //         </div>
+    //     </div>`
+
+    var attributeImage = function (fieldName = "image_file", label = "Image") {
+        return `
+        <div class="form-group col-md-12">
+            <label for="alt_text" class="">${label}</label>
             <div class="custom-file">
-                <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+                <input type="file" name="attribute[${fieldName}]" class="dropify" data-height="80">
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
             </div>
         </div>`
+    }
+
+    var attributeColor = function (fieldName = "color", label = "Color") {
+        return `
+        <div class="form-group col-md-4">
+            <label for="alt_text" class="">${label}</label>
+            <div class="custom-file">
+                <input type="color" name="attribute[${fieldName}][en]" value="#FFFFFF">
+            </div>
+        </div>`
+    }
 
     var attributeTitle =
         `<div class="form-group col-md-6">
@@ -511,14 +532,27 @@
                     multiItemButton() +
                 `</slot>`;
         }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeImage + doubleButton;
+            componentData +=
+                attributeTitle +
+                attributeTitleSubTitle +
+                attributeImage() +
+                attributeImage('bg_img', "Background Image") +
+                doubleButton +
+                attributeColor("bg_color", "Background Color");
         }else if(componentType === "top_image_card_with_button"){
             let config = `
-                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
                     <label for="editor_en">Position</label>
                     <select name="config[slider_action]" class="form-control required" required>
                         <option value="">---Select Position---</option>
                         <option value="navigation">Navigation</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en">Component Type</label>
+                    <select name="config[component_type]" class="form-control">
+                        <option value="fixed" selected>Fixed Card</option>
+                        <option value="slider">Slider Card</option>
                     </select>
                 </div>`
 
@@ -526,9 +560,9 @@
                 `<slot class="page_component_multi_item">` +
                     cardLine('Config') +
                     config +
+                    cardLine('Component Info') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
@@ -590,7 +624,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                     cardLine('Breadcrumbs') +
                     addBtn +
                     itemCountLine(1) +
@@ -619,7 +653,7 @@
                     cardLine('Top Section') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                 `</slot>`;
         }else if(componentType === "top_image_bottom_text_component"){
             componentData +=
@@ -759,7 +793,7 @@
                     cardLine('Component Info') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                     attrPlayStoreLink() +
                     attrAppStoreLink() +
                 `</slot>`;
@@ -825,9 +859,11 @@
                     multiItemButton(index) +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
-        }else if(componentType === "top_image_card_with_button"){
+        }
+        // else if(componentType === "hiring_now_component"){
+        //     componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
+        // }
+        else if(componentType === "top_image_card_with_button"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1) +
