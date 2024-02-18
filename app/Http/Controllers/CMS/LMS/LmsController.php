@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS\LMS;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\NewCampaignModality\MyBlCampaign;
 use App\Repositories\LmsHomeComponentRepository;
@@ -21,8 +22,9 @@ class LmsController extends Controller
     public function index()
     {
         $components = $this->lmsHomeComponentService->findAllComponents();
+        $candidateChildes = Helper::findCandidateChildComponent($components);
 
-        return view('admin.lms-components.index', compact('components'));
+        return view('admin.lms-components.index', compact('components', 'candidateChildes'));
     }
 
     public function store(Request $request)
@@ -46,7 +48,16 @@ class LmsController extends Controller
 
     public function edit($id)
     {
-        return $this->lmsHomeComponentService->editComponent($id);
+        $componentData = $this->lmsHomeComponentService->editComponent($id);
+        $candidateChildes = $this->lmsHomeComponentService->findBy(['type' => 'parent']);
+
+        $routeObj = [
+            'update' => "lms-components.update",
+            'componentName' => 'Lms',
+            'index' => 'lms-components'
+        ];
+
+        return view('admin.mybl-home-components.generic-field', compact('componentData', 'candidateChildes', 'routeObj'));
     }
 
     public function update(Request $request)

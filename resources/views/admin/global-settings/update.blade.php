@@ -11,14 +11,14 @@
 
             <div class="form-group">
                 <label for="settings_key">Setting Key</label>
-                <input type="text" class="form-control" id="settings_key" name="settings_key" required
+                <input type="text" class="form-control" id="settings_key" name="settings_key" required readonly
                        value="{{ $settings->settings_key }}">
                 <div id="settings_key_error" style="color: red;"></div>
             </div>
 
             <div class="form-group">
                 <label for="value_type">Value Type</label>
-                <select class="form-control" id="value_type" name="value_type" required>
+                <select class="form-control" id="value_type" name="value_type" disabled required>
                     <option value="number" @if ($settings->value_type === 'number') selected @endif>Number</option>
                     <option value="string" @if ($settings->value_type === 'string') selected @endif>String</option>
                     <option value="json" @if ($settings->value_type === 'json') selected @endif>JSON</option>
