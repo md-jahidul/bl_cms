@@ -71,8 +71,8 @@
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => false])
     @elseif(isset($component_type) && $component_type == "tab_component_with_image_card_one"
-            || $component_type == "tab_component_with_image_card_two"
-            || $component_type == "tab_component_with_image_card_three"
+        || $component_type == "tab_component_with_image_card_two"
+        || $component_type == "tab_component_with_image_card_three"
     )
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Tab', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => false])
@@ -121,17 +121,20 @@
         @include('admin.new-pages.components.common-field.multi-item.image')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.redirect-link')
+
     @elseif(isset($component_type) && $component_type == "explore_c")
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.image')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.button')
+
     @elseif(isset($component_type) && $component_type == "banner_with_button")
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.image')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.description')
         @include('admin.new-pages.components.common-field.multi-item.button')
+
     @elseif(isset($component_type) && $component_type == "digital_world")
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.image')
@@ -139,10 +142,23 @@
         @include('admin.new-pages.components.common-field.multi-item.description')
         @include('admin.new-pages.components.common-field.multi-item.button')
         @include('admin.new-pages.components.common-field.multi-item.free-text', ['fieldName' => 'date_txt', 'label' => 'Date'])
+
+    @elseif(isset($component_type) && $component_type == "bl_lab")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.image-two', ['fieldName' => 'image_icon', 'label' => 'Icon Image'])
+        @include('admin.new-pages.components.common-field.multi-item.image-two', ['fieldName' => 'image_card', 'label' => 'Card Image'])
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
+        @include('admin.new-pages.components.common-field.multi-item.double-button')
+
+    @elseif(isset($component_type) && $component_type == "videos_component")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.video')
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
     @else
 
     @endif
-
 {{--    @if(isset($key) && $key != 0)--}}
         <div class="form-group col-md-1">
             <label for="alt_text"></label>

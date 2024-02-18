@@ -52,7 +52,6 @@ class PgComponentService
                 $data["attribute"]['bg_image']['bn'] = $imgUrl;
             }
 
-//            dd($data["attribute"]);
             if (isset($data["attribute"])) {
                 foreach ($data["attribute"] as $key => $attrItem){
                     if (!is_object($attrItem) && !isset($attrItem['bn'])){
@@ -116,6 +115,16 @@ class PgComponentService
             if (isset($data['componentData'])){
                 foreach (array_values($data['componentData']) as $index => $item) {
                     $tabParentId = 0;
+//                    $contentData = [];
+//                    foreach ($item as $key => $field){
+//                        if ($key == "content_type"){
+//                            dd($field);
+//                            $contentData[] = $field;
+//                        }
+//                    }
+//                    dd($data, $contentData);
+
+
                     foreach ($item as $key => $field) {
                         $valueEn = $field['value_en'] ?? null;
                         $itemEn = is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn;
@@ -133,10 +142,15 @@ class PgComponentService
                             $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
                         }
 
+
 //                        dd($componentDataSave, $field);
                         if (isset($field['is_tab'])) {
                             $tabParentId = $componentDataSave->id ?? 0;
-//                            dd($tabParentId);
+                        }
+
+
+                        if ($key == "content_type" && $field['value_en'] == "dynamic"){
+                            continue;
                         }
 
 //                        if ($key == "is_static_component" || $key == "component_name") {
@@ -150,7 +164,6 @@ class PgComponentService
 //                            ];
 //                            $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
 //                        }
-
                         if ($key == "tab_items") {
                             foreach ($field as $tabIndex => $tabItems) {
                                 foreach ($tabItems as $tabItemKey => $tabItem) {

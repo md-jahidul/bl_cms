@@ -73,7 +73,8 @@ class PageComponentController extends Controller
             $tabComponents = [
                 "tab_component_with_image_card_one",
                 "tab_component_with_image_card_two",
-                "tab_component_with_image_card_three"
+                "tab_component_with_image_card_three",
+                "tab_component_with_image_card_four"
             ];
             $tabItemData = [];
             if (!empty($data->children) && in_array($component->type, $tabComponents)) {
@@ -93,7 +94,8 @@ class PageComponentController extends Controller
         }
 
         $component->component_data_mod = array_values($componentData);
-//        dd($component);
+        return $component;
+        dd($component);
 //        unset($component->componentData);
 //
 //        if ($component->type == "tab_component_with_image_card_one"){
