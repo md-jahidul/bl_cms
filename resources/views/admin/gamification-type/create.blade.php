@@ -83,6 +83,7 @@
                                                     <option value="home"> Home </option>
                                                     <option value="commerce"> Commerce </option>
                                                     <option value="content"> Content </option>
+                                                    <option value="lms"> LMS </option>
                                                     <option value="non_bl"> Non Bl </option>
                                             </select>
                                             @if ($errors->has('content_for'))
