@@ -13,8 +13,6 @@ class CreateMyBlServiceItemsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('my_bl_service_items');
-
         Schema::create('my_bl_service_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('my_bl_service_id');

@@ -37,7 +37,7 @@ class GenericSliderService
     public $lmsHomeComponentService;
     public $nonBlOfferService;
     public $nonBLComponentService;
-    public $genericComponentService, $genericComponentItemService;
+    protected $genericComponentService, $genericComponentItemService;
     public function __construct(
         GenericSliderRepository $genericSliderRepository,
         MyblHomeComponentService $myblHomeComponentService,

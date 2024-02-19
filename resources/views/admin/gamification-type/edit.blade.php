@@ -77,6 +77,7 @@
                                             <option value="home" @if ($gamificationType->content_for == 'home') selected @endif> Home </option>
                                             <option value="commerce" @if ($gamificationType->content_for == 'commerce') selected @endif> Commerce </option>
                                             <option value="content" @if ($gamificationType->content_for == 'content') selected @endif> Content </option>
+                                            <option value="lms" @if ($gamificationType->content_for == 'lms') selected @endif> LMS </option>
                                             <option value="non_bl" @if ($gamificationType->content_for == 'non_bl') selected @endif> Non Bl </option>
                                     </select>
                                     @if ($errors->has('content_for'))

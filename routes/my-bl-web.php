@@ -413,6 +413,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
     Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
 
+    /**
+     * Roaming Transactions
+     */
+    Route::get('roaming/transactions', 'CMS\RoamingTransactionController@index')->name('roaming.transactions');
+    Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
+    Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
+
     Route::post(
         'mybl/core-product/download',
         'CMS\MyblProductEntryController@downloadMyblProducts'
@@ -1537,7 +1544,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::resource('vas-products', 'CMS\VasProductController');
     Route::match(['GET', 'POST'],'vas-products/order/update-position', 'CMS\VasProductController@updatePosition');
-    // Route::get('vas-products/order/update-position', 'CMS\VasProductController@updatePosition');
     Route::get('vas-products/destroy/{id}', 'CMS\VasProductController@destroy')
         ->name('vas-product.destroy');
 
@@ -1572,10 +1578,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('generic-rail-items/store', 'CMS\GenericRailItemController@store')->name('generic-rail.items.store');
     Route::match(['GET', 'POST'],'generic-rail-item/update-position', 'CMS\GenericRailItemController@updatePosition');
     Route::get('generic-rail-item/destroy/{id}', 'CMS\GenericRailItemController@destroy');
-    //mybl services
-
+    /**  mybl services
+     *
+     */
     Route::resource('my-bl-services', 'CMS\MyBlServiceController');
-//    Route::resource('generic-slider', 'CMS\GenericSliderController');
     Route::get('my-bl-services/destroy/{id}', 'CMS\MyBlServiceController@destroy');
     Route::get('my-bl-services/{service_id}/items', 'CMS\MyBlServiceItemsController@index')->name('my-bl-services.items.index');
     Route::get(
@@ -1590,11 +1596,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('my-bl-services.items.update');
 
     Route::match(['GET', 'POST'], 'myblService-addService/update-position', 'CMS\MyBlServiceController@updatePosition');
-
-//    Route::put(
-//        'my-bl-services/items/{id}/update',
-//        'CMS\GenericSliderImageController@update'
-//    )->name('generic-slider.images.update');
     Route::delete(
         'my-bl-services/items/{id}/delete',
         'CMS\MyBlServiceItemsController@destroy'

@@ -39,7 +39,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-3">
-                                                <a role="button" title="View Images" href="{{route('my-bl-services.items.index',$service->id)}}"
+                                                <a role="button" title="View child items" href="{{route('my-bl-services.items.index',$service->id)}}"
                                                    class=" btn btn-outline-success">
                                                     <i class="la la-picture-o"></i>
                                                 </a>

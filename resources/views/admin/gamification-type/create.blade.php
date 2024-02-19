@@ -27,7 +27,7 @@
                             @method('post')
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-6 mb-2 {{ $errors->has('type_en') ? ' error' : '' }}">
                                         <label for="type_en" class="required">Type (EN):</label>
                                         <input
                                             maxlength="200"
@@ -45,7 +45,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="form-group col-md-6 mb-2 {{ $errors->has('type_bn') ? ' error' : '' }}">
                                         <label for="type_bn" class="required">Type (BN):</label>
                                         <input
                                             maxlength="200"
@@ -77,12 +77,13 @@
                                     </div>
                                     <!-- Content For -->
                                     <div class="col-6">
-                                        <div class="form-group">
+                                        <div class="form-group {{ $errors->has('content_for') ? ' error' : '' }}">
                                             <label for="content_for">Conponent For: </label>
                                             <select name="content_for" class="browser-default custom-select" required>
                                                     <option value="home"> Home </option>
                                                     <option value="commerce"> Commerce </option>
                                                     <option value="content"> Content </option>
+                                                    <option value="lms"> LMS </option>
                                                     <option value="non_bl"> Non Bl </option>
                                             </select>
                                             @if ($errors->has('content_for'))
