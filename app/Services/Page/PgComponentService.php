@@ -40,13 +40,13 @@ class PgComponentService
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
-            if (isset($data["attribute"]) && isset($data["attribute"]['image_file'])) {
+            if (isset($data["attribute"]['image_file'])) {
                 $imgUrl = $this->fileUpload($data["attribute"]['image_file']);
                 $data["attribute"]['image']['en'] = $imgUrl;
                 $data["attribute"]['image']['bn'] = $imgUrl;
             }
 
-            if (isset($data["attribute"]) && isset($data["attribute"]['bg_img'])) {
+            if (isset($data["attribute"]['bg_img'])) {
                 $imgUrl = $this->fileUpload($data["attribute"]['bg_img']);
                 $data["attribute"]['bg_image']['en'] = $imgUrl;
                 $data["attribute"]['bg_image']['bn'] = $imgUrl;
@@ -59,22 +59,6 @@ class PgComponentService
                     }
                 }
             }
-
-//            if (!empty($data['attribute']['button_link'])){
-//                $data["attribute"]['button_link']['bn'] = $data["attribute"]['button_link']['bn'] ?? $data["attribute"]['button_link']['en'];
-//            }
-//
-//            if (!empty($data['attribute']['media_url'])){
-//                $data["attribute"]['media_url']['bn'] = $data["attribute"]['media_url']['bn'] ?? $data["attribute"]['media_url']['en'];
-//            }
-//
-//            if (!empty($data['attribute']['button_one_link'])){
-//                $data["attribute"]['button_one_link']['bn'] = $data["attribute"]['button_one_link']['bn'] ?? $data["attribute"]['button_one_link']['en'];
-//            }
-//
-//            if (!empty($data['attribute']['button_two_link'])){
-//                $data["attribute"]['button_two_link']['bn'] = $data["attribute"]['button_two_link']['bn'] ?? $data["attribute"]['button_two_link']['en'];
-//            }
 
             if ($id && !isset($data["attribute"]['image_file'])) {
                 $component = $this->findOne($id);
@@ -115,21 +99,23 @@ class PgComponentService
             if (isset($data['componentData'])){
                 foreach (array_values($data['componentData']) as $index => $item) {
                     $tabParentId = 0;
-//                    $contentData = [];
-//                    foreach ($item as $key => $field){
-//                        if ($key == "content_type"){
-//                            dd($field);
-//                            $contentData[] = $field;
-//                        }
-//                    }
-//                    dd($data, $contentData);
 
+                    // Tab component four condition
+                    if (isset($item['content_type']) && $item['content_type']['value_en'] == "static"){
+                        unset($item['tab_items']);
+                    }
 
                     foreach ($item as $key => $field) {
                         $valueEn = $field['value_en'] ?? null;
                         $itemEn = is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn;
-
-                        if ($key != "tab_items" && $key != "is_static_component" && $key != "component_name") {
+                        $tabItemKeys = [
+                            'tab_items',
+                            'is_static_component',
+                            'component_name',
+                            'content_type',
+                            'static_component'
+                        ];
+                        if (!in_array($key, $tabItemKeys)) {
                             $componentDataInfo = [
                                 'id' => $field['id'] ?? null,
                                 'component_id' => $componentId,
@@ -142,15 +128,22 @@ class PgComponentService
                             $componentDataSave = $this->componentDataRepository->createOrUpdate($componentDataInfo);
                         }
 
-
-//                        dd($componentDataSave, $field);
                         if (isset($field['is_tab'])) {
                             $tabParentId = $componentDataSave->id ?? 0;
                         }
 
-
-                        if ($key == "content_type" && $field['value_en'] == "dynamic"){
-                            continue;
+                        if ($key == "content_type" || $key == "static_component"){
+                            $valueEn = $field['value_en'] ?? null;
+                            $tabItemData = [
+                                'id' => $field['id'] ?? null,
+                                'component_id' => $componentId,
+                                'parent_id' => $tabParentId,
+                                'key' => $key,
+                                'value_en' => $valueEn,
+                                'value_bn' => $valueEn,
+                                'group' => $index + 1,
+                            ];
+                            $this->componentDataRepository->createOrUpdate($tabItemData);
                         }
 
 //                        if ($key == "is_static_component" || $key == "component_name") {
@@ -164,6 +157,7 @@ class PgComponentService
 //                            ];
 //                            $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
 //                        }
+//                        dd($item);
                         if ($key == "tab_items") {
                             foreach ($field as $tabIndex => $tabItems) {
                                 foreach ($tabItems as $tabItemKey => $tabItem) {
@@ -177,7 +171,6 @@ class PgComponentService
                                         'value_bn' => $tabItem['value_bn'] ?? null,
                                         'group' => $tabParentId . "." . ($tabIndex + 1),
                                     ];
-//                                    dd($tabItemData);
                                     $this->componentDataRepository->createOrUpdate($tabItemData);
                                 }
                             }

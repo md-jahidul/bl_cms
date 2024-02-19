@@ -67,18 +67,42 @@
         @include('admin.new-pages.components.common-field.multi-item.image')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.description')
+
     @elseif(isset($component_type) && $component_type == "stories_slider")
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => false])
+
     @elseif(isset($component_type) && $component_type == "tab_component_with_image_card_one"
         || $component_type == "tab_component_with_image_card_two"
         || $component_type == "tab_component_with_image_card_three"
+        || $component_type == "tab_component_with_image_card_four"
     )
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Tab', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => false])
+            @if($component_type == "tab_component_with_image_card_four")
+                @foreach($data['data'] as $item)
+                    @if(isset($item['content_type']['value_en']))
+                        <div class="form-group col-md-4">
+                            <label for="editor_en">Content Type</label>
+                            <select name="componentData[0][content_type][value_en]" class="form-control tab_content_type">
+                                <option value="static" {{ $item['content_type']['value_en'] == "static"  ? "selected" : ""}}>Static</option>
+                                <option value="dynamic" {{ $item['content_type']['value_en'] == "dynamic"  ? "selected" : ""}}>Dynamic</option>
+                            </select>
+                            <input type="hidden" name="componentData[0][title][is_tab]" value="1">
+                        </div>
+                        <div class="form-group col-md-4 dynamic_or_static">
+                            <label for="static_component">Static Component</label>
+                            <select name="componentData[0][static_component][value_en]" class="form-control">
+                                <option value="find_store" selected>Find a Store</option>
+                            </select>
+                        </div>
+                    @endif
+                @endforeach
+            @endif
         <div class="col-md-11 ml-5">
             <div class="row tab-item">
                 @foreach($data['data'] as $tabIndex => $tabItemData)
+
                     <slot class="tab_item_count" data-tab-id="{{ $key }}">
                         @if($tabIndex == 0)
                             <div class="form-group col-md-12">
@@ -88,6 +112,11 @@
                         @endif
                         @if($component_type == "tab_component_with_image_card_three")
                             @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => true])
+                        @elseif($component_type == "tab_component_with_image_card_four")
+                            @if(isset($tabItemData['content_type']['value_en']) && $tabItemData['content_type']['value_en'] == "dynamic")
+                                @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
+                                @include('admin.new-pages.components.common-field.multi-item.button', ['is_tab' => true, 'tabIndex' => $tabIndex])
+                            @endif
                         @else
                             @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => true, 'tabIndex' => $tabIndex])
                             @include('admin.new-pages.components.common-field.multi-item.description', ['is_tab' => true, 'tabIndex' => $tabIndex, 'is_editor' => true])
@@ -96,11 +125,15 @@
                         @endif
 
                         @if($tabIndex != 0)
-                            @if(isset($tabItemData['title']['parent_id']))
-                                <div class="form-group col-md-1 ">
+                            @if(isset($tabItemData['title']['parent_id']) || isset($tabItemData['button_name']['parent_id']))
+                            @php($comId = $tabItemData['title']['id'] ?? $tabItemData['button_name']['id'])
+                            @php($parentId = $tabItemData['title']['parent_id'] ?? $tabItemData['button_name']['parent_id'])
+                            @php($parentGroup= $tabItemData['title']['group'] ?? $tabItemData['button_name']['group'])
+
+                                <div class="form-group col-md-1">
                                     <label for="alt_text"></label>
-                                    <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $tabItemData['title']['id'] }}" data-tab="1"
-                                       data-parent="{{ $tabItemData['title']['parent_id'] }}" data-group="{{ $tabItemData['title']['group'] }}"></i>
+                                    <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $comId }}" data-tab="1"
+                                       data-parent="{{ $parentId }}" data-group="{{ $parentGroup }}"></i>
                                 </div>
                             @else
                                 <div class="form-group col-md-1 ">

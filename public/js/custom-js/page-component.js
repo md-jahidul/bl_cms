@@ -824,6 +824,12 @@
                     </select>
                     <input type="hidden" name="componentData[0][title][is_tab]" value="1">
                 </div>
+                <div class="form-group col-md-4 dynamic_or_static" style="display: none;">
+                    <label for="static_component">Static Component</label>
+                    <select name="componentData[0][static_component][value_en]" class="form-control">
+                        <option value="find_store" selected>Find a Store</option>
+                    </select>
+                </div>
             `
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -1103,6 +1109,7 @@
                     removeBtn +
                 `</slot>`;
         }else if(componentType === "tab_component_with_image_card_four") {
+
             let contentType = `
                 <div class="form-group col-md-4">
                     <label for="editor_en">Content Type</label>
@@ -1111,6 +1118,12 @@
                         <option value="dynamic" selected>Dynamic</option>
                     </select>
                     <input type="hidden" name="componentData[${index}][title][is_tab]" value="1">
+                </div>
+                <div class="form-group col-md-4" style="display: none;">
+                    <label for="static_component">Static Component</label>
+                    <select name="componentData[${index}][static_component][value_en]" class="form-control">
+                        <option value="find_store" selected>Find a Store</option>
+                    </select>
                 </div>
             `
             componentData +=
@@ -1272,7 +1285,7 @@
                 `<slot class="tab_item_count" data-tab-id="${index}">
                 ${
                     imageOne(index, true, tabItemIndex) +
-                    multiItemButton() +
+                    multiItemButton(index, true, tabItemIndex) +
                     removeTabItemBtn +
                     itemCountLine('', '')
                 }
@@ -1302,11 +1315,15 @@
 
     $(document).on('change', '.tab_content_type', function (event) {
         let contentType = $(this).val();
-        let dynamicAndStatic = $(event.target).parent().next('div')
+        let dynamicAndStaticFirst = $(event.target).parent().next('div');
+        let dynamicAndStaticSecond = $(event.target).parent().next('div').next('div');
+
         if (contentType === "static"){
-            dynamicAndStatic.hide()
+            dynamicAndStaticFirst.show()
+            dynamicAndStaticSecond.hide()
         }else {
-            dynamicAndStatic.show()
+            dynamicAndStaticFirst.hide()
+            dynamicAndStaticSecond.show()
         }
     })
 })();

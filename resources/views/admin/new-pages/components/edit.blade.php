@@ -421,6 +421,23 @@
                                         </slot>
                                     @endif
 
+                                <!--tab_component_with_image_card_four-->
+                                    @if($component->type == "tab_component_with_image_card_four")
+                                        <slot id="tab_component_with_image_card_four" data-offer-type="tab_component_with_image_card_four">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_four',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
                                     {{--explore_c--}}
                                     @if($component->type == "explore_c")
                                         <slot id="explore_c" data-offer-type="explore_c">
