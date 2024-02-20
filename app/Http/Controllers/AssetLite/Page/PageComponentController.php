@@ -73,11 +73,22 @@ class PageComponentController extends Controller
             $tabComponents = [
                 "tab_component_with_image_card_one",
                 "tab_component_with_image_card_two",
-                "tab_component_with_image_card_three"
+                "tab_component_with_image_card_three",
+                "tab_component_with_image_card_four"
             ];
             $tabItemData = [];
             if (!empty($data->children) && in_array($component->type, $tabComponents)) {
                 foreach ($data->children as $childData) {
+                    if ($component->type == "tab_component_with_image_card_four" && $childData->key == "content_type" || $childData->key == "static_component") {
+                        $componentData[$data->group][$childData->key] = [
+                            'id' => $childData->id,
+                            'value_en' => $childData->value_en,
+                            'value_bn' => $childData->value_bn,
+                            'group' => $childData->group,
+                        ];
+                        continue;
+                    }
+
                     $tabItemData["$childData->group"][$childData->key] = [
                         'id' => $childData->id,
                         'parent_id' => $childData->parent_id,
@@ -93,16 +104,8 @@ class PageComponentController extends Controller
         }
 
         $component->component_data_mod = array_values($componentData);
-//        dd($component);
-//        unset($component->componentData);
-//
-//        if ($component->type == "tab_component_with_image_card_one"){
-//            $component =  $this->pgComponentService->findOne($id, ['componentData' => function($q) {
-//                $q->where('parent_id', 0);
-//                $q->with('children');
-//            }]);
-//
-//        }
+
+//        return $component;
         return view('admin.new-pages.components.edit', compact('component', 'componentTypes', 'pageId'));
     }
 

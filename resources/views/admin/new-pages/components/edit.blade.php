@@ -421,6 +421,23 @@
                                         </slot>
                                     @endif
 
+                                <!--tab_component_with_image_card_four-->
+                                    @if($component->type == "tab_component_with_image_card_four")
+                                        <slot id="tab_component_with_image_card_four" data-offer-type="tab_component_with_image_card_four">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_four',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
                                     {{--explore_c--}}
                                     @if($component->type == "explore_c")
                                         <slot id="explore_c" data-offer-type="explore_c">
@@ -499,6 +516,43 @@
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'digital_world',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--bl_lab--}}
+                                    @if($component->type == "bl_lab")
+                                        <slot id="bl_lab" data-offer-type="bl_lab">
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'bl_lab',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--videos_component--}}
+                                    @if($component->type == "videos_component")
+                                        <slot id="videos_component" data-offer-type="videos_component">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'videos_component',
                                                         'data' => $data,
                                                         'key' => $key
                                                     ])

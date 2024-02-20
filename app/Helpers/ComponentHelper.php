@@ -120,9 +120,10 @@ class ComponentHelper
             'top_image_card_with_button' => 'Top image card with button',
             'step_cards_with_hovering_effect' => 'Step Cards with hovering effect',
             'galley_masonry' => 'Gallery Masonry',
-            'tab_component_with_image_card_one' => 'Tab component with image card One',
+            'tab_component_with_image_card_one' => 'Tab Component With Image Card One',
             'tab_component_with_image_card_two' => 'Tab Component With Image Card Two',
             'tab_component_with_image_card_three' => 'Tab Component With Image Card Three',
+            'tab_component_with_image_card_four' => 'Tab Component With Image Card Four',
             'hero_section' => 'Hero Section',
             'text_component' => 'Text Component',
             'text_with_image' => 'Text with Image',
@@ -139,6 +140,8 @@ class ComponentHelper
             'amar_offer' => 'Offer For You (Static Component)',
             'loyalty_offer' => 'Loyalty Offer (Static Component)',
             'digital_world' => 'Digital World',
+            'bl_lab' => 'Bl Labs',
+            'videos_component' => 'Videos Component'
         ];
     }
 }
