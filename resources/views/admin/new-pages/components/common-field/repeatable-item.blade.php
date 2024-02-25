@@ -187,15 +187,29 @@
         @include('admin.new-pages.components.common-field.multi-item.video')
         @include('admin.new-pages.components.common-field.multi-item.title')
         @include('admin.new-pages.components.common-field.multi-item.description')
+
+    @elseif(isset($component_type) && $component_type == "icon_text_with_image")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.image-two', ['fieldName' => 'image_icon', 'label' => 'Icon Image'])
+        @include('admin.new-pages.components.common-field.multi-item.title')
+        @include('admin.new-pages.components.common-field.multi-item.description')
+
+    @elseif(isset($component_type) && $component_type == "multiple_image")
+        @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
+        @include('admin.new-pages.components.common-field.multi-item.image')
     @else
 
     @endif
-{{--    @if(isset($key) && $key != 0)--}}
-        <div class="form-group col-md-1">
-            <label for="alt_text"></label>
+
+    <!--Remove Item-->
+    <div class="form-group col-md-1">
+        <label for="alt_text"></label>
+        @if(isset($data['title']['group']))
             <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $component->id }}" data-parent="0" data-tab="0"
-               data-group="{{ isset($data['title']['group']) ? $data['title']['group'] : '' }}"
-            ></i>
-        </div>
-{{--    @endif--}}
+               data-group="{{ isset($data['title']['group']) ? $data['title']['group'] : '' }}"></i>
+        @else
+            <i class="la la-trash remove-image btn-sm btn-danger" data-com-id="{{ $component->id }}" data-parent="0" data-tab="0"
+               data-group="{{ isset($data['image']['group']) ? $data['image']['group'] : '' }}"></i>
+        @endif
+    </div>
 </slot>
