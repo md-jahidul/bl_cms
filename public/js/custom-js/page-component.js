@@ -568,17 +568,42 @@
                     redirectLink() +
                 `</slot>`;
         }else if(componentType === "text_component"){
+            let config = `
+                <div class="form-group col-md-2">
+                    <label for="is_accordion">Is Accordion</label>
+                    <select name="config[is_accordion]" class="form-control">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
+                    </select>
+                </div>`
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Details Section') +
                     attributeEditor +
                 `</slot>`;
         }else if(componentType === "text_with_image"){
             let config = `
-                <div class="form-group col-md-9">
-                    <label for="editor_en" class="required">Position</label>
+                <div class="form-group col-md-3">
+                    <label for="editor_en">Position</label>
                     <select name="config[position]" class="form-control">
                         <option value="right" selected>Right</option>
                         <option value="left">Left</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="bg_color">Background Color</label>
+                    <select name="config[bg_color]" class="form-control">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="vertical_txt_align">Vertical Text Align</label>
+                    <select name="config[vertical_txt_align]" class="form-control">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
                     </select>
                 </div>
             `
@@ -587,10 +612,11 @@
                 `<slot class="page_component_multi_item">` +
                     cardLine('Config') +
                     config +
-                    cardLine('Top Section') +
+                    cardLine('Component Details') +
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeImage +
+                    doubleButton +
                 `</slot>`;
         }else if(componentType === "top_image_bottom_text_component"){
             componentData +=

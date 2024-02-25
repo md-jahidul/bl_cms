@@ -223,25 +223,49 @@
                                     {{--text_component--}}
                                     @if($component->type == "text_component")
                                         <slot id="text_component" data-offer-type="text_component">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
+                                            <div class="form-group col-md-2">
+                                                <label for="editor_en" class="required">Is Accordion</label>
+                                                <select name="config[is_accordion]" class="form-control">
+                                                    <option value="yes" {{ isset($component->config['is_accordion']) ?? $component->config['is_accordion'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ isset($component->config['is_accordion']) ?? $component->config['is_accordion'] == "no" ? 'selected' : '' }}>No</option>
+                                                </select>
+                                            </div>
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Details Section"])
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
                                         </slot>
                                     @endif
 
                                     {{--text_with_image--}}
                                     @if($component->type == "text_with_image")
-                                        <slot id="galley_masonry" data-offer-type="text_with_image">
+                                        <slot id="text_with_image" data-offer-type="text_with_image">
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
-                                            <div class="form-group col-md-9">
+                                            <div class="form-group col-md-3">
                                                 <label for="editor_en" class="required">Position</label>
                                                 <select name="config[position]" class="form-control">
                                                     <option value="right" {{ $component->config['position'] == "right" ? 'selected' : '' }}>Right</option>
                                                     <option value="left" {{ $component->config['position'] == "left" ? 'selected' : '' }}>Left</option>
                                                 </select>
                                             </div>
-
+                                            <div class="form-group col-md-3">
+                                                <label for="bg_color">Background Color</label>
+                                                <select name="config[bg_color]" class="form-control">
+                                                    <option value="yes" {{ $component->config['bg_color'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ $component->config['bg_color'] == "no" ? 'selected' : '' }}>No</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="vertical_txt_align">Vertical Text Align</label>
+                                                <select name="config[vertical_txt_align]" class="form-control">
+                                                    <option value="yes" {{ $component->config['bg_color'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ $component->config['bg_color'] == "no" ? 'selected' : '' }}>No</option>
+                                                </select>
+                                            </div>
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.double-button')
                                         </slot>
                                     @endif
 
