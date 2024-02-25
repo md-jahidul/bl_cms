@@ -31,7 +31,7 @@
                                             <option value="">--Select Data Type--</option>
                                             @foreach($componentTypes as $key => $type)
                                                 <option data-alias="{{ $key }}"
-                                                        value="{{ $key }}" {{ ($component->type == $key) ? 'selected' : '' }}>{{ $type['title'] }}</option>
+                                                        value="{{ $key }}" {{ ($component->type == $key) ? 'selected' : '' }}>{{ $type }}</option>
                                             @endforeach
                                         </select>
                                         <input type="hidden" name="component_type" value="{{ $component->type }}">
@@ -39,12 +39,11 @@
                                     </div>
 
                                     <div class="col-md-3">
-{{--                                        <label>Component Sample Picture</label>--}}
                                         <img src="{{ asset("page-component-image/$component->type.png") }}"
                                              class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
 
-                                    {{-- Title Text and Image Component --}}
+                                    {{-- banner_with_button --}}
                                     @if($component->type == "banner_with_button")
                                         <slot id="banner_with_button" data-offer-type="banner_with_button">
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
@@ -57,10 +56,15 @@
                                                 </select>
                                             </div>
 
-                                            @include('admin.new-pages.components.common-field.attribute.title')
-                                            @include('admin.new-pages.components.common-field.attribute.description')
-                                            @include('admin.new-pages.components.common-field.attribute.button')
-                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'banner_with_button',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
                                         </slot>
                                     @endif
 
@@ -105,7 +109,13 @@
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.image', [
+                                                'label' => "Background Image",
+                                                'fieldName' => "bg_img",
+                                                'dataField' => "bg_image"
+                                            ])
                                             @include('admin.new-pages.components.common-field.attribute.double-button')
+                                            @include('admin.new-pages.components.common-field.attribute.bg-color')
                                         </slot>
                                     @endif
 
@@ -114,11 +124,18 @@
                                         <slot id="top_image_card_with_button"
                                               data-offer-type="top_image_card_with_button">
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
-                                            <div class="form-group col-md-9">
+                                            <div class="form-group col-md-6">
                                                 <label for="editor_en">Position</label>
                                                 <select name="config[slider_action]" class="form-control">
                                                     <option value="">--Select Position--</option>
                                                     <option value="navigation" {{ $component->config['slider_action'] == "navigation" ? 'selected' : '' }}>Navigation</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="editor_en">Component Type</label>
+                                                <select name="config[component_type]" class="form-control">
+                                                    <option value="fixed" {{ $component->config['component_type'] == "fixed" ? 'selected' : '' }}>Fixed Card</option>
+                                                    <option value="slider" {{ $component->config['component_type'] == "slider" ? 'selected' : '' }}>Slider Card</option>
                                                 </select>
                                             </div>
 
@@ -420,6 +437,146 @@
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'tab_component_with_image_card_three',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                <!--tab_component_with_image_card_four-->
+                                    @if($component->type == "tab_component_with_image_card_four")
+                                        <slot id="tab_component_with_image_card_four" data-offer-type="tab_component_with_image_card_four">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_four',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--explore_c--}}
+                                    @if($component->type == "explore_c")
+                                        <slot id="explore_c" data-offer-type="explore_c">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
+                                            @include('admin.new-pages.components.common-field.config.bg-image')
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Info'])
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'explore_c',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--explore_services--}}
+                                    @if($component->type == "explore_services")
+                                        <slot id="explore_services" data-offer-type="explore_services">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'explore_services',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--Super App--}}
+                                    @if($component->type == "super_app")
+                                        <slot id="super_app" data-offer-type="super_app">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
+                                            @include('admin.new-pages.components.common-field.config.bg-image')
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Info'])
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.play-store-link')
+                                            @include('admin.new-pages.components.common-field.attribute.app-store-link')
+                                        </slot>
+                                    @endif
+
+                                    {{--Amar_offer--}}
+                                    @if($component->type == "amar_offer")
+                                        <slot id="amar_offer" data-offer-type="amar_offer">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                        </slot>
+                                    @endif
+
+                                    {{--Loyalty Offer--}}
+                                    @if($component->type == "loyalty_offer")
+                                        <slot id="loyalty_offer" data-offer-type="loyalty_offer">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                        </slot>
+                                    @endif
+
+                                    {{--digital_world--}}
+                                    @if($component->type == "digital_world")
+                                        <slot id="digital_world" data-offer-type="digital_world">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'digital_world',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--bl_lab--}}
+                                    @if($component->type == "bl_lab")
+                                        <slot id="bl_lab" data-offer-type="bl_lab">
+                                            @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'bl_lab',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--videos_component--}}
+                                    @if($component->type == "videos_component")
+                                        <slot id="videos_component" data-offer-type="videos_component">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.multi-item.divider')
+                                            @if(!empty($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'videos_component',
                                                         'data' => $data,
                                                         'key' => $key
                                                     ])

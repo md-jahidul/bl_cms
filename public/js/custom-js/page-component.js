@@ -1,4 +1,14 @@
 (function () {
+    let configBgImage = `
+        <div class="form-group col-md-4">
+            <label for="editor_en">Background Image</label>
+            <select name="config[bg_image]" class="form-control required" required>
+                <option value="yes">Yes</option>
+                <option value="no" selected>No</option>
+            </select>
+        </div>
+    `
+
     var cardLine = function (title = "Card Info") {
         return `<div class="col-md-12">
             <span><h5><strong>${title}</strong></h5></span>
@@ -29,24 +39,45 @@
         </div>`
     }
 
-    var attributeImage =
-        `<div class="form-group col-md-12">
-            <label for="alt_text" class="">Image</label>
+    // var attributeImage =
+    //     `<div class="form-group col-md-12">
+    //         <label for="alt_text" class="">Image</label>
+    //         <div class="custom-file">
+    //             <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+    //             <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+    //         </div>
+    //     </div>`
+
+    var attributeImage = function (fieldName = "image_file", label = "Image") {
+        return `
+        <div class="form-group col-md-12">
+            <label for="alt_text" class="">${label}</label>
             <div class="custom-file">
-                <input type="file" name="attribute[image_file]" class="dropify" data-height="80">
+                <input type="file" name="attribute[${fieldName}]" class="dropify" data-height="80">
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
             </div>
         </div>`
+    }
+
+    var attributeColor = function (fieldName = "color", label = "Color") {
+        return `
+        <div class="form-group col-md-4">
+            <label for="alt_text" class="">${label}</label>
+            <div class="custom-file">
+                <input type="color" name="attribute[${fieldName}][en]" value="#FFFFFF">
+            </div>
+        </div>`
+    }
 
     var attributeTitle =
         `<div class="form-group col-md-6">
             <label for="title_en">Title Field (English)</label>
-            <input type="text" name="attribute[title][en]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="attribute[title][en]"  class="form-control" placeholder="Enter company name Bangla">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-6">
             <label for="title_en">Title Field (Bangla)</label>
-            <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name bangla">
+            <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name Bangla">
             <div class="help-block"></div>
         </div>`
 
@@ -59,7 +90,7 @@
 
         <div class="form-group col-md-6">
             <label for="desc_bn">Description (Bangla)</label>
-            <textarea type="text" name="attribute[desc][bn]"  class="form-control" placeholder="Enter offer details in english" ></textarea>
+            <textarea type="text" name="attribute[desc][bn]"  class="form-control" placeholder="Enter offer details in Bangla" ></textarea>
             <div class="help-block"></div>
         </div>`
 
@@ -84,7 +115,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="button_bn">Button Field (Bangla)</label>
-            <input type="text" name="attribute[button_name][bn]"  class="form-control" placeholder="Enter button name bangla">
+            <input type="text" name="attribute[button_name][bn]"  class="form-control" placeholder="Enter button name Bangla">
             <div class="help-block"></div>
         </div>
         <div class="form-group col-md-4">
@@ -92,6 +123,22 @@
             <input type="text" name="attribute[button_link][en]"  class="form-control" placeholder="Enter button name url">
             <div class="help-block"></div>
         </div>`
+
+    var attrPlayStoreLink = function (index = 0) {
+        return `<div class="form-group col-md-6">
+            <label for="button_link" >Play Store Link</label>
+            <input type="text" name="attribute[play_store_link][en]"  class="form-control" placeholder="Enter play store link">
+            <div class="help-block"></div>
+        </div>`
+    }
+
+    var attrAppStoreLink = function (index = 0) {
+        return `<div class="form-group col-md-6">
+            <label for="button_link" >App Store Link</label>
+            <input type="text" name="attribute[app_store_link][en]"  class="form-control" placeholder="Enter app store link">
+            <div class="help-block"></div>
+        </div>`
+    }
 
     var singleImage =
         `<div class="form-group col-md-12">
@@ -120,11 +167,10 @@
         </div>`
     }
 
-
     var imageTwo = function (index = 0, label = 'Hover', fieldName = 'image_hover') {
         return `<div class="col-md-12 col-xs-12">
             <div class="form-group">
-                <label for="message">Image ${label}</label>
+                <label for="message">${label} Image</label>
                 <input type="file" class="dropify" name="componentData[${index}][${fieldName}][value_en]" data-height="80"/>
                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                 <div class="help-block"></div>
@@ -177,6 +223,17 @@
         <div class="form-group col-md-6">
             <label for="title_en">Description Bn</label>
             <textarea type="text" rows="3" name="${fieldNameBn}" class="form-control ${it_editor ? 'summernote_editor' : '' }"></textarea>
+        </div>`
+    }
+
+    var multiItemFreeText = function (index = 0, fieldName, Label) {
+        return `<div class="form-group col-md-6">
+            <label for="title_en">${Label} En</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_en]" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="title_en">${Label} Bn</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_bn]" class="form-control">
         </div>`
     }
 
@@ -273,6 +330,13 @@
         </div>`
     }
 
+    var multiItemVideoUrl = function (index = 0, label = 'Video URL', fieldName = 'video_url') {
+        return `<div class="form-group col-md-12">
+            <label for="title_en">${label}</label>
+            <input type="text" name="componentData[${index}][${fieldName}][value_en]" class="form-control">
+        </div>`
+    }
+
     var multiItemDescriptionTwo  = function (index = 0, label = 'Description', fieldName = 'desc') {
         return `<div class="form-group col-md-6">
             <label for="title_en">${label} En</label>
@@ -364,6 +428,44 @@
             <div class="help-block"></div>
         </div>`
 
+    var multiItemDoubleButton = function (index = 0) {
+        return `<div class="form-group col-md-4">
+            <label for="button_en">Button One Title (English)</label>
+            <input type="text" name="componentData[${index}][button_one_name][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <div class="help-block"></div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="button_bn" >Button One Title (Bangla)</label>
+            <input type="text" name="componentData[${index}][button_one_name][value_bn]"  class="form-control" placeholder="Enter button name bangla">
+            <div class="help-block"></div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="button_link" >Button One URL</label>
+            <input type="text" name="componentData[${index}][button_one_link][value_en]"  class="form-control" placeholder="Enter button name bangla">
+            <div class="help-block"></div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="button_en">Button Two Title (English)</label>
+            <input type="text" name="componentData[${index}][button_two_name][value_en]"  class="form-control" placeholder="Enter button name in English">
+            <div class="help-block"></div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="button_bn" >Button Two Title (Bangla)</label>
+            <input type="text" name="componentData[${index}][button_two_name][value_bn]"  class="form-control" placeholder="Enter button name in Bangla">
+            <div class="help-block"></div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="button_link" >Button Two URL</label>
+            <input type="text" name="componentData[${index}][button_two_link][value_en]"  class="form-control" placeholder="Enter button url">
+            <div class="help-block"></div>
+        </div>`
+    }
+
     var addBtn  =
         `<div class="form-group col-md-12">
             <label for="alt_text"></label>
@@ -377,7 +479,7 @@
         </div>`
 
     var removeBtn =
-        `<div class="form-group col-md-1 ">
+        `<div class="form-group col-md-12 ">
            <label for="alt_text"></label>
            <i class="la la-trash remove-image btn-sm btn-danger"></i>
         </div>`;
@@ -427,8 +529,8 @@
 
 
     $('#component_type').on('change', function () {
-        var componentTypeImg = this.value + ".png"
-        var fullUrl = "{{ asset('page-component-image') }}/" + componentTypeImg;
+        const componentTypeImg = this.value + ".png";
+        const fullUrl = "{{ asset('page-component-image') }}/" + componentTypeImg;
         $("#componentImg").attr('src', fullUrl)
 
         let componentElementId = $('#component_data');
@@ -437,7 +539,7 @@
 
         if (componentType === "banner_with_button"){
             let config = `
-                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                     <label for="editor_en" class="required">Position</label>
                     <select name="config[position]" class="form-control required" required>
                         <option value="right">Right</option>
@@ -446,13 +548,18 @@
                 </div>
             `
             componentData +=
-                cardLine('Config') +
-                config +
-                cardLine('Top Section') +
-                attributeTitle +
-                attributeTitleSubTitle +
-                attributeButton +
-                attributeImage;
+                componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Component Info') +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                    multiItemButton() +
+                `</slot>`;
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -465,7 +572,6 @@
                     multiItemTitle() +
                     multiItemDescription() +
                     redirectLink() +
-
                 `</slot>`;
         }else if(componentType === "card_with_bg_color_component"){
             componentData +=
@@ -481,14 +587,27 @@
                     multiItemButton() +
                 `</slot>`;
         }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeImage + doubleButton;
+            componentData +=
+                attributeTitle +
+                attributeTitleSubTitle +
+                attributeImage() +
+                attributeImage('bg_img', "Background Image") +
+                doubleButton +
+                attributeColor("bg_color", "Background Color");
         }else if(componentType === "top_image_card_with_button"){
             let config = `
-                <div class="form-group col-md-9 {{ $errors->has('component_type') ? ' error' : '' }}">
+                <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
                     <label for="editor_en">Position</label>
                     <select name="config[slider_action]" class="form-control required" required>
                         <option value="">---Select Position---</option>
                         <option value="navigation">Navigation</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en">Component Type</label>
+                    <select name="config[component_type]" class="form-control">
+                        <option value="fixed" selected>Fixed Card</option>
+                        <option value="slider">Slider Card</option>
                     </select>
                 </div>`
 
@@ -496,9 +615,9 @@
                 `<slot class="page_component_multi_item">` +
                     cardLine('Config') +
                     config +
+                    cardLine('Component Info') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    cardLine() +
                     addBtn +
                     itemCountLine(1) +
                     imageOne() +
@@ -560,7 +679,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                     cardLine('Breadcrumbs') +
                     addBtn +
                     itemCountLine(1) +
@@ -607,7 +726,6 @@
                     </select>
                 </div>
             `
-
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     cardLine('Config') +
@@ -615,7 +733,7 @@
                     cardLine('Component Details') +
                     attributeTitle +
                     attributeTitleSubTitle +
-                    attributeImage +
+                    attributeImage() +
                     doubleButton +
                 `</slot>`;
         }else if(componentType === "top_image_bottom_text_component"){
@@ -721,6 +839,141 @@
                         </div>
                     </div>` +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_four"){
+            let contentType = `
+                <div class="form-group col-md-4">
+                    <label for="editor_en">Content Type</label>
+                    <select name="componentData[0][content_type][value_en]" class="form-control tab_content_type">
+                        <option value="static">Static</option>
+                        <option value="dynamic" selected>Dynamic</option>
+                    </select>
+                    <input type="hidden" name="componentData[0][title][is_tab]" value="1">
+                </div>
+                <div class="form-group col-md-4 dynamic_or_static" style="display: none;">
+                    <label for="static_component">Static Component</label>
+                    <select name="componentData[0][static_component][value_en]" class="form-control">
+                        <option value="find_store" selected>Find a Store</option>
+                    </select>
+                </div>
+            `
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1, "Tab") +
+                    multiItemTitle() +
+                    contentType +
+                    `<div class="col-md-11 ml-5 dynamic_or_static">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="0">
+                                ${
+                                    addTabBtn +
+                                    imageOne(0, true, 0) +
+                                    multiItemButton(0, true, 0) +
+                                    itemCountLine('', '')
+                                }
+                            </slot>
+                        </div>
+                    </div>` +
+                `</slot>`;
+        }else if(componentType === "explore_services"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    redirectLink() +
+                `</slot>`;
+        }else if(componentType === "explore_c"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    configBgImage +
+                    cardLine('Component Heading') +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemButton() +
+                `</slot>`;
+        }else if(componentType === "super_app"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    configBgImage +
+                    cardLine('Component Info') +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    attributeImage() +
+                    attrPlayStoreLink() +
+                    attrAppStoreLink() +
+                `</slot>`;
+        }else if(componentType === "amar_offer"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                `</slot>`;
+        }else if(componentType === "loyalty_offer"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                `</slot>`;
+        }else if(componentType === "digital_world"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Component Heading') +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageOne() +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                    multiItemButton() +
+                    multiItemFreeText(0, 'date_txt', 'Date');
+                `</slot>`;
+        }else if(componentType === "bl_lab"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Component Heading') +
+                    attributeImage() +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    doubleButton +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1) +
+                    imageTwo(0, "Icon", "image_icon") +
+                    imageTwo(0, "Card", "image_card") +
+                    multiItemTitle() +
+                    multiItemDescription() +
+                    multiItemDoubleButton() +
+                `</slot>`;
+        }else if(componentType === "videos_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                cardLine('Component Heading') +
+                attributeTitle +
+                attributeTitleSubTitle +
+                cardLine() +
+                addBtn +
+                itemCountLine(1) +
+                multiItemVideoUrl() +
+                multiItemTitle() +
+                multiItemDescription() +
+            `</slot>`;
         }else{
             console.log('No component found!!')
         }
@@ -729,10 +982,6 @@
         componentElementId.append(componentData)
         dropify();
         summernote_editor();
-        // if ( == )
-        // var componentType = this.value + ".png"
-        // var fullUrl = "{{ asset('component-images') }}/" + componentType;
-        // $("#componentImg").attr('src', fullUrl)
     })
 
     $(document).on('click', '#plus-image', function () {
@@ -742,7 +991,15 @@
         var componentData = '';
 
         if (componentType === "banner_with_button"){
-            componentData += attributeTitle + attributeTitleSubTitle + attributeButton + singleImage;
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    multiItemButton(index) +
+                    removeBtn +
+                `</slot>`;
         }else if(componentType === "hovering_card_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -763,8 +1020,6 @@
                     multiItemButton(index) +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "hiring_now_component"){
-            componentData += attributeTitle + attributeTitleSubTitle + singleImage + doubleButton;
         }else if(componentType === "top_image_card_with_button"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -859,7 +1114,7 @@
                     </div>` +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "tab_component_with_image_card_three"){
+        }else if(componentType === "tab_component_with_image_card_three") {
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     itemCountLine(index + 1, "Tab") +
@@ -875,7 +1130,102 @@
                                 }
                             </slot>
                         </div>
+                        </div>` +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_four") {
+
+            let contentType = `
+                <div class="form-group col-md-4">
+                    <label for="editor_en">Content Type</label>
+                    <select name="componentData[${index}][content_type][value_en]" class="form-control tab_content_type">
+                        <option value="static">Static</option>
+                        <option value="dynamic" selected>Dynamic</option>
+                    </select>
+                    <input type="hidden" name="componentData[${index}][title][is_tab]" value="1">
+                </div>
+                <div class="form-group col-md-4" style="display: none;">
+                    <label for="static_component">Static Component</label>
+                    <select name="componentData[${index}][static_component][value_en]" class="form-control">
+                        <option value="find_store" selected>Find a Store</option>
+                    </select>
+                </div>
+            `
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1, "Tab") +
+                    multiItemTitle(index) +
+                    contentType +
+                    `<div class="col-md-11 ml-5 dynamic_or_static">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="${index}">
+                                ${
+                                    addTabBtn +
+                                    imageOne(index, true, 0) +
+                                    multiItemButton(index, true, 0) +
+                                    itemCountLine('', '')
+                                }
+                            </slot>
+                        </div>
                     </div>` +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "explore_services"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    redirectLink(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "explore_c"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemButton(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "explore_c"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemButton(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "digital_world"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    multiItemButton(index) +
+                    multiItemFreeText(index, 'date_txt', 'Date') +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "bl_lab"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageTwo(index, 'Icon', 'image_icon') +
+                    imageTwo(index, 'Card', 'image_card') +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    multiItemDoubleButton(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "videos_component"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    multiItemVideoUrl(index) +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
                     removeBtn +
                 `</slot>`;
         }else{
@@ -893,7 +1243,7 @@
         var tab = $(event.target).attr('data-tab');
         var parentId = $(event.target).attr('data-parent');
         if (id){
-            var confirmPopupParams = {
+            const confirmPopupParams = {
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
                 type: 'warning',
@@ -904,11 +1254,11 @@
                 confirmButtonText: 'Yes, delete it!'
             };
 
-            var deletePopupParams = {
+            const deletePopupParams = {
                 title: 'Deleted!',
                 text: 'Your item has been deleted.',
                 type: 'success'
-            }
+            };
 
             Swal.fire(confirmPopupParams).then((result) => {
                 if (result.value) {
@@ -955,6 +1305,16 @@
                     itemCountLine('', '')
                 }
             </slot>`
+        }else if (componentType === "tab_component_with_image_card_four"){
+            componentData +=
+                `<slot class="tab_item_count" data-tab-id="${index}">
+                ${
+                    imageOne(index, true, tabItemIndex) +
+                    multiItemButton(index, true, tabItemIndex) +
+                    removeTabItemBtn +
+                    itemCountLine('', '')
+                }
+            </slot>`
         }else {
             componentData +=
                 `<slot class="tab_item_count" data-tab-id="${index}">
@@ -972,13 +1332,23 @@
         dropify();
         summernote_editor();
     })
+
     // Tab Item Remove
     $(document).on('click', '.remove-tab-item', function (event) {
         $(event.target).parent().parent().remove();
-        // let itemCounter = $('.item-counter');
-        // itemCounter.each(function (index) {
-        //     let totalItem = index + 1;
-        //     $(this).html('Item ' + totalItem)
-        // })
+    })
+
+    $(document).on('change', '.tab_content_type', function (event) {
+        let contentType = $(this).val();
+        let dynamicAndStaticFirst = $(event.target).parent().next('div');
+        let dynamicAndStaticSecond = $(event.target).parent().next('div').next('div');
+
+        if (contentType === "static"){
+            dynamicAndStaticFirst.show()
+            dynamicAndStaticSecond.hide()
+        }else {
+            dynamicAndStaticFirst.hide()
+            dynamicAndStaticSecond.show()
+        }
     })
 })();

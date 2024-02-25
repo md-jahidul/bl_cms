@@ -113,82 +113,35 @@ class ComponentHelper
     public static function pageComponents(): array
     {
         return [
-            'banner_with_button' => [
-                'title' => 'Banner with Button',
-                'config' => ['image_position' => ['top', 'bottom']]
-            ],
-            'hovering_card_component' => [
-                'title' => 'Hovering Card Component',
-                'config' => ['slider']
-            ],
-            'card_with_bg_color_component' => [
-                'title' => 'Card with BG color Component',
-                'config' => []
-            ],
-            'hiring_now_component' => [
-                'title' => 'Hiring now Component',
-                'config' => ['left_image' => true]
-            ],
-            'top_image_card_with_button' => [
-                'title' => 'Top image card with button',
-                'config' => ['left_image' => true]
-            ],
-            'step_cards_with_hovering_effect' => [
-                'title' => 'Step Cards with hovering effect',
-                'config' => ['left_image' => true]
-            ],
-            'galley_masonry' => [
-                'title' => 'Gallery Masonry',
-                'config' => ['left_image' => true]
-            ],
-            'tab_component_with_image_card_one' => [
-                'title' => 'Tab component with image card One',
-                'config' => ['left_image' => true]
-            ],
-            'tab_component_with_image_card_two' => [
-                'title' => 'Tab Component With Image Card Two',
-                'config' => ['left_image' => true]
-            ],
-            'tab_component_with_image_card_three' => [
-                'title' => 'Tab Component With Image Card Three',
-                'config' => ['left_image' => true]
-            ],
-            'hero_section' => [
-                'title' => 'Hero Section',
-                'config' => ['left_image' => true]
-            ],
-            'text_component' => [
-                'title' => 'Text Component',
-                'config' => ['left_image' => true]
-            ],
-            'text_with_image' => [
-                'title' => 'Text with Image',
-                'config' => ['left_image' => true]
-            ],
-            'top_image_bottom_text_component' => [
-                'title' => 'Top Image Bottom Text Component',
-                'config' => ['left_image' => true]
-            ],
-            'icon_text_component' => [
-                'title' => 'Icon Text Component',
-                'config' => ['left_image' => true]
-            ],
-            'icon_text_with_bg_component' => [
-                'title' => 'Icon Text With BG Component',
-                'config' => ['left_image' => true]
-            ],
-            'video_full_width_component' => [
-                'title' => 'Video Full Width Component',
-                'config' => ['left_image' => true]
-            ],
-            'video_with_text_container_component' => [
-                'title' => 'Video With Text Container Component',
-                'config' => ['left_image' => true]
-            ],
-            'stories_slider' => [
-                'title' => 'Stories Slider',
-                'config' => ['left_image' => true]
-            ]
+            'banner_with_button' => 'Banner with Button',
+            'hovering_card_component' => 'Hovering Card Component',
+            'card_with_bg_color_component' => 'Card with BG color Component',
+            'hiring_now_component' => 'Hiring now Component',
+            'top_image_card_with_button' => 'Top image card with button',
+            'step_cards_with_hovering_effect' => 'Step Cards with hovering effect',
+            'galley_masonry' => 'Gallery Masonry',
+            'tab_component_with_image_card_one' => 'Tab Component With Image Card One',
+            'tab_component_with_image_card_two' => 'Tab Component With Image Card Two',
+            'tab_component_with_image_card_three' => 'Tab Component With Image Card Three',
+            'tab_component_with_image_card_four' => 'Tab Component With Image Card Four',
+            'hero_section' => 'Hero Section',
+            'text_component' => 'Text Component',
+            'text_with_image' => 'Text with Image',
+            'top_image_bottom_text_component' => 'Top Image Bottom Text Component',
+            'icon_text_component' => 'Icon Text Component',
+            'icon_text_with_bg_component' => 'Icon Text With BG Component',
+            'video_full_width_component' => 'Video Full Width Component',
+            'video_with_text_container_component' => 'Video With Text Container Component',
+            'stories_slider' => 'Stories Slider',
+            'explore_services' => 'Explore Services',
+            'explore_c' => 'Explore C',
+            'super_app' => 'Super App',
+            'dashboard' => 'Dashboard (Static Component)',
+            'amar_offer' => 'Offer For You (Static Component)',
+            'loyalty_offer' => 'Loyalty Offer (Static Component)',
+            'digital_world' => 'Digital World',
+            'bl_lab' => 'Bl Labs',
+            'videos_component' => 'Videos Component'
         ];
     }
 }
