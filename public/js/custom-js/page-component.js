@@ -974,6 +974,30 @@
                 multiItemTitle() +
                 multiItemDescription() +
             `</slot>`;
+        }else if(componentType === "icon_text_with_image"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                cardLine('Component Heading') +
+                attributeTitle +
+                attributeTitleSubTitle +
+                attributeImage() +
+                cardLine('Multi Items') +
+                addBtn +
+                itemCountLine(1) +
+                imageTwo(0, 'Icon', 'image_icon') +
+                multiItemTitle() +
+                multiItemDescription() +
+                `</slot>`;
+        }else if(componentType === "multiple_image"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                cardLine('Component Heading') +
+                attributeTitle +
+                cardLine('Multi Items') +
+                addBtn +
+                itemCountLine(1) +
+                imageOne() +
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }
@@ -1226,6 +1250,22 @@
                     multiItemVideoUrl(index) +
                     multiItemTitle(index) +
                     multiItemDescription(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "icon_text_with_image"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageTwo(index, 'Icon', 'image_icon') +
+                    multiItemTitle(index) +
+                    multiItemDescription(index) +
+                    removeBtn +
+                `</slot>`;
+        }else if(componentType === "multiple_image"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    itemCountLine(index + 1) +
+                    imageOne(index) +
                     removeBtn +
                 `</slot>`;
         }else{

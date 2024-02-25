@@ -141,7 +141,9 @@ class ComponentHelper
             'loyalty_offer' => 'Loyalty Offer (Static Component)',
             'digital_world' => 'Digital World',
             'bl_lab' => 'Bl Labs',
-            'videos_component' => 'Videos Component'
+            'videos_component' => 'Videos Component',
+            'icon_text_with_image' => 'Icon Text With Image',
+            'multiple_image' => 'Multiple Image'
         ];
     }
 }
