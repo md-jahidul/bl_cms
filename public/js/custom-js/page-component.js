@@ -967,6 +967,7 @@
                 cardLine('Component Heading') +
                 attributeTitle +
                 attributeTitleSubTitle +
+                attributeButton +
                 cardLine() +
                 addBtn +
                 itemCountLine(1) +

@@ -572,6 +572,7 @@
                                         <slot id="videos_component" data-offer-type="videos_component">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @include('admin.new-pages.components.common-field.multi-item.divider')
                                             @if(!empty($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
