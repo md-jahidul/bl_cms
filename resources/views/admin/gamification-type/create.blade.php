@@ -81,10 +81,6 @@
                                             <label for="content_for">Conponent For: </label>
                                             <select name="content_for" class="browser-default custom-select" required>
                                                     <option value="home"> Home </option>
-                                                    <option value="commerce"> Commerce </option>
-                                                    <option value="content"> Content </option>
-                                                    <option value="lms"> LMS </option>
-                                                    <option value="non_bl"> Non Bl </option>
                                             </select>
                                             @if ($errors->has('content_for'))
                                                 <div class="help-block">  {{ $errors->first('content_for') }}</div>
