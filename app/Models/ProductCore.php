@@ -68,7 +68,6 @@ class ProductCore extends Model
         'redirection_deeplink',
         'service_tags',
         'tnc_type',
-        'redirection_deeplink',
         'lms_tier_slab'
     ];
 
