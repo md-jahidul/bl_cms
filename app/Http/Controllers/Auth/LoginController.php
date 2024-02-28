@@ -66,7 +66,7 @@ class LoginController extends Controller
             return redirect('/login')->with('error', 'Your account is locked. contact system Administrator');
         }
 
-        if (env('DXP_NEW_LOGIN', true)){
+        if (config("misc.migrator.dxp_new_login")){
             $this->storeAccessTokenForNewCMS($request);
         }
 
