@@ -66,7 +66,10 @@ class ProductCore extends Model
         'redirection_name_en',
         'redirection_name_bn',
         'redirection_deeplink',
-        'lms_tier_slab',
+        'service_tags',
+        'tnc_type',
+        'redirection_deeplink',
+        'lms_tier_slab'
     ];
 
     protected $guarded = ['id'];

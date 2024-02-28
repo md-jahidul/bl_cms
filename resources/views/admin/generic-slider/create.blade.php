@@ -84,7 +84,7 @@
                                     <select name="component_for" class="form-control custom-select"
                                             id="component_for" required data-validation-required-message="Please select component type">
                                         <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.component_for') as $key => $type)
+                                        @foreach ($componentType as $key => $type)
                                             <option value="{{$key}}" >{{$type}}</option>
                                         @endforeach
                                     </select>
@@ -95,7 +95,7 @@
                                     @endif
                                 </div>
 
-                                <div id="scrollable_div" class="form-group col-md-3">
+                                <div id="scrollable_div" class="form-group col-md-2">
                                     <label for="scrollable" class="required">Scrollable</label>
                                     <select name="scrollable" class="form-control custom-select"
                                             id="scrollable" required data-validation-required-message="Please select component is scrollable or not">
@@ -108,7 +108,7 @@
                                         </p>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-3 mb-2">
+                                <div class="form-group col-md-2 mb-2">
                                     <label class="required" for="is_title_show">Is Title Show: </label>
                                     <div class="form-group {{ $errors->has('is_title_show') ? ' error' : '' }}">
                                         <input required type="radio" name="is_title_show" value="1" id=""/>
@@ -118,6 +118,19 @@
 
                                         @if ($errors->has('is_title_show'))
                                             <div class="help-block">  {{ $errors->first('is_title_show') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2 mb-2">
+                                    <label for="is_card">Is Card View: </label>
+                                    <div class="form-group {{ $errors->has('is_card') ? ' error' : '' }}">
+                                        <input required type="radio" name="is_card" value="1" id=""/>
+                                        <label for="is_card" class="mr-3">True</label>
+                                        <input required type="radio" name="is_card" value="0" id="" checked/>
+                                        <label for="is_card" class="mr-3">False</label>
+
+                                        @if ($errors->has('is_card'))
+                                            <div class="help-block">  {{ $errors->first('is_card') }}</div>
                                         @endif
                                     </div>
                                 </div>
@@ -139,6 +152,33 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('ios_version_code'))
                                         <div class="help-block">  {{ $errors->first('ios_version_code') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('redirection_button_en') ? ' error' : '' }}">
+                                    <label for="title" class="">Redirection Button En</label>
+                                    <input type="text" name="redirection_button_en"  class="form-control" placeholder="Enter Button Name En">
+                                    <div class="help-block"></div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_button_en'))
+                                        <div class="help-block">  {{ $errors->first('redirection_button_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('redirection_button_bn') ? ' error' : '' }}">
+                                    <label for="title" class="">Redirection Button Bn</label>
+                                    <input type="text" name="redirection_button_bn"  class="form-control" placeholder="Enter Button Name Bn">
+                                    <div class="help-block"></div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_button_bn'))
+                                        <div class="help-block">  {{ $errors->first('redirection_button_bn') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('redirection_button_deeplink') ? ' error' : '' }}">
+                                    <label for="title" class="">Redirection Button Deeplink</label>
+                                    <input type="text" name="redirection_button_deeplink"  class="form-control" placeholder="Enter  Deeplink">
+                                    <div class="help-block"></div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('redirection_button_deeplink'))
+                                        <div class="help-block">  {{ $errors->first('redirection_button_deeplink') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6">

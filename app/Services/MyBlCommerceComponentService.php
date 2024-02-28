@@ -112,6 +112,7 @@ class MyBlCommerceComponentService
 
         $data['component_key'] = str_replace(' ', '_', strtolower($data['title_en']));;
         $data['display_order'] = $commerceComponentCount + $homeSecondarySliderCount + 1;
+        $data['child_ids'] = isset($data['child_ids']) ? json_encode($data['child_ids']) : null;
 
         $this->save($data);
         Helper::removeVersionControlRedisKey('commerce');
@@ -126,6 +127,7 @@ class MyBlCommerceComponentService
         $ios_version_code = implode('-', [$component['ios_version_code_min'], $component['ios_version_code_max']]);
         $component->android_version_code = $android_version_code;
         $component->ios_version_code = $ios_version_code;
+        $component->child_ids = $component->child_ids ? json_decode($component->child_ids, true) : [];
 
         return $component;
     }
@@ -140,6 +142,7 @@ class MyBlCommerceComponentService
         $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
         $data = array_merge($data, $version_code);
         unset($data['android_version_code'], $data['ios_version_code']);
+        $data['child_ids'] = isset($data['child_ids']) ? json_encode($data['child_ids']) : null;
 
         $component->update($data);
         Helper::removeVersionControlRedisKey('commerce');
