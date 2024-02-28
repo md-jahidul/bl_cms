@@ -524,7 +524,7 @@
             </li>
 
             @if( auth()->user()->can_view('MyblProductEntry') )
-                @if(env('DXP_NEW_LOGIN', true) && config("misc.migrator.product_list") == "V2")
+                @if(config("misc.migrator.dxp_new_login") && config("misc.migrator.product_list") == "V2")
                     <li class="">
                         <a class="menu-item redirectNewCms" target="/connect/products">
                             <i class="ft-list"></i>Products </a>
@@ -799,7 +799,7 @@
             </li>
 
             @if( auth()->user()->can_view('Otp') )
-                @if(env('DXP_NEW_LOGIN', true) && config("misc.migrator.config") == "V2")
+                @if(config("misc.migrator.dxp_new_login") && config("misc.migrator.config") == "V2")
                     <li class="">
                         <a class="menu-item redirectNewCms" target="/connect/config/otp">
                             <i class="ft-list"></i>Config </a>
