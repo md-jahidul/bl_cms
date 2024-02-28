@@ -66,7 +66,9 @@ class LoginController extends Controller
             return redirect('/login')->with('error', 'Your account is locked. contact system Administrator');
         }
 
-        $this->storeAccessTokenForNewCMS($request);
+        if (env('DXP_NEW_LOGIN', true)){
+            $this->storeAccessTokenForNewCMS($request);
+        }
 
         if ($this->attemptLogin($request)) {
             if (Auth::user()->status == "locked") {
@@ -144,6 +146,6 @@ class LoginController extends Controller
             ];
         }
 
-        Log::error('New CMS Login Error:' . $result);
+        Log::error('New CMS Login Error:' . json_encode($result));
     }
 }
