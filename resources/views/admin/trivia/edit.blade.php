@@ -61,7 +61,6 @@
                                 <option value="home" @if ($trivia->content_for == 'home') selected @endif> Home </option>
                                 <option value="commerce" @if ($trivia->content_for == 'commerce') selected @endif> Commerce </option>
                                 <option value="content" @if ($trivia->content_for == 'content') selected @endif> Content </option>
-                                <option value="lms" @if ($trivia->content_for == 'lms') selected @endif> LMS </option>
                                 <option value="non_bl" @if ($trivia->content_for == 'non_bl') selected @endif> Non Bl </option>
                         </select>
                         @if ($errors->has('content_for'))

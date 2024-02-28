@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
             ->timezone('Asia/Dhaka');
         $schedule->command('mybl:global-setting-scheduler')->withoutOverlapping()->everyTenMinutes();
         $schedule->command('mybl:available-product-cache-by-package-scheduler')->withoutOverlapping(60)->hourly();
-
+        $schedule->command('mybl:audio-book-cache-scheduler')->withoutOverlapping(60)->cron('0 */2 * * *');
     }
 
     /**
