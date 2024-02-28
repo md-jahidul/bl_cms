@@ -587,7 +587,18 @@
                     multiItemButton() +
                 `</slot>`;
         }else if(componentType === "hiring_now_component"){
+            let config = `
+                <div class="form-group col-md-3">
+                    <label for="is_ookla">Is Ookla</label>
+                    <select name="config[is_ookla]" class="form-control">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>No</option>
+                    </select>
+                </div>`
             componentData +=
+                cardLine('Config') +
+                config +
+                cardLine('Component Items') +
                 attributeTitle +
                 attributeTitleSubTitle +
                 attributeImage() +
@@ -932,6 +943,8 @@
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    attributeButton +
                     cardLine('Component Heading') +
                     attributeTitle +
                     attributeTitleSubTitle +

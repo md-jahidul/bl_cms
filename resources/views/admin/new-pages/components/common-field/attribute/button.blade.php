@@ -1,6 +1,6 @@
 <div class="form-group col-md-4 {{ $errors->has('button_en') ? ' error' : '' }}">
     <label for="button_en">Button Title (English)</label>
-    <input type="text" name="attribute[button_name][en]"  class="form-control" placeholder="Enter company name bangla"
+    <input type="text" name="attribute[button_name][en]"  class="form-control" placeholder="Enter company name English"
            value="{{ $component->attribute['button_name']['en'] ?? '' }}">
     <div class="help-block"></div>
 </div>

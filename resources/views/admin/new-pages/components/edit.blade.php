@@ -106,6 +106,15 @@
                                     {{--hiring_now_component--}}
                                     @if($component->type == "hiring_now_component")
                                         <slot id="hiring_now_component" data-offer-type="hiring_now_component">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
+                                            <div class="form-group col-md-3">
+                                                <label for="is_ookla">Is Ookla</label>
+                                                <select name="config[is_ookla]" class="form-control">
+                                                    <option value="yes" {{ $component->config['is_ookla'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ $component->config['is_ookla'] == "no" ? 'selected' : '' }}>No</option>
+                                                </select>
+                                            </div>
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Component Items"])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
                                             @include('admin.new-pages.components.common-field.attribute.image')
@@ -533,6 +542,9 @@
                                     {{--digital_world--}}
                                     @if($component->type == "digital_world")
                                         <slot id="digital_world" data-offer-type="digital_world">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Heading'])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.multi-item.divider')
@@ -551,9 +563,11 @@
                                     {{--bl_lab--}}
                                     @if($component->type == "bl_lab")
                                         <slot id="bl_lab" data-offer-type="bl_lab">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Heading'])
                                             @include('admin.new-pages.components.common-field.attribute.image')
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.double-button')
                                             @include('admin.new-pages.components.common-field.multi-item.divider')
                                             @if(!empty($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
