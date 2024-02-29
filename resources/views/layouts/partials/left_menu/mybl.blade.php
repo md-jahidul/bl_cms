@@ -205,6 +205,34 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('MyblProductEntry') )
+        <li class="{{ is_active_url('vas-products') }} nav-item"><a href="{{ url('vas-products') }}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">VAS</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(url('vas-products')) }}">
+                    <a class="menu-item" href="{{ url('vas-products') }}">
+                        <i class="ft-list"></i>Products</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('RoamingTransactions') )
+        <li class="{{ is_active_url('roaming/transactions') }} nav-item"><a href="{{ route('roaming.transactions') }}"><i
+                    class="la la-list"></i>
+                <span class="menu-title">Roaming</span></a>
+
+            <ul class="menu-content">
+                <li class="{{ is_active_match(route('roaming.transactions')) }}">
+                    <a class="menu-item" href="{{ route('roaming.transactions') }}">
+                        <i class="ft-list"></i>Transaction</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('AppLaunch') )
         <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Popup Management</span></a>
@@ -248,6 +276,13 @@
         <a class="menu-item" href="{{ route('digital-service.index') }}"
            data-i18n="nav.templates.vert.classic_menu">
             <i class="la la-server"></i>Digital Services
+        </a>
+    </li>
+
+    <li class="{{ is_active_url('my-bl-services') }}">
+        <a class="menu-item" href="{{ route('my-bl-services.index') }}"
+           data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-server"></i> Services
         </a>
     </li>
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
@@ -605,6 +640,11 @@
                     <a class="menu-item" href="{{ url('generic-carousel') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>Generic Carousel</a>
+                </li>
+                <li class="{{ is_active_match('generic-rail')}}">
+                    <a class="menu-item" href="{{ url('generic-rail') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i>Generic Rail</a>
                 </li>
                 <li class="{{ is_active_url('mybl-slider/base-msisdn-list'). is_active_url('mybl-slider/base-msisdn-create')}}">
                     <a class="menu-item" href="{{ route('myblslider.baseMsisdnList.index') }}"

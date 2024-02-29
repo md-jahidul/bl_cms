@@ -496,8 +496,8 @@
                                         <label for="tnc_type">C for T&C</label>
                                         <select name="tnc_type" class="form-control">
                                             <option value="">Select a option</option>
-                                            @foreach(config('constants.tnc_types') as $key => $type)
-                                            <option value="{{$key}}">{{$type}}</option>
+                                            @foreach($tnc_keywords as $key => $type)
+                                            <option value="{{$type}}">{{strtoupper($type)}}</option>
                                             @endforeach
                                         </select>
                                     </div>
