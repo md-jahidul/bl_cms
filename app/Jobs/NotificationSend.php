@@ -67,7 +67,7 @@ class NotificationSend implements ShouldQueue
             //TODO:: Add missing msisdns to db
             Log::channel('notificationinfolog')->info('notification-send-missing-msisdns: Schedule Ends - ' . $scheduleEnds . " Process Time" . $currentTime . "-- Count:" . count($this->user_phone) , $this->user_phone);
         } else {
-            $response = PushNotificationService::sendNotification($this->notification);
+            $response = PushNotificationService::sendNotification($this->notification, $this->notification_id);
 
             try {
                 $formatted_response = json_decode($response);

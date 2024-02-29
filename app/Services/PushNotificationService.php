@@ -29,9 +29,11 @@ class PushNotificationService
     }
 
 
-    public static function sendNotification($data)
+    public static function sendNotification($data, $notifcationDraftId = null)
     {
-        $res = static::post('/api/v1/push/notification', $data);
+        $url = $notifcationDraftId ? '/api/v1/push/notification' : '/api/v1/push/notification/' . $notifcationDraftId;
+
+        $res = static::post($url, $data);
 
         return $res;
     }
