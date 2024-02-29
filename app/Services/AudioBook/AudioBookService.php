@@ -21,7 +21,7 @@ class AudioBookService
             Log::info($response);
                 
             if(!$response) {
-                throw new \Exception('Something went wrongd');
+                throw new \Exception('Something went wrong');
             }
 
             if ($response['status_code'] == "200") {
@@ -29,11 +29,11 @@ class AudioBookService
                 $responseData = json_decode($body);
                 Redis::setex(self::REDIS_KEY, self::REDIS_TTL, json_encode($responseData));
             } else {
-                Log::info('service unavailable');
-                throw new \Exception('Something went wrongd');
+                Log::info('Audio Book: service unavailable');
+                throw new \Exception('Something went wrong');
             }
         } catch (\Exception $ex) {
-            Log::error($ex->getMessage());
+            Log::error('Audio Book:'. $ex->getMessage());
         }
     }
 
