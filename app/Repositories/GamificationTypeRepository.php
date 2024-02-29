@@ -24,5 +24,4 @@ class GamificationTypeRepository extends BaseRepository
         }
         return true;
     }
-
 }

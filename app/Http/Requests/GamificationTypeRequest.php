@@ -35,14 +35,10 @@ class GamificationTypeRequest extends FormRequest
                 'trivia_gamification_ids' => 'required',
             ];
         }
-        
-        
     }
 
     public function messages()
     {
-        return [
-            // 'subscription_offer_id.unique' => 'This Subscription Offer ID already exists ',
-        ];
+        return [];
     }
 }
