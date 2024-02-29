@@ -108,13 +108,13 @@ class MyblAppMenuService
         $menu = $this->findOne($id);
         if (request()->hasFile('icon')) {
             $data['icon'] = 'storage/' . $data['icon']->store('menu_icon');
-            if (!empty($menu->icon)) {
+            if (!empty($menu->icon) && file_exists($menu->icon)) {
                 unlink($menu->icon);
             }
         }
         if (request()->hasFile('parent_icon')) {
             $data['parent_icon'] = 'storage/' . $data['parent_icon']->store('menu_icon');
-            if (!empty($menu->parent_icon)) {
+            if (!empty($menu->parent_icon) && file_exists($menu->parent_icon)) {
                 unlink($menu->parent_icon);
             }
         }

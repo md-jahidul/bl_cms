@@ -593,6 +593,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
+                                    <label>LMS Tier Slab</label>
+                                    <input class="form-control" name="lms_tier_slab" id="lms_tier_slab"
+                                           value="{{ $details->details->lms_tier_slab }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('lms_tier_slab'))
+                                        <div class="help-block">{{ $errors->first('lms_tier_slab') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label>Service Product Image</label>
                                     <input type="file" id="input-file-now" name="service_image_url" class="dropify" data-default-file="{{ $details->details->service_image_url ? url('storage/' .$details->details->service_image_url) : ''}}"/>
                                     @if($errors->has('service_image_url'))
