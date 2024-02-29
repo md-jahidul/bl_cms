@@ -62,6 +62,7 @@
                                 <option value="content"> Content </option>
                                 <option value="lms"> Lms </option>
                                 <option value="non_bl"> Non Bl </option>
+                                <option value="ALL"> ALL </option>
                         </select>
                         @if ($errors->has('content_for'))
                             <div class="help-block">  {{ $errors->first('content_for') }}</div>
