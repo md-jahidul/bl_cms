@@ -28,6 +28,8 @@ class LoginController extends Controller
     */
     use AuthenticatesUsers;
 
+    protected const DXP_TOKEN_PREFIX = "dxp_user_token:";
+
     /**
      * Where to redirect users after login.
      *
@@ -107,7 +109,7 @@ class LoginController extends Controller
         $response = $this->cUrlRequest($request->all(), $urlEndPoint);
         $user = User::where('email', $request->email)->first();
         if ($response && $user) {
-            $redisKey = "user_token_" . $user->id . ":";
+            $redisKey = self::DXP_TOKEN_PREFIX . $user->id;
             Redis::set($redisKey, $response['access_token']);
         }
     }
@@ -123,7 +125,7 @@ class LoginController extends Controller
             "password" => $request['password']
         ];
 
-        $baseUrl = env("NEW_CMS_API", "http://172.16.191.50:8443");
+        $baseUrl =  config("misc.migrator.dxp.api_base_url");
 
         $url = $baseUrl . $urlEndPoint;
 

@@ -17,31 +17,19 @@ use Mail;
 
 class NewCMSAuthController extends Controller
 {
-    /**
-     * @var AgentService
-     */
-//    protected $agentService;
-
-//    /**
-//     * AgentListController constructor.
-//     * @param AgentService $agentService
-//     */
-//    public function __construct(AgentService $agentService)
-//    {
-//        $this->agentService = $agentService;
-//        $this->middleware('auth');
-//    }
-
+    protected const DXP_TOKEN_PREFIX = "dxp_user_token:";
 
     public function verifyToken()
     {
-        $token = Redis::get("user_token_" . auth()->id() . ":");
+        $token = Redis::get(self::DXP_TOKEN_PREFIX . auth()->id());
 
         $verifyTokenUrl = "/api/v1/access-token";
         $refreshTokenUrl = "/api/v1/refresh";
-        $newCmsUrl = env("NEW_CMS_URL", "http://172.16.191.50:8445");
-        $newCmsApi = env("NEW_CMS_API", "http://172.16.191.50:8443");
-        $url = $newCmsApi . $verifyTokenUrl;
+
+        $dxpUrl = config("misc.migrator.dxp.fe_base_url");;
+        $dxpApi = config("misc.migrator.dxp.api_base_url");;
+
+        $url = $dxpApi . $verifyTokenUrl;
         $response = $this->cUrlRequest($url, $token);
 
         if ($response['status_code'] == 200){
@@ -52,23 +40,12 @@ class NewCMSAuthController extends Controller
                 "data" => [
                     'status_code' => $response['status_code'],
                     'access_token' => $response['data']['access_token'],
-                    'redirect_url' => $newCmsUrl
+                    'redirect_url' => $dxpUrl
                 ]
             ];
         }
         return $response;
     }
-
-//    public function storeAccessTokenForNewCMS($request)
-//    {
-//        $urlEndPoint = "/api/v1/login";
-//        $response = $this->cUrlRequest($request->all(), $urlEndPoint);
-//        $user = User::where('email', $request->email)->first();
-//        if ($response && $user) {
-//            $redisKey = "user_token_" . $user->id . ":";
-//            Redis::set($redisKey, $response['access_token']);
-//        }
-//    }
 
     public function cUrlRequest($url, $token)
     {
