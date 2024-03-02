@@ -118,6 +118,12 @@
                            data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-sliders"></i>Generic Carousel</a>
                     </li>
+
+                    <li class="{{ is_active_match('generic-rail')}}">
+                        <a class="menu-item" href="{{ url('generic-rail') }}"
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i>Generic Rail</a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -192,6 +198,22 @@
                     </ul>
                 </li>
             @endif
+        </ul>
+
+        <!--I Screen-->
+        <ul class="menu-content">
+            <li class="{{ is_active_match(route('generic-components.index')) }} nav-item"><a href="{{route('generic-components.index')}}"><i
+                        class="la la-list"></i>
+                    <span class="menu-title">Iscreen</span></a>
+
+                <ul class="menu-content">
+
+                    <li class="{{ is_active_match(route('generic-components.index')) }}">
+                        <a class="menu-item" href="{{ route('generic-components.index') }}">
+                            <i class="ft-list"></i>Generic Component</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
 
         <!-- FIFA WC -->
@@ -284,6 +306,16 @@
                 <a class="menu-item" href="{{ route('support-message') }}">
                     <i class="la la-code-fork"></i>Support Messages</a>
             </li>
+        </ul>
+
+        <!--Shortcuts-->
+        <ul class="menu-content">
+            @if( auth()->user()->can_view('ShortCut') )
+                <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i
+                            class="la la-fighter-jet"></i>
+                        <span class="menu-title" data-i18n="nav.dash.main">Shortcuts</span></a>
+                </li>
+            @endif
         </ul>
 
         <!--App Version-->
@@ -438,10 +470,10 @@
                     </a>
                 </li>
             @endif
-            <li class="">
-                <a class="menu-item text-danger" href="">
-                    <i class="la la-puzzle-piece"></i>T&C</a>
-            </li>
+            {{--            <li class="">--}}
+            {{--                <a class="menu-item text-danger" href="">--}}
+            {{--                    <i class="la la-puzzle-piece"></i>T&C</a>--}}
+            {{--            </li>--}}
             <li class="{{ is_active_url('mybl/learn-priyojon') }}">
                 <a class="menu-item" href="{{ route('learn-priyojon.show') }}"
                    data-i18n="nav.templates.vert.classic_menu">
@@ -772,6 +804,37 @@
                 </ul>
             </li>
 
+            <!--VAS-->
+            @if( auth()->user()->can_view('MyblProductEntry') )
+                <li class="{{ is_active_url('vas-products') }} nav-item"><a href="{{ url('vas-products') }}"><i
+                            class="la la-list"></i>
+                        <span class="menu-title">VAS</span></a>
+
+                    <ul class="menu-content">
+                        <li class="{{ is_active_match(url('vas-products')) }}">
+                            <a class="menu-item" href="{{ url('vas-products') }}">
+                                <i class="ft-list"></i>Products</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+
+            <!--Roaming-->
+            @if( auth()->user()->can_view('RoamingTransactions') )
+                <li class="{{ is_active_url('roaming/transactions') }} nav-item"><a href="{{ route('roaming.transactions') }}"><i
+                            class="la la-list"></i>
+                        <span class="menu-title">Roaming</span></a>
+
+                    <ul class="menu-content">
+                        <li class="{{ is_active_match(route('roaming.transactions')) }}">
+                            <a class="menu-item" href="{{ route('roaming.transactions') }}">
+                                <i class="ft-list"></i>Transaction</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+
+            <!--Config-->
             @if( auth()->user()->can_view('Otp') )
                 @if(config("misc.migrator.dxp_new_login") && config("misc.migrator.config") == "V2")
                     <li class="">
@@ -900,13 +963,6 @@
                     {{--                            <i class="la la-list"></i>Music Transaction--}}
                     {{--                        </a>--}}
                     {{--                    </li>--}}
-
-                    {{--                    <li class="{{is_active_url('mybl/onmobile/transaction-status-report-view')}}">--}}
-                    {{--                        <a class="menu-item" href="{{ route('mybl.transaction-status',['type' => 'onmobile']) }} "--}}
-                    {{--                           data-i18n="nav.templates.vert.classic_menu">--}}
-                    {{--                            <i class="la la-list"></i>Onmobile Transaction--}}
-                    {{--                        </a>--}}
-                    {{--                    </li>--}}
                 </ul>
             </li>
         </ul>
@@ -947,6 +1003,12 @@
                 <a class="menu-item" href="{{ route('gamification.index') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-gamepad"></i>Gamification
+                </a>
+            </li>
+            <li class="{{ is_active_url('gamification-type') . is_active_url('gamification-type')}}">
+                <a class="menu-item" href="{{ route('gamification-type.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-gamepad"></i>Gamification Types
                 </a>
             </li>
         </ul>
@@ -1001,6 +1063,7 @@
     <!--Other-->
     <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
             <span class="menu-title" data-i18n="nav.templates.main">Others</span></a>
+
         <ul class="menu-content">
             <li class=" {{ is_active_url('mybl-menu') }}">
                 <a class="menu-item" href="{{ url('mybl-menu') }}"
@@ -1021,6 +1084,34 @@
                     <i class="la la-medium"></i>Media Upload</a>
             </li>
         </ul>
+        <ul class="menu-content">
+            <li class="{{is_active_url('mybl/onmobile/transaction-status-report-view')}}">
+                <a class="menu-item" href="{{ route('mybl.transaction-status',['type' => 'onmobile']) }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i>Onmobile Transaction
+                </a>
+            </li>
+        </ul>
+        <!--Services-->
+        <ul class="menu-content">
+            <li class="{{ is_active_url('my-bl-services') }}">
+                <a class="menu-item" href="{{ route('my-bl-services.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i> Services
+                </a>
+            </li>
+        </ul>
+
+        <!--Store Location Entry-->
+        @if( auth()->user()->can_view('StoreLocatorEntry'))
+            <li class="{{ is_active_url('digital-service') }}">
+                <a class="menu-item" href="{{ url('store-locations/entry') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-server"></i>Store Location Entry
+                </a>
+            </li>
+        @endif
+
         <ul class="menu-content">
             <li class="{{ is_active_url('manage-category') }}">
                 <a class="menu-item" href="{{ route('manage-category.index') }}">
@@ -1226,6 +1317,26 @@
                 </li>
             @endif
         </ul>
+        <ul class="menu-content">
+            @if( auth()->user()->can_view('Feed') || auth()->user()->can_view('FeedCategory') )
+                <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Feed</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url('feeds/categories') }}{{ is_active_url('feeds/categories/create') }}">
+                            <a class="menu-item" href="{{ route('feeds.categories.index') }}"
+                               data-i18n="nav.templates.vert.classic_menu">
+                                <i class="la la-server"></i>Category List
+                            </a>
+                        </li>
+                        <li class="{{ is_active_url('feeds') }}{{ is_active_url('feeds/create') }}">
+                            <a class="menu-item" href="{{ route('feeds.index') }}"
+                               data-i18n="nav.templates.vert.classic_menu">
+                                <i class="la la-feed"></i>Feed List</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+        </ul>
     </li>
 
 
@@ -1245,25 +1356,7 @@
 
 
 
-    {{--    @if( auth()->user()->can_view('Feed') || auth()->user()->can_view('FeedCategory') )--}}
-    {{--        <li class=" nav-item"><a href="#"><i class="la la-feed"></i>--}}
-    {{--                <span class="menu-title" data-i18n="nav.templates.main">Feed</span></a>--}}
-    {{--            <ul class="menu-content">--}}
-    {{--                --}}{{--page--}}
-    {{--                <li class="{{ is_active_url('feeds/categories') }}{{ is_active_url('feeds/categories/create') }}">--}}
-    {{--                    <a class="menu-item" href="{{ route('feeds.categories.index') }}"--}}
-    {{--                       data-i18n="nav.templates.vert.classic_menu">--}}
-    {{--                        <i class="la la-server"></i>Category List--}}
-    {{--                    </a>--}}
-    {{--                </li>--}}
-    {{--                <li class="{{ is_active_url('feeds') }}{{ is_active_url('feeds/create') }}">--}}
-    {{--                    <a class="menu-item" href="{{ route('feeds.index') }}"--}}
-    {{--                       data-i18n="nav.templates.vert.classic_menu">--}}
-    {{--                        <i class="la la-feed"></i>Feed List</a>--}}
-    {{--                </li>--}}
-    {{--            </ul>--}}
-    {{--        </li>--}}
-    {{--    @endif--}}
+
 
 
 
