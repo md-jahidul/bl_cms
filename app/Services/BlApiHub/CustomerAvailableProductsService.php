@@ -74,14 +74,14 @@ class CustomerAvailableProductsService extends BaseService
 
                 Redis::setex(self::CACHE_KEY_PREFIX . $packageId, 60 * 60 * 24, json_encode($available_products));
             } else {
-                $this->cacheKeyListForDelete[] = self::CACHE_KEY_PREFIX . $packageId;
+                // $this->cacheKeyListForDelete[] = self::CACHE_KEY_PREFIX . $packageId;
 
                 Log::channel('available-product-cache-log')->info(
                     "Available Product cache update Failure ({$packageId}): " . json_encode($response)
                 );
             }
         } catch (\Exception $e) {
-            $this->cacheKeyListForDelete[] = self::CACHE_KEY_PREFIX . $packageId;
+            // $this->cacheKeyListForDelete[] = self::CACHE_KEY_PREFIX . $packageId;
 
             Log::channel('available-product-cache-log')->info(
                 'Available Product cache By package update Error ('.$packageId.'):' . $e->getMessage()
