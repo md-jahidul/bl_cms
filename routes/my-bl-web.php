@@ -1026,8 +1026,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
      * Gamification Type
      */
 
-     Route::resource('gamification-type', 'CMS\GamificationTypeController');
-     Route::match(['GET', 'POST'],'gamification-type/order/update-position', 'CMS\GamificationTypeController@updatePosition');
+    Route::resource('gamification-type', 'CMS\GamificationTypeController');
+    Route::match(['GET', 'POST'],'gamification-type/order/update-position', 'CMS\GamificationTypeController@updatePosition');
 
 
     // PGW Routes
@@ -1310,7 +1310,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 // 4G Map View Route
 Route::view('/4g-map', '4g-map.view');
 
+/**
+ * New CMS Token Generate
+ */
+Route::get('new-cms/verify-token', "Auth\NewCMSAuthController@verifyToken");
+
 Route::get( 'winner-test', function() {
     $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
     return $myBlCampaignWinnerSelectionService->processCampaignWinner();
-  });
+});
