@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/users/change-password', 'AssetLite\UserController@changePasswordForm');
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
+Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 //Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     # Al Banner =========================================================
@@ -1549,10 +1550,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('/page-components/{pageId}/edit/{id}', 'AssetLite\Page\PageComponentController@edit')->name('page-components-edit');
     Route::get('/page-components/{pageId}/update', 'AssetLite\Page\PageComponentController@update')->name('page-components-update');
     Route::get('/page-components/{pageId}/destroy/{id}', 'AssetLite\Page\PageComponentController@destroy')->name('page-components-destroy');
-    Route::get('/page-components-save-sorted', 'AssetLite\Page\PageComponentController@componentOrderingSave');
+    Route::get('/page-components-save-sorted/{pageId}', 'AssetLite\Page\PageComponentController@componentOrderingSave');
 
     // Page Repeatable Item Delete
-    Route::get('/page-components-data-destroy', 'AssetLite\Page\PageComponentController@componentDataItemDelete')->name('components-data-destroy');
+    Route::get('/page-components-data-destroy/{pageId}', 'AssetLite\Page\PageComponentController@componentDataItemDelete')->name('components-data-destroy');
 
     // Site Map Generator
     Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');

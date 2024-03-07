@@ -15,10 +15,10 @@ class CreateNewPageComponentDataTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('component_id')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->string('key')->nullable();
+            $table->string('key')->nullable()->index();
             $table->text('value_en')->nullable();
             $table->text('value_bn')->nullable();
-            $table->double('group')->default(0);
+            $table->double('group')->default(0)->index();
             $table->timestamps();
             $table->foreign('component_id')
                 ->references('id')

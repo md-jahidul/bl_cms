@@ -699,7 +699,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
     <script>
-        var componentDataDestroyUrl = "{{ url('page-components-data-destroy') }}";
+        var componentDataDestroyUrl = "{{ url('page-components-data-destroy') . "/" . $pageId }}";
         $(function () {
             $('#component_type').on('change', function () {
                 var componentType = this.value + ".png"

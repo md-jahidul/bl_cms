@@ -9,6 +9,7 @@ use App\Repositories\Page\PgComponentRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class PgComponentService
 {
@@ -17,6 +18,7 @@ class PgComponentService
     private $pageRepository;
     private $componentRepository;
     private $componentDataRepository;
+    protected const REDIS_PAGE_KEY = "new_page_components:";
 
     /**
      * PageService constructor.
@@ -36,7 +38,6 @@ class PgComponentService
 
     public function storeUpdatePageComponent($data, $id = null)
     {
-//        dd($data);
         DB::transaction(function () use ($data, $id) {
             $components = $this->componentRepository->findAll();
 
@@ -146,18 +147,6 @@ class PgComponentService
                             $this->componentDataRepository->createOrUpdate($tabItemData);
                         }
 
-//                        if ($key == "is_static_component" || $key == "component_name") {
-//                            $componentDataInfo = [
-//                                'component_id' => $componentId,
-//                                'parent_id' => $tabParentId,
-//                                'key' => $key,
-//                                'value_en' => is_object($valueEn) ? $this->fileUpload($valueEn) : $valueEn,
-//                                'value_bn' => $field['value_bn'] ?? null,
-//                                'group' => $field['group'] ?? 0,
-//                            ];
-//                            $componentDataSave = $this->componentDataRepository->save($componentDataInfo);
-//                        }
-//                        dd($item);
                         if ($key == "tab_items") {
                             foreach ($field as $tabIndex => $tabItems) {
                                 foreach ($tabItems as $tabItemKey => $tabItem) {
@@ -177,6 +166,13 @@ class PgComponentService
                         }
                     }
                 }
+            }
+
+            $page = $this->pageRepository->findOne($data['pageId']);
+
+            if ($page) {
+                $redisKey = self::REDIS_PAGE_KEY . $page->url_slug;
+                Redis::del($redisKey);
             }
         });
     }
@@ -199,11 +195,16 @@ class PgComponentService
                 $pageComponent->order = $comPosition;
                 $pageComponent->update();
             }
+
+            // Delete Redis key By url slug
+            $this->redisKeyDel(request()->pageId);
         }
+
     }
 
     public function deleteDataItem($data)
     {
+
         if ($data['data-parent'] > 0) {
             $componentData = $this->componentDataRepository->findBy(['parent_id' => $data['data-parent'], 'group' => $data['data-group']]);
         } else {
@@ -221,6 +222,9 @@ class PgComponentService
             }
             $item->delete();
         }
+
+        // Delete Redis key By url slug
+        $this->redisKeyDel(request()->pageId);
     }
 
     public function destroy($id)
@@ -236,5 +240,21 @@ class PgComponentService
             }
         }
         $pageComponent->delete();
+
+        // Delete Redis key By url slug
+        $this->redisKeyDel($pageComponent->page_id);
+    }
+
+    /**
+     * @param $pageId
+     * @return void
+     */
+    public function redisKeyDel($pageId)
+    {
+        $page = $this->pageRepository->findOne($pageId);
+        if ($page) {
+            $redisKey = self::REDIS_PAGE_KEY . $page->url_slug;
+            Redis::del($redisKey);
+        }
     }
 }

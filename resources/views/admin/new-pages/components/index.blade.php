@@ -12,27 +12,14 @@
 @endsection
 @section('content')
     @php
-
         $action = [
             'edit' => "page-components/$pageId/edit",
             'destroy' => "page-components/$pageId/destroy",
-            'componentSort' => 'page-components-save-sorted',
+            'componentSort' => 'page-components-save-sorted/' . $pageId,
             'section_id' => $pageId
         ];
-
     @endphp
     @include('admin.components.index', $action)
-
-{{--    @php--}}
-{{--    --}}
-{{--        $action = [--}}
-{{--            'section_type' => $pageType,--}}
-{{--            'section_id' => $page->id--}}
-{{--        ];--}}
-
-{{--    @endphp--}}
-{{--    @include('admin.al-banner.section', $action)--}}
-
 @stop
 
 @push('page-css')
@@ -51,9 +38,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-
-        {{--var auto_save_url = "{{ url('page-components/save-sorted') }}";--}}
-
         $(function () {
 
             //show dropify for  photo

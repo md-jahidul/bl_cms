@@ -5,12 +5,14 @@ namespace App\Services\Page;
 use App\Repositories\Page\PageRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Illuminate\Support\Facades\Redis;
 
 class PageService
 {
     use CrudTrait;
     use FileTrait;
     private $pageRepository;
+    protected const REDIS_PAGE_KEY = "new_page_components:";
 
     /**
      * PageService constructor.
@@ -38,6 +40,8 @@ class PageService
             return response('Page Save Successfully!!');
         }else{
             $page->update($data);
+            $redisKey = self::REDIS_PAGE_KEY . $page->url_slug;
+            Redis::del($redisKey);
             return Response('Page Update Successfully!!');
         }
     }
@@ -51,5 +55,7 @@ class PageService
     {
         $page = $this->findOne($id);
         $page->delete();
+        $redisKey = self::REDIS_PAGE_KEY . $page->url_slug;
+        Redis::del($redisKey);
     }
 }
