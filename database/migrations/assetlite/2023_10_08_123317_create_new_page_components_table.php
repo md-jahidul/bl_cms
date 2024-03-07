@@ -15,11 +15,11 @@ class CreateNewPageComponentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('page_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('type')->nullable();
+            $table->string('type')->nullable()->index();
             $table->mediumText('attribute')->nullable();
             $table->text('config')->nullable();
             $table->integer('order')->default(1);
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(0)->index();
             $table->timestamps();
             $table->foreign('page_id')
                 ->references('id')
