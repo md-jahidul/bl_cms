@@ -54,14 +54,34 @@ class GamificationTypeController extends Controller
     public function edit($gamificationTypeId)
     {
         $gamificationType = $this->gamificationTypeService->findOne($gamificationTypeId);
-        $gamifications = $this->triviaGamificationService->findBy(['status' => 1]);
+        $gamificationsList = $this->triviaGamificationService->findBy(['status' => 1]);
+
+        $preferredOrder = $gamificationType->trivia_gamification_ids;
+
+        # Sort the collection based on the preferred order of IDs
+        $gamifications = $gamificationsList->sortBy(function ($item) use ($preferredOrder) {
+            return array_search($item['id'], $preferredOrder);
+        });
+
+        # Remove the items with preferred order IDs from the collection
+        $gamifications = $gamifications->reject(function ($item) use ($preferredOrder) {
+            return in_array($item['id'], $preferredOrder);
+        });
+
+        # Item pushed based on preferred order ID's position to the sorted collection
+        foreach ($preferredOrder as $key =>  $id) {
+            $item = $gamificationsList->firstWhere('id', $id);
+            if ($item) {
+                $gamifications->splice($key, 0, [$item]);
+            }
+        }
 
         return view('admin.gamification-type.edit', compact('gamificationType','gamifications'));
     }
 
 
     public function update(GamificationTypeRequest $request, $gamificationTypeId)
-    {
+    {        
         if($this->gamificationTypeService->updateGamificationType($request->all(), $gamificationTypeId)) {
             session()->flash('message', 'Gamification Type Updated Successfully');
         } else {

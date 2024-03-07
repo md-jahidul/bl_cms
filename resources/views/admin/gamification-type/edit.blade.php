@@ -152,5 +152,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // with this element...
+            $('select').select2({
+                tags: false,
+            });
+            // apply tag order fix
+            $('select').on("select2:select", function (evt) {
+                console.log(evt.params.data);
+                var element = evt.params.data.element;
+                var $element = $(element);
+                $element.detach();
+                $(this).append($element);
+                $(this).trigger("change");
+            });
+            
+        });
+    </script>
 
 @endpush
