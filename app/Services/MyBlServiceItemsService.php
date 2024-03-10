@@ -88,6 +88,16 @@ class MyBlServiceItemsService
     {
         try {
             $serviceItems = $this->findOne($id);
+
+            $version_code = Helper::versionCode(
+                $data['android_version_code'],
+                $data['ios_version_code']
+            );
+
+            $data = array_merge($data, $version_code);
+
+            unset($data['android_version_code'], $data['ios_version_code']);
+
             DB::transaction(function () use ($data, $id, $serviceItems) {
                 if (isset($data['tag'])) {
                     $data['tags'] = implode(', ', $data['tag']);
