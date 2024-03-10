@@ -11,7 +11,7 @@ class TriviaGamificationRepository extends BaseRepository
     {
         return $this->model->updateOrCreate(['id' => $data['id']], $data);
     }
-    
+
     public function otherGamification($gamification)
     {
         return $this->model->where('type', $gamification->type)

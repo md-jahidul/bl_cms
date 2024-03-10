@@ -19,7 +19,7 @@ class AudioBookService
         try {
             $response = $this->get(self::AUDIO_BOOK_CONTENT_URL, [] );
             Log::info($response);
-                
+
             if(!$response) {
                 throw new \Exception('Something went wrongd');
             }

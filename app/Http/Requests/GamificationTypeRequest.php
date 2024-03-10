@@ -35,8 +35,8 @@ class GamificationTypeRequest extends FormRequest
                 'trivia_gamification_ids' => 'required',
             ];
         }
-        
-        
+
+
     }
 
     public function messages()

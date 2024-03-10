@@ -81,7 +81,7 @@ class GamificationTypeController extends Controller
 
 
     public function update(GamificationTypeRequest $request, $gamificationTypeId)
-    {        
+    {
         if($this->gamificationTypeService->updateGamificationType($request->all(), $gamificationTypeId)) {
             session()->flash('message', 'Gamification Type Updated Successfully');
         } else {

@@ -54,5 +54,8 @@ return [
         "details_internet",
         "details_sms",
         "details_minute",
+    ],
+    'ad_inventory_size' => [
+        '340x50' => '340 x 50',
     ]
 ];
