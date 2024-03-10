@@ -44,14 +44,18 @@
                                 <td>{{ $items->is_highlight==1?'Yes':'No' }}</td>
                                 <td>{{ $items->status ==1?'Active':'Inactive'}}</td>
                                 <td class="action">
+                                    <a
+                                        href="{{ route('my-bl-services.items.edit', $items->id) }}"
+                                        role="button"
+                                        class="btn btn-outline-info border-0"
+                                    >
+                                        <i class="la la-pencil" aria-hidden="true"></i>
+                                    </a>
                                     <form action="{{route('my-bl-services.items.destroy',$items->id)}}"
                                           id="del_form_{{$items->id}}"
                                           method="post">
                                         @csrf
                                         @method('delete')
-                                        <a href="{{route('my-bl-services.items.edit', $items->id )}}"
-                                           role="button" class="btn btn-outline-info border-0"><i class="la la-pencil"
-                                                                                                  aria-hidden="true"></i></a>
                                         <a href="#" data-id="{{ $items->id }}"
                                            role="button" class="btn btn-outline-danger border-0 del"><i
                                                 class="la la-remove"
