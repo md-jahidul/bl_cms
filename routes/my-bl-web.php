@@ -1136,7 +1136,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     )->name('generic-slider.images.destroy');
     Route::match(['GET', 'POST'], 'generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
 
+    /*
+     * Veon Ad Tech
+     */
 
+    Route::get('veon-adtech', 'CMS\VeonAdTechController@index');
+    Route::get('veon-adtech/create', 'CMS\VeonAdTechController@create')->name('veon-adtech.create');
+    Route::get('veon-adtech/{id}/edit', 'CMS\VeonAdTechController@edit')->name('veon-adtech.edit');
+    Route::put('veon-adtech/{id}/update', 'CMS\VeonAdTechController@update')->name('veon-adtech.update');
+    Route::delete('veon-adtech/{id}/delete', 'CMS\VeonAdTechController@destroy')->name('veon-adtech.destroy');
     /*
      *  Transaction status report
      */

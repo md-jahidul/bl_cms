@@ -22,7 +22,8 @@ class GenericSlider extends Model
         'redirection_button_en',
         'redirection_button_bn',
         'redirection_button_deeplink',
-        'is_card'
+        'is_card',
+        'ad_unit_id'
     ];
 
     public function images(): \Illuminate\Database\Eloquent\Relations\BelongsTo
