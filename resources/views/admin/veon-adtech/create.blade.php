@@ -14,7 +14,7 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('generic-slider.store') }}"
+                              action="{{ route('veon-adtech.store') }}"
                               method="POST"
                               class="form"
                               enctype="multipart/form-data">

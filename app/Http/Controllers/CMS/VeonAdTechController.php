@@ -30,12 +30,7 @@ class VeonAdTechController extends Controller
 
     public function create()
     {
-
-        $config = config('generic-slider.component_for');
-        $genericComponent = $this->genericComponentService->findAll();
-        $genericComponent = $genericComponent->pluck('title_en', 'component_key')->toArray();
-        $componentType = array_merge($config, $genericComponent);
-
+        $componentType = config('generic-slider.all_c_component');
         return view('admin.veon-adtech.create', compact('componentType'));
     }
 
@@ -75,10 +70,7 @@ class VeonAdTechController extends Controller
         $slider->android_version_code = $android_version_code;
         $slider->ios_version_code = $ios_version_code;
 
-        $config = config('generic-slider.component_for');
-        $genericComponent = $this->genericComponentService->findAll();
-        $genericComponent = $genericComponent->pluck('title_en', 'component_key')->toArray();
-        $componentType = array_merge($config, $genericComponent);
+        $componentType = config('generic-slider.all_c_component');
 
         return view('admin.veon-adtech.edit', compact('slider', 'componentType'));
     }
