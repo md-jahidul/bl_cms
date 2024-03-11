@@ -49,7 +49,8 @@ return [
             'redirection_name_bn'   => 42,
             'redirection_deeplink' => 43,
             'tnc_type'             => 44,
-            'service_tags' => 45
+            'service_tags' => 45,
+            'lms_tier_slab' => 46
         ],
         'download-columns' => [
             'sim_type'              => 0,
@@ -98,7 +99,8 @@ return [
             'redirection_name_bn'   => 42,
             'redirection_deeplink' => 43,
             'tnc_type'             => 44,
-            'service_tags' => 45
+            'service_tags' => 45,
+            'lms_tier_slab' => 46
         ],
         'product_schedule_statuses' => [
             0 => 'None',

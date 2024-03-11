@@ -456,7 +456,7 @@ class PushNotificationController extends Controller
 
             return redirect(route('notification.index'));*/
 
-            $response = PushNotificationService::sendNotification($notification);
+            $response = PushNotificationService::sendNotification($notification, $notification_id);
 
             Log::info($response);
             $notify = json_decode($response);

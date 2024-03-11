@@ -395,6 +395,7 @@
                                         <label for="is_popular_pack">Is Popular Pack</label>
                                     </fieldset>
                                 </div>
+                                <slot id="lms_tier_slab_info"></slot>
                                 <div class="form-group col-md-4 mb-2" id="cta_action">
                                     <label for="base_msisdn_groups_id">Base Msisdn</label>
                                     <select id="base_msisdn_groups_id" name="base_msisdn_group_id"
@@ -511,6 +512,14 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>LMS Tier Slab</label>
+                                    <input class="form-control" name="lms_tier_slab" id="lms_tier_slab" value="">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('lms_tier_slab'))
+                                        <div class="help-block">{{ $errors->first('lms_tier_slab') }}</div>
+                                    @endif
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Service Product Image</label>
@@ -843,6 +852,7 @@
                                 </div>`
 
             offer_types.empty()
+
             console.log(type)
             if (
                 type === 'data' ||
@@ -867,7 +877,6 @@
             } else if (type === 'ma loan') {
                 offer_types.empty()
             }
-
             $('.data-section').select2({
                 placeholder: 'Please Select Product Category',
                 maximumSelectionLength: 5,

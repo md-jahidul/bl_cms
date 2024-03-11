@@ -31,15 +31,6 @@ class TriviaGamificationService
      */
     public function saveTriviaInfo($data)
     {
-        // $triviaInfo = $this->findOne($data['id']);
-        // if (isset($data['banner'])) {
-        //     $data['banner'] = 'storage/' . $data['banner']->store('trivia');
-        //     if (isset($triviaInfo) && file_exists($triviaInfo->banner)) {
-        //         unlink($triviaInfo->banner);
-        //     }
-        // }
-        // return $this->triviaGamificationRepository->saveTriviaInfo($data);
-
         if (isset($data['banner'])) {
             $data['banner'] = 'storage/' . $data['banner']->store('trivia');
         }
@@ -47,7 +38,19 @@ class TriviaGamificationService
             $data['icon'] = 'storage/' . $data['icon']->store('trivia');
         }
 
-        return $this->triviaGamificationRepository->save($data);
+        $gamification = $this->triviaGamificationRepository->save($data);
+        
+
+        if ($gamification && $gamification->content_for != 'ALL' && $gamification->status == true) {
+            /**
+             * Get Other Gamification with same type and content_for excluding the recently saved on
+             */
+
+            $otherGamifications = $this->triviaGamificationRepository->otherGamification($gamification);
+            $this->triviaGamificationRepository->updateOtherGamificationContentFor($otherGamifications);
+        }
+        
+        return true;
     }
 
     /**
@@ -69,7 +72,17 @@ class TriviaGamificationService
             }
         }
 
-        return $this->triviaGamificationRepository->update($triviaInfo, $data);
+        $updatedGamification = $this->triviaGamificationRepository->update($triviaInfo, $data);
+
+        if ($updatedGamification && $updatedGamification->content_for != 'ALL' && $updatedGamification->status == true) {
+            /**
+             * Get Other Gamification with same type and content_for excluding the recently saved on
+             */
+
+            $otherGamifications = $this->triviaGamificationRepository->otherGamification($updatedGamification);
+            $this->triviaGamificationRepository->updateOtherGamificationContentFor($otherGamifications);
+        }
+        return true;
     }
 
     /**

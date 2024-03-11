@@ -1022,6 +1022,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
 
+    /**
+     * Gamification Type
+     */
+
+     Route::resource('gamification-type', 'CMS\GamificationTypeController');
+     Route::match(['GET', 'POST'],'gamification-type/order/update-position', 'CMS\GamificationTypeController@updatePosition');
 
 
     // PGW Routes
