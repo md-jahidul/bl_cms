@@ -1,14 +1,14 @@
 @php($key ?? 0)
 
-    @if(isset($key) && $key == 0)
-        <div class="form-group col-md-12">
-            <label for="alt_text"></label>
-            <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
-        </div>
-    @endif
+{{--    @if(isset($key) && $key == 0)--}}
+{{--  --}}
+{{--    @endif--}}
+<div class="form-group col-md-12">
+    <label for="alt_text"></label>
+    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+</div>
+
 <slot class="page_component_multi_item">
-
-
     @if(isset($component_type) && $component_type == "hovering_card_component")
         @include('admin.new-pages.components.common-field.multi-item.divider')
         @include('admin.new-pages.components.common-field.multi-item.image')
@@ -123,8 +123,6 @@
                                 @include('admin.new-pages.components.common-field.multi-item.button', ['is_tab' => true, 'tabIndex' => $tabIndex])
                                 @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
                             @endif
-
-{{--                            @if($tabIndex != 0)--}}
                                 @if(isset($tabItemData['title']['parent_id']) || isset($tabItemData['button_name']['parent_id']))
                                     @php($comId = $tabItemData['title']['id'] ?? $tabItemData['button_name']['id'])
                                     @php($parentId = $tabItemData['title']['parent_id'] ?? $tabItemData['button_name']['parent_id'])
@@ -142,8 +140,6 @@
                                            data-parent="{{ $tabItemData['feedback']['parent_id'] }}" data-group="{{ $tabItemData['feedback']['group'] }}"></i>
                                     </div>
                                 @endif
-
-{{--                            @endif--}}
                             @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => '', 'index' => ""])
                         </slot>
                     @endforeach

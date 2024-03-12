@@ -536,6 +536,7 @@
                                         <slot id="loyalty_offer" data-offer-type="loyalty_offer">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                         </slot>
                                     @endif
 

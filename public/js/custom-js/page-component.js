@@ -939,14 +939,15 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                 `</slot>`;
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
                     cardLine('Component Heading') +
-                    attributeButton +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                     cardLine() +
                     addBtn +
                     itemCountLine(1) +
