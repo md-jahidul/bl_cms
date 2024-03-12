@@ -1145,7 +1145,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('veon-adtech/store', 'CMS\VeonAdTechController@store')->name('veon-adtech.store');
     Route::get('veon-adtech/{id}/edit', 'CMS\VeonAdTechController@edit')->name('veon-adtech.edit');
     Route::put('veon-adtech/{id}/update', 'CMS\VeonAdTechController@update')->name('veon-adtech.update');
-    Route::delete('veon-adtech/{id}/delete', 'CMS\VeonAdTechController@destroy')->name('veon-adtech.destroy');
+    Route::get('veon-adtech/destroy/{id}', 'CMS\VeonAdTechController@destroy');
     /*
      *  Transaction status report
      */
