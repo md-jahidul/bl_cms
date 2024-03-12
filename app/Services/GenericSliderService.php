@@ -171,8 +171,9 @@ class GenericSliderService
             $genericComponent = $this->genericComponentService->findAll();
             $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
             if (in_array($data['component_for'], $genericComponentKeys)) {
-                $genericItem = $slider['component_type'] == 'ad_inventory' ? $this->genericComponentItemService->findBy(['other_component_name' => 'ad_inventory', 'other_component_id' =>$slider->id])[0]:
-                    $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0];
+                $params = $this->queryParam($slider);
+                $params['other_component_name'] = 'generic_slider';
+                $genericItem = $this->genericComponentItemService->findBy($params)[0];
                 $homeComponentData['display_order'] = $genericItem['display_order'];
 
                 $genericItem->update($homeComponentData);
@@ -181,22 +182,19 @@ class GenericSliderService
 
             else if (!in_array($data['component_for'], config('generic-slider.top_most_visited_page'))) {
                 if ($slider['component_for'] == 'home') {
-                    $homeComponent = $slider['component_type'] == 'ad_inventory' ? $this->myblHomeComponentService->findBy(['other_component_id' => $slider->id])[0] :
-                        $this->myblHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
+                    $homeComponent = $this->myblHomeComponentService->findBy($this->queryParam($slider))[0];
                     $homeComponent->update($homeComponentData);
                     Helper::removeVersionControlRedisKey('home');
                 } elseif ($slider['component_for'] == 'content') {
-                    $contentComponent =  $slider['component_type'] == 'ad_inventory' ? $this->contentComponentRepository->findBy(['other_component_id' => $slider->id])[0] :
-                        $this->contentComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
+                    $contentComponent = $this->contentComponentRepository->findBy($this->queryParam($slider))[0];
                     $contentComponent->update($homeComponentData);
                     Helper::removeVersionControlRedisKey('content');
                 } elseif ($slider['component_for'] == 'commerce') {
-                    $commerceComponent =  $slider['component_type'] == 'ad_inventory' ? $this->commerceComponentRepository->findBy(['other_component_id' => $slider->id])[0] :
-                        $this->commerceComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
+                    $commerceComponent = $this->commerceComponentRepository->findBy($this->queryParam($slider))[0];
                     $commerceComponent->update($homeComponentData);
                     Helper::removeVersionControlRedisKey('commerce');
                 } elseif ($slider['component_for'] == 'lms') {
-                    $lmsComponent =  $slider['component_type'] == 'ad_inventory' ? $this->lmsHomeComponentService->findBy(['other_component_id' => $slider->id])[0] : $this->lmsHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
+                    $lmsComponent = $this->lmsHomeComponentService->findBy($this->queryParam($slider))[0];
                     $lmsComponent->update($homeComponentData);
 
                     $keys = [
@@ -209,11 +207,11 @@ class GenericSliderService
                 } elseif ($slider['component_for'] == 'toffee' || $slider['component_for'] == 'toffee_section') {
                     Redis::del('toffee_banner');
                 } elseif ($slider['component_for'] == 'non_bl') {
-                    $nonBlComponent =  $slider['component_type'] == 'ad_inventory' ? $this->nonBlComponentRepository->findBy(['other_component_id' => $slider->id])[0] : $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
+                    $nonBlComponent = $this->nonBlComponentRepository->findBy($this->queryParam($slider))[0];
                     $nonBlComponent->update($homeComponentData);
                     Helper::removeVersionControlRedisKey('nonbl');
                 } elseif ($slider['component_for'] == 'non_bl_offer') {
-                    $nonBlComponent =  $slider['component_type'] == 'ad_inventory' ? $this->nonBlOfferService->findBy(['other_component_id' => $slider->id])[0] : $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])[0];
+                    $nonBlComponent = $this->nonBlOfferService->findBy($this->queryParam($slider))[0];
                     $nonBlComponent->update($homeComponentData);
                     Redis::del('non_bl_offer');
                 }
@@ -234,13 +232,6 @@ class GenericSliderService
             } else {
                 unset($data['icon']);
             }
-
-//            /**
-//             * Version Control
-//             */
-//            $version_code = Helper::versionCode($data['android_version_code'], $data['ios_version_code']);
-//            $data = array_merge($data, $version_code);
-//            unset($data['android_version_code'], $data['ios_version_code']);
 
             $slider->update($data);
             Redis::del(['top_visit_slider', 'generic_component_data']);
@@ -314,41 +305,44 @@ class GenericSliderService
     {
         try {
             $slider = $this->findOne($id);
+
             $componentFor = $slider['component_for'];
 
             $genericComponent = $this->genericComponentService->findAll();
             $genericComponentKeys = $genericComponent->pluck('component_key')->toArray();
 
             if (in_array($slider['component_for'], $genericComponentKeys)) {
-                $id = $this->genericComponentItemService->findBy(['other_component_name' => 'generic_slider', 'other_component_id' =>$slider->id])[0]['id'];
+                $params = $this->queryParam($slider);
+                $params['other_component_name'] = 'generic_slider';
+                $id = $this->genericComponentItemService->findBy($params)[0]['id'];
                 $this->genericComponentItemService->deleteComponent($id);
             }
 
             else if (!in_array($componentFor, config('generic-slider.top_most_visited_page'))) {
                 if ($componentFor == 'home') {
-                    $homeComponent = $this->myblHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                    $homeComponent = $this->myblHomeComponentService->findBy($this->queryParam($slider))->first();
                     $this->myblHomeComponentService->deleteComponent($homeComponent->id);
                 }
                 else if ($componentFor == 'content') {
-                    $contentComponent = $this->contentComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                    $contentComponent = $this->contentComponentRepository->findBy($this->queryParam($slider))->first();
                     $this->contentComponentService->deleteComponent($contentComponent->id);
                 }
                 else if ($componentFor == 'commerce') {
-                    $commerceComponent = $this->commerceComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                    $commerceComponent = $this->commerceComponentRepository->findBy($this->queryParam($slider))->first();
                     $this->commerceComponentService->deleteComponent($commerceComponent->id);
                 }
                 else if ($componentFor == 'lms') {
-                    $lmsComponent = $this->lmsHomeComponentService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                    $lmsComponent = $this->lmsHomeComponentService->findBy($this->queryParam($slider))->first();
                     $this->lmsHomeComponentService->deleteComponent($lmsComponent->id);
                     $keys = ['lms_component_prepaid', 'lms_component_postpaid', 'lms_old_user_postpaid', 'lms_old_user_prepaid'];
                     Redis::del($keys);
                 }
                 else if ($componentFor == 'non_bl') {
-                    $nonBlComponent = $this->nonBlComponentRepository->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                    $nonBlComponent = $this->nonBlComponentRepository->findBy($this->queryParam($slider))->first();
                     $this->nonBLComponentService->deleteComponent($nonBlComponent->id);
                 }
                 else if ($componentFor == 'non_bl_offer') {
-                    $nonBlOffer = $this->nonBlOfferService->findBy(['component_key' => 'generic_slider_' . $slider->id])->first();
+                    $nonBlOffer = $this->nonBlOfferService->findBy($this->queryParam($slider))->first();
                     $this->nonBlOfferService->deleteComponent($nonBlOffer->id);
                 }
                 elseif ($componentFor == 'toffee' || $componentFor == 'toffee_section') {
@@ -399,5 +393,14 @@ class GenericSliderService
         }
 
         return $homeComponentData;
+    }
+
+    public function queryParam($slider)
+    {
+        if ($slider['component_type'] == 'ad_inventory') {
+            return ['other_component_id' =>$slider->id];
+        }
+
+        return ['component_key' => 'generic_slider_' . $slider->id];
     }
 }

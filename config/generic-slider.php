@@ -56,7 +56,7 @@ return [
         "details_minute",
     ],
     'ad_inventory_size' => [
-        '340x50' => '340 x 50',
+        '320x50' => '320 x 50',
     ],
     'all_c_component' => [
         'commerce' => 'Commerce',
