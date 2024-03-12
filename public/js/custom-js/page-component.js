@@ -1388,7 +1388,6 @@
 
     // Tab Item Remove
     $(document).on('click', '.remove-tab-item', function (event) {
-        alert('Hii')
         $(event.target).parent().parent().remove();
     })
 
