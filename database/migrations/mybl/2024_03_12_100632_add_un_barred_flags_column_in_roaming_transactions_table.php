@@ -26,7 +26,7 @@ class AddUnBarredFlagsColumnInRoamingTransactionsTable extends Migration
     public function down()
     {
         Schema::table('roaming_transactions', function (Blueprint $table) {
-            //
+            $table->dropColumn('un_barred_flags');
         });
     }
 }
