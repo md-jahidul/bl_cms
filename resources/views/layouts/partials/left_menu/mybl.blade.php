@@ -135,6 +135,11 @@
                             <i class="la la-bullhorn"></i> Content Filter
                         </a>
                     </li>
+                    <li class="{{ is_active_match('veon-adtech')}}">
+                        <a class="menu-item" href="{{ url('veon-adtech') }}"
+                           data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-list"></i>Veon Adtech</a>
+                    </li>
                 </ul>
             </li>
         </ul>

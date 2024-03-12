@@ -54,5 +54,15 @@ return [
         "details_internet",
         "details_sms",
         "details_minute",
+    ],
+    'ad_inventory_size' => [
+        '320x50' => '320 x 50',
+    ],
+    'all_c_component' => [
+        'commerce' => 'Commerce',
+        'content' => 'Content',
+        'home' => 'Home',
+        'lms' => 'LMS',
+        'non_bl' => 'Non Bl',
     ]
 ];
