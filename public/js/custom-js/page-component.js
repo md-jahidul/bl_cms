@@ -943,9 +943,8 @@
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
-                    cardLine('Config') +
-                    attributeButton +
                     cardLine('Component Heading') +
+                    attributeButton +
                     attributeTitle +
                     attributeTitleSubTitle +
                     cardLine() +
@@ -1389,6 +1388,7 @@
 
     // Tab Item Remove
     $(document).on('click', '.remove-tab-item', function (event) {
+        alert('Hii')
         $(event.target).parent().parent().remove();
     })
 

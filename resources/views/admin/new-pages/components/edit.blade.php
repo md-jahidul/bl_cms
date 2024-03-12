@@ -454,7 +454,7 @@
                                         </slot>
                                     @endif
 
-                                <!--tab_component_with_image_card_four-->
+                                    <!--tab_component_with_image_card_four-->
                                     @if($component->type == "tab_component_with_image_card_four")
                                         <slot id="tab_component_with_image_card_four" data-offer-type="tab_component_with_image_card_four">
                                             @include('admin.new-pages.components.common-field.attribute.title')
@@ -542,9 +542,8 @@
                                     {{--digital_world--}}
                                     @if($component->type == "digital_world")
                                         <slot id="digital_world" data-offer-type="digital_world">
-                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
-                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Heading'])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.multi-item.divider')

@@ -1,12 +1,12 @@
 @php($key ?? 0)
 
-<slot class="page_component_multi_item">
     @if(isset($key) && $key == 0)
         <div class="form-group col-md-12">
             <label for="alt_text"></label>
             <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
         </div>
     @endif
+<slot class="page_component_multi_item">
 
 
     @if(isset($component_type) && $component_type == "hovering_card_component")
@@ -79,35 +79,38 @@
     )
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Tab', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => false])
-            @if($component_type == "tab_component_with_image_card_four")
-                <div class="form-group col-md-4">
-                    <label for="editor_en">Content Type</label>
-                    <select name="componentData[0][content_type][value_en]" class="form-control tab_content_type" disabled>
-                        <option value="static" {{ isset($data) && $data['content_type']['value_en'] == "static"  ? "selected" : ""}}>Static</option>
-                        <option value="dynamic" {{ isset($data) && $data['content_type']['value_en'] == "dynamic"  ? "selected" : ""}}>Dynamic</option>
+        @if($component_type == "tab_component_with_image_card_four")
+            <div class="form-group col-md-4">
+                <label for="editor_en">Content Type</label>
+                <select name="componentData[0][content_type][value_en]" class="form-control tab_content_type" disabled>
+                    <option value="static" {{ isset($data) && $data['content_type']['value_en'] == "static"  ? "selected" : ""}}>Static</option>
+                    <option value="dynamic" {{ isset($data) && $data['content_type']['value_en'] == "dynamic"  ? "selected" : ""}}>Dynamic</option>
+                </select>
+                <input type="hidden" name="componentData[0][title][is_tab]" value="1">
+            </div>
+            @if($data['content_type']['value_en'] == "static")
+                <div class="form-group col-md-4 dynamic_or_static" >
+                    <label for="static_component">Static Component</label>
+                    <select name="componentData[0][static_component][value_en]" class="form-control" disabled>
+                        <option value="find_store" selected>Find a Store</option>
                     </select>
-                    <input type="hidden" name="componentData[0][title][is_tab]" value="1">
                 </div>
-                @if($data['content_type']['value_en'] == "static")
-                    <div class="form-group col-md-4 dynamic_or_static" >
-                        <label for="static_component">Static Component</label>
-                        <select name="componentData[0][static_component][value_en]" class="form-control" disabled>
-                            <option value="find_store" selected>Find a Store</option>
-                        </select>
-                    </div>
-                @endif
             @endif
+        @endif
         <div class="col-md-11 ml-5">
             <div class="row tab-item">
                 @if(isset($data['data']))
                     @foreach($data['data'] as $tabIndex => $tabItemData)
-                        <slot class="tab_item_count" data-tab-id="{{ $key }}">
+                        <slot class="tab_item_count">
                             @if($tabIndex == 0)
                                 <div class="form-group col-md-12">
                                     <label for="alt_text"></label>
                                     <button type="button" class="btn-sm btn-outline-warning block add-tab-item" ><i class="la la-plus"></i> Add More</button>
                                 </div>
                             @endif
+                        </slot>
+                        <slot class="tab_item_count" data-tab-id="{{ $key }}">
+
                             @if($component_type == "tab_component_with_image_card_three")
                                 @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => true])
 
@@ -121,7 +124,7 @@
                                 @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
                             @endif
 
-                            @if($tabIndex != 0)
+{{--                            @if($tabIndex != 0)--}}
                                 @if(isset($tabItemData['title']['parent_id']) || isset($tabItemData['button_name']['parent_id']))
                                     @php($comId = $tabItemData['title']['id'] ?? $tabItemData['button_name']['id'])
                                     @php($parentId = $tabItemData['title']['parent_id'] ?? $tabItemData['button_name']['parent_id'])
@@ -140,10 +143,19 @@
                                     </div>
                                 @endif
 
-                            @endif
+{{--                            @endif--}}
                             @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => '', 'index' => ""])
                         </slot>
                     @endforeach
+                @else
+                    @if(isset($data['content_type']['value_en']) && $data['content_type']['value_en'] != "static")
+                        <slot class="tab_item_count">
+                            <div class="form-group col-md-12">
+                                <label for="alt_text"></label>
+                                <button type="button" class="btn-sm btn-outline-warning block add-tab-item" ><i class="la la-plus"></i> Add More</button>
+                            </div>
+                        </slot>
+                    @endif
                 @endif
             </div>
         </div>
