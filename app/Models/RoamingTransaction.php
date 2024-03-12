@@ -31,6 +31,7 @@ class RoamingTransaction extends Model
         'invoice_payment',
         "refund_initiated",
         "refund_status",
-        "refund_ref_id"
+        "refund_ref_id",
+        "un_barred_flags",
     ];
 }
