@@ -78,7 +78,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-        var auto_save_url = "{{ url('page-components-save-sorted/') . $pageId }}";
+        var auto_save_url = "{{ url('page-components-save-sorted') . "/" . $pageId }}";
         $(function () {
 
             //show dropify for  photo
