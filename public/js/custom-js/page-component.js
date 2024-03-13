@@ -32,7 +32,7 @@
     }
 
     var videoUrl = function (index = 0) {
-        return `<div class="form-group col-md-12">
+        return `<div class="form-group col-md-12" id="video_input_container">
             <label for="button_link" >Video URL</label>
             <input type="text" name="attribute[media_url][en]"  class="form-control" placeholder="Enter video link">
             <div class="help-block"></div>
@@ -48,9 +48,20 @@
     //         </div>
     //     </div>`
 
-    var attributeImage = function (fieldName = "image_file", label = "Image") {
+    var attributeIsVideo = function (fieldName = "is_video", label = "Video Preview") {
         return `
         <div class="form-group col-md-12">
+            <label for="is_video" class="">${label}</label>
+            <div class="button_link">
+                <input type="checkbox" id="is_video" name="attribute[is_video][en]" class="checkbox"/>
+                <span class="text-primary"> Check here, if you need Video preview</span>
+            </div>
+        </div>`
+    }
+    
+    var attributeImage = function (fieldName = "image_file", label = "Image") {
+        return `
+        <div class="form-group col-md-12" id="image_input_container">
             <label for="alt_text" class="">${label}</label>
             <div class="custom-file">
                 <input type="file" name="attribute[${fieldName}]" class="dropify" data-height="80">
@@ -744,7 +755,9 @@
                     cardLine('Component Details') +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeIsVideo() +
                     attributeImage() +
+                    videoUrl() +
                     doubleButton +
                 `</slot>`;
         }else if(componentType === "top_image_bottom_text_component"){
@@ -1289,6 +1302,39 @@
         $('#component_data').append(componentData);
         $('#' + componentType).append(componentData);
         dropify();
+    });
+
+    var onContentTypeChange = () => {
+        if( $('#is_video').length){
+            
+            var video_input_container = $("#video_input_container");
+            var image_input_container = $("#image_input_container");
+            var is_video_check = $("#is_video").is(":checked");
+            if(is_video_check){
+                if(image_input_container) image_input_container.hide();
+                if(video_input_container) video_input_container.show();
+            }else{
+                if(image_input_container) image_input_container.show();
+                if(video_input_container) video_input_container.hide();
+            }
+            $(document).on('click', '#is_video', function (event) {
+                var id = $(event.target).is(":checked");
+                if(id) {
+                    if(image_input_container) image_input_container.hide();
+                    if(video_input_container) video_input_container.show();
+                } else {
+                    if(image_input_container) image_input_container.show();
+                    if(video_input_container) video_input_container.hide();
+                }
+            });
+        }
+    }
+
+    if( $('#component_type').length){
+        onContentTypeChange();
+    }
+    $(document).on('change', '#component_type', function (event) {
+        onContentTypeChange();
     });
 
     $(document).on('click', '.remove-image', function (event) {
