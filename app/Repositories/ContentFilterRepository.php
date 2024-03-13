@@ -16,7 +16,7 @@ class ContentFilterRepository extends BaseRepository
     public function manageTableSort($request)
     {
         $positions = $request->position;
-//        dd($request->all());
+
         foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
