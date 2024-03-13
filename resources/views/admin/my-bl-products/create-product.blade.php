@@ -278,6 +278,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-4 {{ $errors->has('content_filter_tags') ? ' error' : '' }}">
+                                    <label for="content_filter_tags">Content Filter Tags</label>
+                                    <input class="form-control" name="content_filter_tags" id="content_filter_tags"
+                                           value="{{ old("content_filter_tags") ? old("content_filter_tags") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('content_filter_tags'))
+                                        <div class="help-block">{{ $errors->first('content_filter_tags') }}</div>
+                                    @endif
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Content Filter Tags should be Comma-separated value. Example: data,toffee</span>
+                                </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
