@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use http\Client;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -24,12 +28,14 @@ class LoginController extends Controller
     */
     use AuthenticatesUsers;
 
+    protected const DXP_TOKEN_PREFIX = "dxp_user_token:";
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+//    protected $redirectTo = '/home';
 
 //    protected $decayMinutes = 5;
 
@@ -60,6 +66,10 @@ class LoginController extends Controller
                 ]);
             }
             return redirect('/login')->with('error', 'Your account is locked. contact system Administrator');
+        }
+
+        if (config("misc.migrator.dxp_new_login")){
+            $this->storeAccessTokenForNewCMS($request);
         }
 
         if ($this->attemptLogin($request)) {
@@ -93,4 +103,51 @@ class LoginController extends Controller
         );
     }
 
+    public function storeAccessTokenForNewCMS($request)
+    {
+        $urlEndPoint = "/api/v1/login";
+        $response = $this->cUrlRequest($request->all(), $urlEndPoint);
+        $user = User::where('email', $request->email)->first();
+        if ($response && $user) {
+            $redisKey = self::DXP_TOKEN_PREFIX . $user->id;
+            Redis::set($redisKey, $response['access_token']);
+        }
+    }
+
+    public function cUrlRequest($request, $urlEndPoint)
+    {
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+
+        $body = [
+            "email" => $request['email'],
+            "password" => $request['password']
+        ];
+
+        $baseUrl =  config("misc.migrator.dxp.api_base_url");
+
+        $url = $baseUrl . $urlEndPoint;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper("POST"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+        $result = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        $result = json_decode($result, true);
+
+        if ($httpCode == 200){
+            return [
+                'access_token' => $result['data']['access_token'] ?? null
+            ];
+        }
+
+        Log::error('New CMS Login Error:' . json_encode($result));
+    }
 }
