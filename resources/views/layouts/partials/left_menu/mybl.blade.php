@@ -729,12 +729,6 @@
                         <i class="la la-paper-plane"></i>Popup Sequence
                     </a>
                 </li>
-                <li {{is_active_url(route('content-filter.index'))}}>
-                    <a class="menu-item" href="{{ route('content-filter.index') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-bullhorn"></i> Content Filter
-                    </a>
-                </li>
             </ul>
         </li>
     @endif
