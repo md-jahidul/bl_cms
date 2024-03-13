@@ -236,12 +236,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
-{{--                                            @else--}}
-{{--                                                @include('admin.new-pages.components.common-field.repeatable-item', [--}}
-{{--                                                     'component_type' => 'hero_section',--}}
-{{--                                                     'data' => [],--}}
-{{--                                                     'key' => 0--}}
-{{--                                                 ])--}}
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -252,12 +251,21 @@
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
                                             <div class="form-group col-md-2">
                                                 <label for="editor_en" class="required">Is Accordion</label>
-                                                <select name="config[is_accordion]" class="form-control">
-                                                    <option value="yes" {{ isset($component->config['is_accordion']) ?? $component->config['is_accordion'] == "yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="no" {{ isset($component->config['is_accordion']) ?? $component->config['is_accordion'] == "no" ? 'selected' : '' }}>No</option>
+                                                <select name="config[is_accordion]" class="form-control" id="is_accordion">
+                                                    <option value="yes" {{ isset($component->config['is_accordion']) && $component->config['is_accordion'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ isset($component->config['is_accordion']) && $component->config['is_accordion'] == "no" ? 'selected' : '' }}>No</option>
                                                 </select>
                                             </div>
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Details Section"])
+                                            @if($component->config['is_accordion'] == "yes")
+                                                <slot>
+                                                    @include('admin.new-pages.components.common-field.attribute.title')
+                                                </slot>
+                                            @else
+                                                <slot style="display: none">
+                                                    @include('admin.new-pages.components.common-field.attribute.title')
+                                                </slot>
+                                            @endif
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
                                         </slot>
                                     @endif
@@ -456,12 +464,12 @@
                                         </slot>
                                     @endif
 
-                                <!--tab_component_with_image_card_four-->
+                                    <!--tab_component_with_image_card_four-->
                                     @if($component->type == "tab_component_with_image_card_four")
                                         <slot id="tab_component_with_image_card_four" data-offer-type="tab_component_with_image_card_four">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
-                                            @if(isset($component->component_data_mod))
+                                            @if(!empty($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [
                                                         'component_type' => 'tab_component_with_image_card_four',
@@ -469,6 +477,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -489,6 +502,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -507,6 +525,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -538,15 +561,15 @@
                                         <slot id="loyalty_offer" data-offer-type="loyalty_offer">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                         </slot>
                                     @endif
 
                                     {{--digital_world--}}
                                     @if($component->type == "digital_world")
                                         <slot id="digital_world" data-offer-type="digital_world">
-                                            @include('admin.new-pages.components.common-field.card-info', ['title' => 'Config'])
-                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => 'Component Heading'])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                             @include('admin.new-pages.components.common-field.multi-item.divider')
@@ -558,6 +581,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -579,6 +607,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -598,6 +631,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -617,6 +655,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif
@@ -634,6 +677,11 @@
                                                         'key' => $key
                                                     ])
                                                 @endforeach
+                                            @else
+                                                <div class="form-group col-md-12">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
+                                                </div>
                                             @endif
                                         </slot>
                                     @endif

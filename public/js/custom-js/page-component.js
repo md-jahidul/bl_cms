@@ -712,7 +712,7 @@
             let config = `
                 <div class="form-group col-md-2">
                     <label for="is_accordion">Is Accordion</label>
-                    <select name="config[is_accordion]" class="form-control">
+                    <select name="config[is_accordion]" id="is_accordion" class="form-control">
                         <option value="yes">Yes</option>
                         <option value="no" selected>No</option>
                     </select>
@@ -722,6 +722,9 @@
                     cardLine('Config') +
                     config +
                     cardLine('Details Section') +
+                    `<slot style="display: none">
+                        ${attributeTitle}
+                    </slot>`+
                     attributeEditor +
                 `</slot>`;
         }else if(componentType === "text_with_image"){
@@ -952,15 +955,15 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                 `</slot>`;
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
-                    cardLine('Config') +
-                    attributeButton +
                     cardLine('Component Heading') +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                     cardLine() +
                     addBtn +
                     itemCountLine(1) +
@@ -1239,15 +1242,6 @@
                     multiItemButton(index) +
                     removeBtn +
                 `</slot>`;
-        }else if(componentType === "explore_c"){
-            componentData +=
-                `<slot class="page_component_multi_item">` +
-                    itemCountLine(index + 1) +
-                    imageOne(index) +
-                    multiItemTitle(index) +
-                    multiItemButton(index) +
-                    removeBtn +
-                `</slot>`;
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -1449,6 +1443,23 @@
         }else {
             dynamicAndStaticFirst.hide()
             dynamicAndStaticSecond.show()
+        }
+    })
+
+    // function isAccordion() {
+    //
+    // }
+
+    $(document).on('change', '#is_accordion', function (event){
+        let contentType = $(this).val();
+        let titleEn = $(event.target).parent().next('div').next('slot');
+        // let titleBn = $(event.target).parent().next('div').next('div').next('div');
+        if (contentType === "yes"){
+            titleEn.show()
+            // titleBn.show()
+        }else {
+            titleEn.hide()
+            // titleBn.hide()
         }
     })
 })();
