@@ -251,12 +251,21 @@
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
                                             <div class="form-group col-md-2">
                                                 <label for="editor_en" class="required">Is Accordion</label>
-                                                <select name="config[is_accordion]" class="form-control">
-                                                    <option value="yes" {{ isset($component->config['is_accordion']) ?? $component->config['is_accordion'] == "yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="no" {{ isset($component->config['is_accordion']) ?? $component->config['is_accordion'] == "no" ? 'selected' : '' }}>No</option>
+                                                <select name="config[is_accordion]" class="form-control" id="is_accordion">
+                                                    <option value="yes" {{ isset($component->config['is_accordion']) && $component->config['is_accordion'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ isset($component->config['is_accordion']) && $component->config['is_accordion'] == "no" ? 'selected' : '' }}>No</option>
                                                 </select>
                                             </div>
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Details Section"])
+                                            @if($component->config['is_accordion'] == "yes")
+                                                <slot>
+                                                    @include('admin.new-pages.components.common-field.attribute.title')
+                                                </slot>
+                                            @else
+                                                <slot style="display: none">
+                                                    @include('admin.new-pages.components.common-field.attribute.title')
+                                                </slot>
+                                            @endif
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
                                         </slot>
                                     @endif
