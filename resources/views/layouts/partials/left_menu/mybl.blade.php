@@ -72,17 +72,6 @@
                                 <i class="la la-comment-o"></i>Quick Notification List</a>
                         </li>
 
-                        {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
-                             <a class="menu-item" href="{{ route('notification.report') }}"
-                                data-i18n="nav.templates.vert.classic_menu">
-                                 <i class="la la-comment-o"></i>Notification Report</a>
-                         </li>--}}
-
-                        {{-- <li class="{{ is_active_url('notification-report')}}">
-                            <a class="menu-item" href="{{ url('notification-report') }}"
-                               data-i18n="nav.templates.vert.classic_menu">
-                                <i class="la la-comment-o"></i>Notification Report</a>
-                        </li> --}}
                         <li class="{{ is_active_url('target-wise-notification-report') }}">
                             <a class="menu-item" href="{{ route('target-wise-notification-report.report') }}"
                                data-i18n="nav.templates.vert.classic_menu">
@@ -124,7 +113,7 @@
                            data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-list"></i>Generic Rail</a>
                     </li>
-                    <li {{is_active_url(route('content-filter.index'))}}>
+                    <li {{is_active_url(route('content-filter.index')) }}>
                         <a class="menu-item" href="{{ route('content-filter.index') }} "
                            data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-bullhorn"></i> Content Filter
@@ -476,10 +465,6 @@
                     </a>
                 </li>
             @endif
-            {{--            <li class="">--}}
-            {{--                <a class="menu-item text-danger" href="">--}}
-            {{--                    <i class="la la-puzzle-piece"></i>T&C</a>--}}
-            {{--            </li>--}}
             <li class="{{ is_active_url('mybl/learn-priyojon') }}">
                 <a class="menu-item" href="{{ route('learn-priyojon.show') }}"
                    data-i18n="nav.templates.vert.classic_menu">
@@ -728,24 +713,6 @@
                         </a>
                     </li>
 
-                    {{--            <li class="nav-item"><a href="#"><i class="la la-users"></i>--}}
-                    {{--                    <span class="menu-title" data-i18n="nav.templates.main">Event Base Bonus</span></a>--}}
-                    {{--                <ul class="menu-content">--}}
-                    {{--                    <li class="{{ is_active_url('event-base-bonus/tasks')}}">--}}
-                    {{--                        <a class="menu-item" href="{{ url('event-base-bonus/tasks') }}"--}}
-                    {{--                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Tasks</a>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="{{ is_active_url('event-base-bonus/campaigns')}}">--}}
-                    {{--                        <a class="menu-item" href="{{ url('event-base-bonus/campaigns') }}"--}}
-                    {{--                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-user"></i> Campaign</a>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="{{ is_active_url('event-base-bonus/tasks/analytics')}}">--}}
-                    {{--                        <a class="menu-item" href="{{ url('event-base-bonus/analytics') }}"--}}
-                    {{--                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-book"></i> Analytic</a>--}}
-                    {{--                    </li>--}}
-                    {{--                </ul>--}}
-                    {{--            </li>--}}
-
 
 
 
@@ -963,12 +930,6 @@
                             <i class="la la-list"></i>Course Transaction
                         </a>
                     </li>
-                    {{--                    <li class="{{is_active_url('mybl/music-transaction-status-report-view')}}">--}}
-                    {{--                        <a class="menu-item" href="{{ route('mybl.transaction-status.music') }} "--}}
-                    {{--                           data-i18n="nav.templates.vert.classic_menu">--}}
-                    {{--                            <i class="la la-list"></i>Music Transaction--}}
-                    {{--                        </a>--}}
-                    {{--                    </li>--}}
                 </ul>
             </li>
         </ul>
@@ -1107,15 +1068,16 @@
                 </a>
             </li>
         </ul>
-
         <!--Store Location Entry-->
         @if( auth()->user()->can_view('StoreLocatorEntry'))
-            <li class="{{ is_active_url('digital-service') }}">
-                <a class="menu-item" href="{{ url('store-locations/entry') }}"
-                   data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-server"></i>Store Location Entry
-                </a>
-            </li>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('digital-service') }}">
+                    <a class="menu-item" href="{{ url('store-locations/entry') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Store Location Entry
+                    </a>
+                </li>
+            </ul>
         @endif
 
         <ul class="menu-content">
@@ -1130,32 +1092,6 @@
                     <i class="la la-server"></i>Digital Services
                 </a>
             </li>
-
-            <!-- LMS -->
-{{--            <li class="nav-item"><a href="#"><i class="la la-users"></i>--}}
-{{--                    <span class="menu-title" data-i18n="nav.templates.main">LMS</span></a>--}}
-{{--                <ul class="menu-content">--}}
-{{--                    <li class="{{ is_active_url('lms-components') }}">--}}
-{{--                        <a class="menu-item" href="{{ route('lms-components') }}">--}}
-{{--                            <i class="la la-puzzle-piece"></i>Home Components</a>--}}
-{{--                    </li>--}}
-{{--                    <li class="{{ is_active_url('shortcut-components') }}">--}}
-{{--                        <a class="menu-item" href="{{ route('shortcut-components') }}">--}}
-{{--                            <i class="la la-puzzle-piece"></i>Shortcut</a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </li>--}}
-
-
-            <!-- PGW -->
-{{--            <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>--}}
-{{--                    <span class="menu-title" data-i18n="nav.templates.main">Commerce</span></a>--}}
-{{--                <ul class="menu-content">--}}
-{{--                    <li class="{{ is_active_match('mybl-commerce-components')}}">--}}
-{{--                        <a class="menu-item" href="{{ url('mybl-commerce-components') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-cubes"></i> Home Component</a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </li>--}}
 
             @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
                 <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
@@ -1250,11 +1186,6 @@
                     </ul>
                 </li>
             @endif
-
-            <li class="{{ is_active_url('content-deeplink') }} nav-item"><a href="{{route('content-deeplink.index')}}"><i
-                        class="la la-fighter-jet"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">Content & Course Deeplink</span></a>
-            </li>
             @if( auth()->user()->can_view('HelpCenter') )
                 <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Offers</span></a>
@@ -1295,28 +1226,6 @@
                 </li>
             @endif
 
-{{--            @if( auth()->user()->can_view('PrivacyPolicy') )--}}
-{{--                <li class="{{ is_active_url('/privacy-policy') }} nav-item"><a href="{{route('privacy-policy.show')}}"><i--}}
-{{--                            class="la la-paragraph"></i>--}}
-{{--                        <span class="menu-title">Privacy and Policy</span></a>--}}
-{{--                </li>--}}
-{{--            @endif--}}
-
-{{--            @if( auth()->user()->can_view('LearnPriyojon') )--}}
-{{--                <li class=" nav-item"><a href="#"><i class="la la-gift"></i>--}}
-{{--                        <span class="menu-title">Priyojon</span></a>--}}
-{{--                    <ul class="menu-content">--}}
-{{--                        --}}{{--page--}}
-{{--                        <li class="{{ is_active_url('mybl/learn-priyojon') }}">--}}
-{{--                            <a class="menu-item" href="{{ route('learn-priyojon.show') }}"--}}
-{{--                               data-i18n="nav.templates.vert.classic_menu">--}}
-{{--                                <i class="la la-file"></i>Learn Priyojon--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
-{{--            @endif--}}
-
             @if( auth()->user()->can_view('Ussd') )
                 <li class="{{ is_active_url('ussd') }} nav-item"><a href="{{route('ussd.index')}}">
                         <i class="la la-qrcode"></i>USSD Code</a>
@@ -1346,31 +1255,6 @@
     </li>
 
 
-
-    {{--    @if( auth()->user()->can_view('MyblAppMenu') )--}}
-    {{--        <li class=" {{ is_active_url('mybl-menu') }}">--}}
-    {{--            <a class="menu-item" href="{{ url('mybl-menu') }}"--}}
-    {{--            data-i18n="nav.templates.vert.classic_menu">--}}
-    {{--                <i class="la la-ellipsis-v"></i> Menu List--}}
-    {{--            </a>--}}
-    {{--        </li>--}}
-    {{--    @endif--}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- Non Bl -->
     <!--    <li class="nav-item"><a href="#"><i class="la la-bullhorn"></i>
         <span class="menu-title" data-i18n="nav.templates.main">Non Bl</span></a>
@@ -1393,68 +1277,10 @@
     <!-- FIFA WC -->
 
 
-
-
-
-
-
-    {{--    @if( auth()->user()->can_view('MigratePlan'))--}}
-    {{--        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>--}}
-    {{--                <span class="menu-title" data-i18n="nav.templates.main">Deeplink Report</span></a>--}}
-    {{--            <ul class="menu-content">--}}
-    {{--                <li class="{{ is_active_url(route('products-deep-link-report')) }}">--}}
-    {{--                    <a class="menu-item" href="{{ route('products-deep-link-report') }}"--}}
-    {{--                       data-i18n="nav.templates.vert.classic_menu">--}}
-    {{--                        <i class="la la-comment-o"></i>Product Deeplink</a>--}}
-    {{--                </li>--}}
-
-    {{--                <li class="{{ is_active_url('deeplink-analytic') }}">--}}
-    {{--                    <a class="menu-item" href="{{ url('deeplink-analytic') }}"--}}
-    {{--                       data-i18n="nav.templates.vert.classic_menu">--}}
-    {{--                        <i class="la la-comment-o"></i>Deeplink Analytic</a>--}}
-    {{--                </li>--}}
-    {{--            </ul>--}}
-    {{--        </li>--}}
-    {{--    @endif--}}
-
-    {{--    @if (Auth::user()->hasRole('developer'))--}}
-    {{--        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>--}}
-    {{--                <span class="menu-title" data-i18n="nav.templates.main">Debug Panel</span></a>--}}
-    {{--            <ul class="menu-content">--}}
-    {{--                <li class="{{ is_active_url('developer/api/debug') }}">--}}
-    {{--                    <a class="menu-item" href="{{ route('mybl.api.debug') }}">--}}
-    {{--                        <i class="la la-code-fork"></i> BL Msisdn Log</a>--}}
-    {{--                </li>--}}
-
-    {{--                <li class="{{ is_active_url(route('guest-user-track-list')) }}">--}}
-    {{--                    <a class="menu-item" href="{{ route('guest-user-track-list') }}">--}}
-    {{--                        <i class="la la-code-fork"></i> Guest User Log</a>--}}
-    {{--                </li>--}}
-    {{--            </ul>--}}
-    {{--        </li>--}}
-    {{--    @endif--}}
-
-
     <!-- Agent Deep link Menu -->
 
 
     <!-- Others Menu -->
-
-
-
-
-    <!-- Gift -->
-    {{--    <li class=" nav-item"><a href="#"><i class="la la-list"></i>--}}
-    {{--            <span class="menu-title" data-i18n="nav.templates.main">Gift</span></a>--}}
-    {{--        <ul class="menu-content">--}}
-    {{--            <li class="{{is_active_url('internet-gift-content')}}">--}}
-    {{--                <a class="menu-item" href="{{ url('internet-gift-content') }} "--}}
-    {{--                   data-i18n="nav.templates.vert.classic_menu">--}}
-    {{--                    <i class="la la-list"></i>Internet Gift Content--}}
-    {{--                </a>--}}
-    {{--            </li>--}}
-    {{--        </ul>--}}
-    {{--    </li>--}}
 
 @endif
 
@@ -1484,11 +1310,3 @@
         })
     </script>
 @endpush
-
-{{--<li class="{{ is_active_url('developer/api/debug') }}">--}}
-{{--    <a class="menu-item" href="{{ route('support-message') }}">--}}
-{{--        <i class="la la-code-fork"></i>Support Messages</a>--}}
-{{--</li>--}}
-{{--------------------------------------------------------------------------------------------------------------------}}
-{{---------------------------------------------------------My-BL App End----------------------------------------------}}
-{{--------------------------------------------------------------------------------------------------------------------}}
