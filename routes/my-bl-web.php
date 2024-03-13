@@ -1305,6 +1305,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'CMS\MyBlServiceItemsController@destroy'
     )->name('my-bl-services.items.destroy');
     Route::match(['GET', 'POST'], 'my-bl-services/add-items/update-position', 'CMS\MyBlServiceItemsController@updatePosition');
+
+    /**
+     *  Content Filter
+     */
+
+    Route::resource('content-filter', 'CMS\ContentFilterController')->except(['show', 'destroy']);
+    Route::get('content-filter/destroy/{id}', 'CMS\ContentFilterController@destroy')->name('content-filter.destroy');
+    Route::match(['GET', 'POST'], 'content-filter/sort-auto-save', 'CMS\ContentFilterController@categorySortable');
 });
 
 // 4G Map View Route
