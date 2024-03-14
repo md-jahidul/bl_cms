@@ -144,7 +144,8 @@ class ComponentHelper
             'bl_lab' => 'Bl Labs',
             'videos_component' => 'Videos Component',
             'icon_text_with_image' => 'Icon Text With Image',
-            'multiple_image' => 'Multiple Image'
+            'multiple_image' => 'Multiple Image',
+            'customer_complaint' => 'Customer Complaint'
         ];
     }
 }

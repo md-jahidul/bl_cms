@@ -686,6 +686,14 @@
                                         </slot>
                                     @endif
 
+                                    {{--customer_complaint--}}
+                                    @if($component->type == "customer_complaint")
+                                        <slot id="customer_complaint" data-offer-type="customer_complaint">
+                                            @include('admin.new-pages.components.common-field.attribute.customer-complaint')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
+                                        </slot>
+                                    @endif
+
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
