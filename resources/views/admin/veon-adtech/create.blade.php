@@ -49,13 +49,14 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="component_size" class="required">Component Size</label>
-                                    <select name="component_size" class="form-control custom-select"
-                                            id="component_size" required data-validation-required-message="Please select component size">
-                                        <option value="" >--Select Tab Section--</option>
-                                        @foreach (Config::get('generic-slider.ad_inventory_size') as $key => $size)
-                                        <option value="{{$key}}" >{{$size}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input class="form-control"
+                                           name="component_size"
+                                           id="component_size"
+                                           placeholder="Enter Component Size"
+                                           required>
+                                    <div class="help-block"></div>
+                                    <span class="text-info"><strong><i class="la la-info-circle"></i></strong> Example: 320x50</span>
+                                    <div class="help-block"></div>
                                     @if($errors->has('component_size'))
                                         <p class="text-left">
                                             <small class="danger text-muted">{{ $errors->first('component_size') }}</small>
