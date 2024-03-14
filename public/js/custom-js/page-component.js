@@ -92,6 +92,20 @@
             <div class="help-block"></div>
         </div>`
 
+    var dynamicInputField = function (label= 'Title', fieldName= 'title', lang='en', type="text") {
+        var languageText = lang==="en" ? ' (English)' : lang==="bn" ? ' (Bangla)' : ' '+lang,
+         languageKey = !['en','bn'].includes(lang) ? 'en': lang;
+        return `<div class="form-group col-md-6">
+            <label for="${fieldName + languageKey}">${label + languageText}</label>
+            <input type="${type}" name="attribute[${fieldName}][${languageKey}]"  class="form-control" placeholder="Enter ${label + languageText}" id="${fieldName + languageKey}">
+            <div class="help-block"></div>
+        </div>`
+    }
+
+    var dynamicInputFieldPair = function (label= 'Title', fieldName= 'title', lang='en', type="text") {
+        return dynamicInputField(label, fieldName, 'en', type) + dynamicInputField(label, fieldName, 'bn', type);
+    }
+
     var attributeTitleSubTitle =
         `<div class="form-group col-md-6">
             <label for="desc_en">Description (English)</label>
@@ -1024,6 +1038,22 @@
                 addBtn +
                 itemCountLine(1) +
                 imageOne() +
+                `</slot>`;
+        }else if(componentType === "customer_complaint"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    dynamicInputField('Complaint Closed No', 'complaint_closed_no', '(%)') +
+                    dynamicInputField('Unreached Customer No', 'unreached_customer_no', '(%)') +
+                    dynamicInputFieldPair('Complaint Closed Title', 'complaint_closed_title') +
+                    dynamicInputFieldPair('Unreached Customer Title', 'unreached_customer_title') +
+                    attributeEditor +
+                    // attributeTitleSubTitle +
+                    // cardLine() +
+                    // addBtn +
+                    // itemCountLine(1) +
+                    // imageOne() +
+                    // multiItemTitle() +
+                    // multiItemDescription() +
                 `</slot>`;
         }else{
             console.log('No component found!!')
