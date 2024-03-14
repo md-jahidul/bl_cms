@@ -298,7 +298,9 @@
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.is-video')
                                             @include('admin.new-pages.components.common-field.attribute.image')
+                                            @include('admin.new-pages.components.common-field.attribute.video-url')
                                             @include('admin.new-pages.components.common-field.attribute.double-button')
                                         </slot>
                                     @endif

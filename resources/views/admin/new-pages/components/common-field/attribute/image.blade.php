@@ -1,4 +1,4 @@
-<div class="form-group col-md-12">
+<div class="form-group col-md-12" id="image_input_container">
     <label for="alt_text" class="">{{ $label ?? "Image" }}</label>
     <div class="custom-file">
         <input type="file" name="attribute[{{ $fieldName ?? 'image_file' }}]" class="dropify" data-height="80"
