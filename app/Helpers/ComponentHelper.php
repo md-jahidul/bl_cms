@@ -124,6 +124,7 @@ class ComponentHelper
             'tab_component_with_image_card_two' => 'Tab Component With Image Card Two',
             'tab_component_with_image_card_three' => 'Tab Component With Image Card Three',
             'tab_component_with_image_card_four' => 'Tab Component With Image Card Four',
+            'tab_component_with_image_card_five' => 'Tab Component With Image Card Five',
             'hero_section' => 'Hero Section',
             'text_component' => 'Text Component',
             'text_with_image' => 'Text with Image',
@@ -143,7 +144,8 @@ class ComponentHelper
             'bl_lab' => 'Bl Labs',
             'videos_component' => 'Videos Component',
             'icon_text_with_image' => 'Icon Text With Image',
-            'multiple_image' => 'Multiple Image'
+            'multiple_image' => 'Multiple Image',
+            'customer_complaint' => 'Customer Complaint'
         ];
     }
 }

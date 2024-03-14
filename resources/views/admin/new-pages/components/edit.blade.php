@@ -277,6 +277,7 @@
                                             <div class="form-group col-md-3">
                                                 <label for="editor_en" class="required">Position</label>
                                                 <select name="config[position]" class="form-control">
+                                                    <option value="top" {{ $component->config['position'] == "top" ? 'selected' : '' }}>Top</option>
                                                     <option value="right" {{ $component->config['position'] == "right" ? 'selected' : '' }}>Right</option>
                                                     <option value="left" {{ $component->config['position'] == "left" ? 'selected' : '' }}>Left</option>
                                                 </select>
@@ -486,6 +487,23 @@
                                         </slot>
                                     @endif
 
+                                    <!--tab_component_with_image_card_five-->
+                                    @if($component->type == "tab_component_with_image_card_five")
+                                        <slot id="tab_component_with_image_card_five" data-offer-type="tab_component_with_image_card_five">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description')
+                                            @if(isset($component->component_data_mod))
+                                                @foreach($component->component_data_mod as $key => $data)
+                                                    @include('admin.new-pages.components.common-field.repeatable-item', [
+                                                        'component_type' => 'tab_component_with_image_card_five',
+                                                        'data' => $data,
+                                                        'key' => $key
+                                                    ])
+                                                @endforeach
+                                            @endif
+                                        </slot>
+                                    @endif
+
                                     {{--explore_c--}}
                                     @if($component->type == "explore_c")
                                         <slot id="explore_c" data-offer-type="explore_c">
@@ -683,6 +701,14 @@
                                                     <button type="button" class="btn-sm btn-outline-secondary block" id="plus-image"><i class="la la-plus"></i>Add More</button>
                                                 </div>
                                             @endif
+                                        </slot>
+                                    @endif
+
+                                    {{--customer_complaint--}}
+                                    @if($component->type == "customer_complaint")
+                                        <slot id="customer_complaint" data-offer-type="customer_complaint">
+                                            @include('admin.new-pages.components.common-field.attribute.customer-complaint')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => true])
                                         </slot>
                                     @endif
 

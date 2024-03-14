@@ -58,7 +58,7 @@
             </div>
         </div>`
     }
-    
+
     var attributeImage = function (fieldName = "image_file", label = "Image") {
         return `
         <div class="form-group col-md-12" id="image_input_container">
@@ -91,6 +91,20 @@
             <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name Bangla">
             <div class="help-block"></div>
         </div>`
+
+    var dynamicInputField = function (label= 'Title', fieldName= 'title', lang='en', type="text") {
+        var languageText = lang==="en" ? ' (English)' : lang==="bn" ? ' (Bangla)' : ' '+lang,
+         languageKey = !['en','bn'].includes(lang) ? 'en': lang;
+        return `<div class="form-group col-md-6">
+            <label for="${fieldName + languageKey}">${label + languageText}</label>
+            <input type="${type}" name="attribute[${fieldName}][${languageKey}]"  class="form-control" placeholder="Enter ${label + languageText}" id="${fieldName + languageKey}">
+            <div class="help-block"></div>
+        </div>`
+    }
+
+    var dynamicInputFieldPair = function (label= 'Title', fieldName= 'title', lang='en', type="text") {
+        return dynamicInputField(label, fieldName, 'en', type) + dynamicInputField(label, fieldName, 'bn', type);
+    }
 
     var attributeTitleSubTitle =
         `<div class="form-group col-md-6">
@@ -732,6 +746,7 @@
                 <div class="form-group col-md-3">
                     <label for="editor_en">Position</label>
                     <select name="config[position]" class="form-control">
+                        <option value="top">Top</option>
                         <option value="right" selected>Right</option>
                         <option value="left">Left</option>
                     </select>
@@ -905,6 +920,29 @@
                         </div>
                     </div>` +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_five"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1, "Tab") +
+                    multiItemTitle() +
+                    `<div class="col-md-11 ml-5">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="0">
+                                ${
+                                    addTabBtn +
+                                    imageOne(0, true, 0) +
+                                    multiItemTitle(0, true, 0) +
+                                    multiItemDescription(0, true, 0, true) +
+                                    itemCountLine("",'')
+                                }
+                            </slot>
+                        </div>
+                    </div>` +
+                `</slot>`;
         }else if(componentType === "explore_services"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -1027,6 +1065,15 @@
                 addBtn +
                 itemCountLine(1) +
                 imageOne() +
+                `</slot>`;
+        }else if(componentType === "customer_complaint"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    dynamicInputField('Complaint Closed No', 'complaint_closed_no', '(%)') +
+                    dynamicInputField('Unreached Customer No', 'unreached_customer_no', '(%)') +
+                    dynamicInputFieldPair('Complaint Closed Title', 'complaint_closed_title') +
+                    dynamicInputFieldPair('Unreached Customer Title', 'unreached_customer_title') +
+                    attributeEditor +
                 `</slot>`;
         }else{
             console.log('No component found!!')
@@ -1224,6 +1271,26 @@
                     </div>` +
                     removeBtn +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_five"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1, "Tab") +
+                multiItemTitle(index) +
+                `<div class="col-md-11 ml-5">
+                    <div class="row tab-item">
+                        <slot class="tab_item_count" data-tab-id="${index}">
+                            ${
+                                addTabBtn +
+                                imageOne(index, true, 0) +
+                                multiItemTitle(index, true, 0) +
+                                multiItemDescription(index, true, 0) +
+                                itemCountLine('', '')
+                            }
+                        </slot>
+                    </div>
+                </div>` +
+                removeBtn +
+                `</slot>`;
         }else if(componentType === "explore_services"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -1300,7 +1367,7 @@
 
     var onContentTypeChange = () => {
         if( $('#is_video').length){
-            
+
             var video_input_container = $("#video_input_container");
             var image_input_container = $("#image_input_container");
             var is_video_check = $("#is_video").is(":checked");
@@ -1409,16 +1476,27 @@
                     itemCountLine('', '')
                 }
             </slot>`
+        }else if (componentType === "tab_component_with_image_card_five"){
+            componentData +=
+                `<slot class="tab_item_count" data-tab-id="${index}">
+                ${
+                    imageOne(index, true, tabItemIndex) +
+                    multiItemTitle(index, true, tabItemIndex) +
+                    multiItemDescription(index, true, tabItemIndex, true) +
+                    itemCountLine('', '') +
+                    removeTabItemBtn
+                }
+            </slot>`
         }else {
             componentData +=
                 `<slot class="tab_item_count" data-tab-id="${index}">
                 ${
+                    itemCountLine(index + 1, 'Item-') +
                     multiItemTitle(index, true, tabItemIndex) +
                     multiItemDescription(index, true, tabItemIndex, true) +
                     imageOne(index, true, tabItemIndex) +
                     multiItemButton(index, true, tabItemIndex) +
-                    removeTabItemBtn +
-                    itemCountLine('', '')
+                    removeTabItemBtn
                 }
             </slot>`
         }
