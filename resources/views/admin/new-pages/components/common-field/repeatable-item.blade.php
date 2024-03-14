@@ -74,6 +74,7 @@
         || $component_type == "tab_component_with_image_card_two"
         || $component_type == "tab_component_with_image_card_three"
         || $component_type == "tab_component_with_image_card_four"
+        || $component_type == "tab_component_with_image_card_five"
     )
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Tab', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => false])
@@ -111,10 +112,13 @@
 
                             @if($component_type == "tab_component_with_image_card_three")
                                 @include('admin.new-pages.components.common-field.multi-item.feedback', ['is_tab' => true])
-
                             @elseif($component_type == "tab_component_with_image_card_four")
                                 @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
                                 @include('admin.new-pages.components.common-field.multi-item.button', ['is_tab' => true, 'tabIndex' => $tabIndex])
+                            @elseif($component_type == "tab_component_with_image_card_five")
+                                @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
+                                @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => true, 'tabIndex' => $tabIndex])
+                                @include('admin.new-pages.components.common-field.multi-item.description', ['is_tab' => true, 'tabIndex' => $tabIndex, 'is_editor' => true])
                             @else
                                 @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => true, 'tabIndex' => $tabIndex])
                                 @include('admin.new-pages.components.common-field.multi-item.description', ['is_tab' => true, 'tabIndex' => $tabIndex, 'is_editor' => true])

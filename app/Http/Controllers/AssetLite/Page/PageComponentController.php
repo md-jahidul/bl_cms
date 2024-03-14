@@ -74,7 +74,8 @@ class PageComponentController extends Controller
                 "tab_component_with_image_card_one",
                 "tab_component_with_image_card_two",
                 "tab_component_with_image_card_three",
-                "tab_component_with_image_card_four"
+                "tab_component_with_image_card_four",
+                "tab_component_with_image_card_five"
             ];
             $tabItemData = [];
             if (!empty($data->children) && in_array($component->type, $tabComponents)) {

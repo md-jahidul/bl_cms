@@ -41,7 +41,7 @@
                                 <td>{{ $item->attribute['title']['en'] ?? null }}</td>
                                 <td class="text-right">
                                     <a href="{{ url("page-components/$pageId/edit/$item->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("page-components/$pageId/destroy") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
+                                    <a href="#" remove="{{ url("page-components/$pageId/destroy/$item->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $item->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
