@@ -119,6 +119,7 @@
                                 @include('admin.new-pages.components.common-field.multi-item.image', ['is_tab' => true, 'tabIndex' => $tabIndex])
                                 @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => true, 'tabIndex' => $tabIndex])
                                 @include('admin.new-pages.components.common-field.multi-item.description', ['is_tab' => true, 'tabIndex' => $tabIndex, 'is_editor' => true])
+                                @include('admin.new-pages.components.common-field.multi-item.button', ['is_tab' => true, 'tabIndex' => $tabIndex])
                             @else
                                 @include('admin.new-pages.components.common-field.multi-item.title', ['is_tab' => true, 'tabIndex' => $tabIndex])
                                 @include('admin.new-pages.components.common-field.multi-item.description', ['is_tab' => true, 'tabIndex' => $tabIndex, 'is_editor' => true])
