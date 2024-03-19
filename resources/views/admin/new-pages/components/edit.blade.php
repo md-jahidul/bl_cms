@@ -492,6 +492,7 @@
                                         <slot id="tab_component_with_image_card_five" data-offer-type="tab_component_with_image_card_five">
                                             @include('admin.new-pages.components.common-field.attribute.title')
                                             @include('admin.new-pages.components.common-field.attribute.description')
+                                            @include('admin.new-pages.components.common-field.attribute.button')
                                             @if(isset($component->component_data_mod))
                                                 @foreach($component->component_data_mod as $key => $data)
                                                     @include('admin.new-pages.components.common-field.repeatable-item', [

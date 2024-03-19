@@ -925,6 +925,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                     cardLine() +
                     addBtn +
                     itemCountLine(1, "Tab") +
@@ -937,6 +938,7 @@
                                     imageOne(0, true, 0) +
                                     multiItemTitle(0, true, 0) +
                                     multiItemDescription(0, true, 0, true) +
+                                    multiItemButton(0, true, 0) +
                                     itemCountLine("",'')
                                 }
                             </slot>
@@ -1284,6 +1286,7 @@
                                 imageOne(index, true, 0) +
                                 multiItemTitle(index, true, 0) +
                                 multiItemDescription(index, true, 0) +
+                                multiItemButton(index, true,0) +
                                 itemCountLine('', '')
                             }
                         </slot>
@@ -1483,6 +1486,7 @@
                     imageOne(index, true, tabItemIndex) +
                     multiItemTitle(index, true, tabItemIndex) +
                     multiItemDescription(index, true, tabItemIndex, true) +
+                    multiItemButton(index,true, tabItemIndex) +
                     itemCountLine('', '') +
                     removeTabItemBtn
                 }
