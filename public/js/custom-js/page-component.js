@@ -1077,6 +1077,24 @@
                     dynamicInputFieldPair('Unreached Customer Title', 'unreached_customer_title') +
                     attributeEditor +
                 `</slot>`;
+        }else if(componentType === "button_component"){
+            let config = `
+                <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en" class="required">Position</label>
+                    <select name="config[position]" class="form-control required" required>
+                        <option value="right">Right</option>
+                        <option value="left" selected>Left</option>
+                        <option value="middle">Middle</option>
+                    </select>
+                </div>
+            `
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Button Info') +
+                    attributeButton +
+                `</slot>`;
         }else{
             console.log('No component found!!')
         }

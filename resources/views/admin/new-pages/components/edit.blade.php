@@ -713,6 +713,24 @@
                                         </slot>
                                     @endif
 
+                                    {{--button_component--}}
+                                    @if($component->type == "button_component")
+                                        <slot id="button_component" data-offer-type="button_component">
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
+                                            <div class="form-group col-md-9">
+                                                <label for="editor_en" class="required">Position</label>
+                                                <select name="config[position]" class="form-control">
+                                                    <option value="">--Select Position--</option>
+                                                    <option value="right" {{ $component->config['position'] == "right" ? 'selected' : '' }}>Right</option>
+                                                    <option value="left" {{ $component->config['position'] == "left" ? 'selected' : '' }}>Left</option>
+                                                    <option value="middle" {{ $component->config['position'] == "middle" ? 'selected' : '' }}>Middle</option>
+                                                </select>
+                                            </div>
+                                            @include('admin.new-pages.components.common-field.card-info', ['title' => "Button Info"])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
+                                        </slot>
+                                    @endif
+
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
