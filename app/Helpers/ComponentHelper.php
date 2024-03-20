@@ -145,7 +145,8 @@ class ComponentHelper
             'videos_component' => 'Videos Component',
             'icon_text_with_image' => 'Icon Text With Image',
             'multiple_image' => 'Multiple Image',
-            'customer_complaint' => 'Customer Complaint'
+            'customer_complaint' => 'Customer Complaint',
+            'button_component' => 'Button Component'
         ];
     }
 }
