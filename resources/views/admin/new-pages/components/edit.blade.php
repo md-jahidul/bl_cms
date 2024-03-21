@@ -731,6 +731,24 @@
                                         </slot>
                                     @endif
 
+                                    {{--button_component--}}
+                                    @if($component->type == "separator")
+                                        <slot id="separator" data-offer-type="separator">
+                                            <div class="form-group col-md-6">
+                                                <label for="editor_en" class="">Desktop View Height (Pixel)</label>
+                                                <input type="number" name="attribute[desktop_height][en]" class="form-control"
+                                                       placeholder="Enter mobile view height in pixel" value="{{ $component->attribute['desktop_height']['en'] }}">
+                                                <small class="warning">Example: 300</small>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="editor_en" class="">Mobile View Height (Pixel)</label>
+                                                <input type="number" name="attribute[mobile_height][en]" class="form-control"
+                                                       placeholder="Enter mobile view height in pixel" value="{{ $component->attribute['mobile_height']['en'] }}">
+                                                <small class="warning">Example: 300</small>
+                                            </div>
+                                        </slot>
+                                    @endif
+
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
