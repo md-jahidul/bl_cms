@@ -758,6 +758,13 @@
                         <option value="no" selected>No</option>
                     </select>
                 </div>
+                <div class="form-group col-md-3" id="bg_color_type">
+                    <label for="bg_color_type">Background Color Type</label>
+                    <select name="config[bg_color_type]" class="form-control">
+                        <option value="grediayn">Grediayn</option>
+                        <option value="gray" selected>Gray</option>
+                    </select>
+                </div>
                 <div class="form-group col-md-3">
                     <label for="vertical_txt_align">Vertical Text Align</label>
                     <select name="config[vertical_txt_align]" class="form-control">
@@ -1412,13 +1419,30 @@
         }
     }
 
+    var onBgColorChange = (selectedValue='') => {
+        if( $('#bg_color_type').length){
+            var bg_color_type = $('#bg_color_type');
+            if(bg_color_type && selectedValue == 'yes'){
+                bg_color_type.show();
+            }else{
+                bg_color_type.hide();
+            }
+        }
+    }
+
     if( $('#component_type').length){
         onContentTypeChange();
     }
     $(document).on('change', '#component_type', function (event) {
         onContentTypeChange();
+        var initialSelectedValue = $('select[name="config[bg_color]"]').val();
+        if(initialSelectedValue) onBgColorChange(initialSelectedValue);
     });
 
+    $(document).on('change', 'select[name="config[bg_color]"]', function (event) {
+        var selectedValue = $(this).val();
+        onBgColorChange(selectedValue);
+    })
     $(document).on('click', '.remove-image', function (event) {
         var id = $(event.target).attr('data-com-id');
         var group = $(event.target).attr('data-group');

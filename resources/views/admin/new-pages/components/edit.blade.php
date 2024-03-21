@@ -289,6 +289,13 @@
                                                     <option value="no" {{ $component->config['bg_color'] == "no" ? 'selected' : '' }}>No</option>
                                                 </select>
                                             </div>
+                                            <div class="form-group col-md-3" id="bg_color_type" style="display: {{$component->config['bg_color'] == "no" ? 'none': 'block'}}">
+                                                <label for="bg_color_type">Background Color Type</label>
+                                                <select name="config[bg_color_type]" class="form-control">
+                                                    <option value="grediayn" {{ $component->config['bg_color_type'] == "grediayn" ? 'selected' : '' }}>Grediayn</option>
+                                                    <option value="gray" {{ $component->config['bg_color_type'] == "gray" ? 'selected' : '' }}>Gray</option>
+                                                </select>
+                                            </div>
                                             <div class="form-group col-md-3">
                                                 <label for="vertical_txt_align">Vertical Text Align</label>
                                                 <select name="config[vertical_txt_align]" class="form-control">
