@@ -63,57 +63,57 @@
 
 <div class="form-group col-md-6">
     <label for="title_en">Feedback En</label>
-    <textarea type="text" rows="3" name="{{ $fieldFeedbackEn }}" class="form-control">{{ $tabItemData['feedback']['value_en'] ?? '' }}</textarea>
-    <input type="hidden" name="{{ $fieldFeedbackId }}" value="{{ isset($tabItemData['feedback']['id']) ? $tabItemData['feedback']['id'] : '' }}">
+    <textarea type="text" rows="3" name="{{ $fieldFeedbackEn }}" class="form-control">{{ $data['feedback']['value_en'] ?? '' }}</textarea>
+    <input type="hidden" name="{{ $fieldFeedbackId }}" value="{{ isset($data['feedback']['id']) ? $data['feedback']['id'] : '' }}">
     {!! $isTab !!}
 </div>
 
 <div class="form-group col-md-6">
     <label for="title_en">Feedback Bn</label>
-    <textarea type="text" rows="3" name="{{ $fieldFeedbackBn }}" class="form-control">{{ $tabItemData['feedback']['value_bn'] ?? '' }}</textarea>
-    <input type="hidden" name="{{ $fieldFeedbackId }}" value="{{ isset($tabItemData['feedback']['id']) ? $tabItemData['feedback']['id'] : '' }}">
+    <textarea type="text" rows="3" name="{{ $fieldFeedbackBn }}" class="form-control">{{ $data['feedback']['value_bn'] ?? '' }}</textarea>
+    <input type="hidden" name="{{ $fieldFeedbackId }}" value="{{ isset($data['feedback']['id']) ? $data['feedback']['id'] : '' }}">
 </div>
 
 <div class="form-group col-md-6">
     <label for="title_en">Name En</label>
-    <input type="text" name="{{ $fieldNameEn }}" class="form-control" value="{{ $tabItemData['name']['value_en'] ?? '' }}">
-    <input type="hidden" name="{{ $fieldNameId }}" value="{{ isset($tabItemData['name']['id']) ? $tabItemData['name']['id'] : '' }}">
+    <input type="text" name="{{ $fieldNameEn }}" class="form-control" value="{{ $data['name']['value_en'] ?? '' }}">
+    <input type="hidden" name="{{ $fieldNameId }}" value="{{ isset($data['name']['id']) ? $data['name']['id'] : '' }}">
 </div>
 <div class="form-group col-md-6">
     <label for="title_en">Name Bn</label>
-    <input type="text" name="{{ $fieldNameBn }}" class="form-control" value="{{ $tabItemData['name']['value_bn'] ?? '' }}">
-    <input type="hidden" name="{{ $fieldNameId }}" value="{{ isset($tabItemData['name']['id']) ? $tabItemData['name']['id'] : '' }}">
+    <input type="text" name="{{ $fieldNameBn }}" class="form-control" value="{{ $data['name']['value_bn'] ?? '' }}">
+    <input type="hidden" name="{{ $fieldNameId }}" value="{{ isset($data['name']['id']) ? $data['name']['id'] : '' }}">
 </div>
 
 <div class="form-group col-md-6">
     <label for="title_en">Designation En</label>
-    <input type="text" name="{{ $fieldDesignationEn }}" class="form-control" value="{{ $tabItemData['designation']['value_en'] ?? '' }}">
-    <input type="hidden" name="{{ $fieldDesignationId }}" value="{{ isset($tabItemData['designation']['id']) ? $tabItemData['designation']['id'] : '' }}">
+    <input type="text" name="{{ $fieldDesignationEn }}" class="form-control" value="{{ $data['designation']['value_en'] ?? '' }}">
+    <input type="hidden" name="{{ $fieldDesignationId }}" value="{{ isset($data['designation']['id']) ? $data['designation']['id'] : '' }}">
 </div>
 <div class="form-group col-md-6">
     <label for="title_en">Designation Bn</label>
-    <input type="text" name="{{ $fieldDesignationBn }}" class="form-control" value="{{ $tabItemData['designation']['value_bn'] ?? '' }}">
-    <input type="hidden" name="{{ $fieldDesignationId }}" value="{{ isset($tabItemData['designation']['id']) ? $tabItemData['designation']['id'] : '' }}">
+    <input type="text" name="{{ $fieldDesignationBn }}" class="form-control" value="{{ $data['designation']['value_bn'] ?? '' }}">
+    <input type="hidden" name="{{ $fieldDesignationId }}" value="{{ isset($data['designation']['id']) ? $data['designation']['id'] : '' }}">
 </div>
 <div class="form-group col-md-6">
     <label for="title_en">Institute En</label>
-    <input type="text" name="{{ $fieldInstituteEn }}" class="form-control" value="{{ $tabItemData['institute']['value_en'] ?? '' }}">
-    <input type="hidden" name="{{ $fieldInstituteId }}" value="{{ isset($tabItemData['institute']['id']) ? $tabItemData['institute']['id'] : '' }}">
+    <input type="text" name="{{ $fieldInstituteEn }}" class="form-control" value="{{ $data['institute']['value_en'] ?? '' }}">
+    <input type="hidden" name="{{ $fieldInstituteId }}" value="{{ isset($data['institute']['id']) ? $data['institute']['id'] : '' }}">
 </div>
 <div class="form-group col-md-6">
     <label for="title_en">Institute Bn</label>
-    <input type="text" name="{{ $fieldInstituteBn }}" class="form-control" value="{{ $tabItemData['institute']['value_bn'] ?? '' }}">
-    <input type="hidden" name="{{ $fieldInstituteId }}" value="{{ isset($tabItemData['institute']['id']) ? $tabItemData['institute']['id'] : '' }}">
+    <input type="text" name="{{ $fieldInstituteBn }}" class="form-control" value="{{ $data['institute']['value_bn'] ?? '' }}">
+    <input type="hidden" name="{{ $fieldInstituteId }}" value="{{ isset($data['institute']['id']) ? $data['institute']['id'] : '' }}">
 </div>
 
 <div class="col-md-12 col-xs-12 ">
     <div class="form-group">
         <label for="message">Image</label>
-        <input type="hidden" name="{{ $fieldName }}" value="{{ isset($tabItemData['image']['value_en']) ? $tabItemData['image']['value_en'] : '' }}">
+        <input type="hidden" name="{{ $fieldName }}" value="{{ isset($data['image']['value_en']) ? $data['image']['value_en'] : '' }}">
         <input type="file" class="dropify" name="{{$fieldName}}" data-height="80"
-               data-default-file="{{ isset($tabItemData['image']['value_en']) ? config('filesystems.file_base_url') . $tabItemData['image']['value_en'] : '' }}"/>
+               data-default-file="{{ isset($data['image']['value_en']) ? config('filesystems.file_base_url') . $data['image']['value_en'] : '' }}"/>
         <input type="hidden" name="{{ $fieldNameGroup }}" value="{{ $key + 1 }}">
-        <input type="hidden" name="{{ $imageId }}" value="{{ isset($tabItemData['image']['id']) ? $tabItemData['image']['id'] : '' }}">
+        <input type="hidden" name="{{ $imageId }}" value="{{ isset($data['image']['id']) ? $data['image']['id'] : '' }}">
         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
         <div class="help-block"></div>
     </div>

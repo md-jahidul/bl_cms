@@ -391,7 +391,7 @@
                                         </slot>
                                     @endif
 
-                                    {{--icon_text_component--}}
+                                    {{--stories_slider--}}
                                     @if($component->type == "stories_slider")
                                         <slot id="stories_slider" data-offer-type="stories_slider">
                                             @include('admin.new-pages.components.common-field.attribute.title')
