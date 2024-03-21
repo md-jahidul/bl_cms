@@ -538,6 +538,24 @@
                                             @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
                                         </slot>
                                     @endif
+                                    @if($component->type == "store_finder")
+                                        <slot id="store_finder" data-offer-type="store_finder">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                        </slot>
+                                    @endif
+                                    @if($component->type == "store_finder_map")
+                                        <slot id="store_finder_map" data-offer-type="store_finder_map">
+                                        </slot>
+                                    @endif
+                                    @if($component->type == "recycle_directory")
+                                        <slot id="recycle_directory" data-offer-type="recycle_directory">
+                                        </slot>
+                                    @endif
+                                    @if($component->type == "recycle_content")
+                                        <slot id="recycle_content" data-offer-type="recycle_content">
+                                            @include('admin.new-pages.components.common-field.attribute.button')
+                                        </slot>
+                                    @endif
 
                                     {{--digital_world--}}
                                     @if($component->type == "digital_world")

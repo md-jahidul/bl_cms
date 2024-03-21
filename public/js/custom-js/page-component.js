@@ -940,6 +940,26 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                 `</slot>`;
+        }else if(componentType === "store_finder"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                `</slot>`;
+        }else if(componentType === "store_finder_map"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    // attributeTitle +
+                `</slot>`;
+        }else if(componentType === "recycle_directory"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    // attributeTitle +
+                `</slot>`;
+        }else if(componentType === "recycle_content"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeButton +
+                `</slot>`;
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
