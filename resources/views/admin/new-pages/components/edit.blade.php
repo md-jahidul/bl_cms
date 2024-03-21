@@ -292,8 +292,8 @@
                                             <div class="form-group col-md-3">
                                                 <label for="vertical_txt_align">Vertical Text Align</label>
                                                 <select name="config[vertical_txt_align]" class="form-control">
-                                                    <option value="yes" {{ $component->config['bg_color'] == "yes" ? 'selected' : '' }}>Yes</option>
-                                                    <option value="no" {{ $component->config['bg_color'] == "no" ? 'selected' : '' }}>No</option>
+                                                    <option value="yes" {{ $component->config['vertical_txt_align'] == "yes" ? 'selected' : '' }}>Yes</option>
+                                                    <option value="no" {{ $component->config['vertical_txt_align'] == "no" ? 'selected' : '' }}>No</option>
                                                 </select>
                                             </div>
                                             @include('admin.new-pages.components.common-field.card-info', ['title' => "Config"])
