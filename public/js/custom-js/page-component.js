@@ -32,7 +32,7 @@
     }
 
     var videoUrl = function (index = 0) {
-        return `<div class="form-group col-md-12">
+        return `<div class="form-group col-md-12" id="video_input_container">
             <label for="button_link" >Video URL</label>
             <input type="text" name="attribute[media_url][en]"  class="form-control" placeholder="Enter video link">
             <div class="help-block"></div>
@@ -48,9 +48,20 @@
     //         </div>
     //     </div>`
 
-    var attributeImage = function (fieldName = "image_file", label = "Image") {
+    var attributeIsVideo = function (fieldName = "is_video", label = "Video Preview") {
         return `
         <div class="form-group col-md-12">
+            <label for="is_video" class="">${label}</label>
+            <div class="button_link">
+                <input type="checkbox" id="is_video" name="attribute[is_video][en]" class="checkbox"/>
+                <span class="text-primary"> Check here, if you need Video preview</span>
+            </div>
+        </div>`
+    }
+
+    var attributeImage = function (fieldName = "image_file", label = "Image") {
+        return `
+        <div class="form-group col-md-12" id="image_input_container">
             <label for="alt_text" class="">${label}</label>
             <div class="custom-file">
                 <input type="file" name="attribute[${fieldName}]" class="dropify" data-height="80">
@@ -80,6 +91,20 @@
             <input type="text" name="attribute[title][bn]"  class="form-control" placeholder="Enter company name Bangla">
             <div class="help-block"></div>
         </div>`
+
+    var dynamicInputField = function (label= 'Title', fieldName= 'title', lang='en', type="text") {
+        var languageText = lang==="en" ? ' (English)' : lang==="bn" ? ' (Bangla)' : ' '+lang,
+         languageKey = !['en','bn'].includes(lang) ? 'en': lang;
+        return `<div class="form-group col-md-6">
+            <label for="${fieldName + languageKey}">${label + languageText}</label>
+            <input type="${type}" name="attribute[${fieldName}][${languageKey}]"  class="form-control" placeholder="Enter ${label + languageText}" id="${fieldName + languageKey}">
+            <div class="help-block"></div>
+        </div>`
+    }
+
+    var dynamicInputFieldPair = function (label= 'Title', fieldName= 'title', lang='en', type="text") {
+        return dynamicInputField(label, fieldName, 'en', type) + dynamicInputField(label, fieldName, 'bn', type);
+    }
 
     var attributeTitleSubTitle =
         `<div class="form-group col-md-6">
@@ -701,7 +726,7 @@
             let config = `
                 <div class="form-group col-md-2">
                     <label for="is_accordion">Is Accordion</label>
-                    <select name="config[is_accordion]" class="form-control">
+                    <select name="config[is_accordion]" id="is_accordion" class="form-control">
                         <option value="yes">Yes</option>
                         <option value="no" selected>No</option>
                     </select>
@@ -711,6 +736,9 @@
                     cardLine('Config') +
                     config +
                     cardLine('Details Section') +
+                    `<slot style="display: none">
+                        ${attributeTitle}
+                    </slot>`+
                     attributeEditor +
                 `</slot>`;
         }else if(componentType === "text_with_image"){
@@ -718,6 +746,7 @@
                 <div class="form-group col-md-3">
                     <label for="editor_en">Position</label>
                     <select name="config[position]" class="form-control">
+                        <option value="top">Top</option>
                         <option value="right" selected>Right</option>
                         <option value="left">Left</option>
                     </select>
@@ -744,7 +773,9 @@
                     cardLine('Component Details') +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeIsVideo() +
                     attributeImage() +
+                    videoUrl() +
                     doubleButton +
                 `</slot>`;
         }else if(componentType === "top_image_bottom_text_component"){
@@ -889,6 +920,31 @@
                         </div>
                     </div>` +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_five"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    attributeButton +
+                    cardLine() +
+                    addBtn +
+                    itemCountLine(1, "Tab") +
+                    multiItemTitle() +
+                    `<div class="col-md-11 ml-5">
+                        <div class="row tab-item">
+                            <slot class="tab_item_count" data-tab-id="0">
+                                ${
+                                    addTabBtn +
+                                    imageOne(0, true, 0) +
+                                    multiItemTitle(0, true, 0) +
+                                    multiItemDescription(0, true, 0, true) +
+                                    multiItemButton(0, true, 0) +
+                                    itemCountLine("",'')
+                                }
+                            </slot>
+                        </div>
+                    </div>` +
+                `</slot>`;
         }else if(componentType === "explore_services"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -939,6 +995,7 @@
                 `<slot class="page_component_multi_item">` +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                 `</slot>`;
         }else if(componentType === "store_finder"){
             componentData +=
@@ -963,11 +1020,10 @@
         }else if(componentType === "digital_world"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
-                    cardLine('Config') +
-                    attributeButton +
                     cardLine('Component Heading') +
                     attributeTitle +
                     attributeTitleSubTitle +
+                    attributeButton +
                     cardLine() +
                     addBtn +
                     itemCountLine(1) +
@@ -1031,6 +1087,33 @@
                 addBtn +
                 itemCountLine(1) +
                 imageOne() +
+                `</slot>`;
+        }else if(componentType === "customer_complaint"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    dynamicInputField('Complaint Closed No', 'complaint_closed_no', '(%)') +
+                    dynamicInputField('Unreached Customer No', 'unreached_customer_no', '(%)') +
+                    dynamicInputFieldPair('Complaint Closed Title', 'complaint_closed_title') +
+                    dynamicInputFieldPair('Unreached Customer Title', 'unreached_customer_title') +
+                    attributeEditor +
+                `</slot>`;
+        }else if(componentType === "button_component"){
+            let config = `
+                <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
+                    <label for="editor_en" class="required">Position</label>
+                    <select name="config[position]" class="form-control required" required>
+                        <option value="right">Right</option>
+                        <option value="left" selected>Left</option>
+                        <option value="middle">Middle</option>
+                    </select>
+                </div>
+            `
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    cardLine('Config') +
+                    config +
+                    cardLine('Button Info') +
+                    attributeButton +
                 `</slot>`;
         }else{
             console.log('No component found!!')
@@ -1228,6 +1311,27 @@
                     </div>` +
                     removeBtn +
                 `</slot>`;
+        }else if(componentType === "tab_component_with_image_card_five"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                itemCountLine(index + 1, "Tab") +
+                multiItemTitle(index) +
+                `<div class="col-md-11 ml-5">
+                    <div class="row tab-item">
+                        <slot class="tab_item_count" data-tab-id="${index}">
+                            ${
+                                addTabBtn +
+                                imageOne(index, true, 0) +
+                                multiItemTitle(index, true, 0) +
+                                multiItemDescription(index, true, 0) +
+                                multiItemButton(index, true,0) +
+                                itemCountLine('', '')
+                            }
+                        </slot>
+                    </div>
+                </div>` +
+                removeBtn +
+                `</slot>`;
         }else if(componentType === "explore_services"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -1235,15 +1339,6 @@
                     imageOne(index) +
                     multiItemTitle(index) +
                     redirectLink(index) +
-                    removeBtn +
-                `</slot>`;
-        }else if(componentType === "explore_c"){
-            componentData +=
-                `<slot class="page_component_multi_item">` +
-                    itemCountLine(index + 1) +
-                    imageOne(index) +
-                    multiItemTitle(index) +
-                    multiItemButton(index) +
                     removeBtn +
                 `</slot>`;
         }else if(componentType === "explore_c"){
@@ -1309,6 +1404,39 @@
         $('#component_data').append(componentData);
         $('#' + componentType).append(componentData);
         dropify();
+    });
+
+    var onContentTypeChange = () => {
+        if( $('#is_video').length){
+
+            var video_input_container = $("#video_input_container");
+            var image_input_container = $("#image_input_container");
+            var is_video_check = $("#is_video").is(":checked");
+            if(is_video_check){
+                if(image_input_container) image_input_container.hide();
+                if(video_input_container) video_input_container.show();
+            }else{
+                if(image_input_container) image_input_container.show();
+                if(video_input_container) video_input_container.hide();
+            }
+            $(document).on('click', '#is_video', function (event) {
+                var id = $(event.target).is(":checked");
+                if(id) {
+                    if(image_input_container) image_input_container.hide();
+                    if(video_input_container) video_input_container.show();
+                } else {
+                    if(image_input_container) image_input_container.show();
+                    if(video_input_container) video_input_container.hide();
+                }
+            });
+        }
+    }
+
+    if( $('#component_type').length){
+        onContentTypeChange();
+    }
+    $(document).on('change', '#component_type', function (event) {
+        onContentTypeChange();
     });
 
     $(document).on('click', '.remove-image', function (event) {
@@ -1389,16 +1517,28 @@
                     itemCountLine('', '')
                 }
             </slot>`
+        }else if (componentType === "tab_component_with_image_card_five"){
+            componentData +=
+                `<slot class="tab_item_count" data-tab-id="${index}">
+                ${
+                    imageOne(index, true, tabItemIndex) +
+                    multiItemTitle(index, true, tabItemIndex) +
+                    multiItemDescription(index, true, tabItemIndex, true) +
+                    multiItemButton(index,true, tabItemIndex) +
+                    itemCountLine('', '') +
+                    removeTabItemBtn
+                }
+            </slot>`
         }else {
             componentData +=
                 `<slot class="tab_item_count" data-tab-id="${index}">
                 ${
+                    itemCountLine(index + 1, 'Item-') +
                     multiItemTitle(index, true, tabItemIndex) +
                     multiItemDescription(index, true, tabItemIndex, true) +
                     imageOne(index, true, tabItemIndex) +
                     multiItemButton(index, true, tabItemIndex) +
-                    removeTabItemBtn +
-                    itemCountLine('', '')
+                    removeTabItemBtn
                 }
             </slot>`
         }
@@ -1423,6 +1563,23 @@
         }else {
             dynamicAndStaticFirst.hide()
             dynamicAndStaticSecond.show()
+        }
+    })
+
+    // function isAccordion() {
+    //
+    // }
+
+    $(document).on('change', '#is_accordion', function (event){
+        let contentType = $(this).val();
+        let titleEn = $(event.target).parent().next('div').next('slot');
+        // let titleBn = $(event.target).parent().next('div').next('div').next('div');
+        if (contentType === "yes"){
+            titleEn.show()
+            // titleBn.show()
+        }else {
+            titleEn.hide()
+            // titleBn.hide()
         }
     })
 })();
