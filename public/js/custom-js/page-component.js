@@ -2,7 +2,7 @@
     let configBgImage = `
         <div class="form-group col-md-4">
             <label for="editor_en">Background Image</label>
-            <select name="config[bg_image]" class="form-control required" required>
+            <select name="config[is_bg_image]" class="form-control required" required>
                 <option value="yes">Yes</option>
                 <option value="no" selected>No</option>
             </select>
