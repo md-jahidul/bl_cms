@@ -46,7 +46,7 @@
     @elseif(isset($component_type) && $component_type == "hero_section")
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
         @include('admin.new-pages.components.common-field.multi-item.title')
-        @include('admin.new-pages.components.common-field.multi-item.url')
+        @include('admin.new-pages.components.common-field.multi-item.redirect-link')
 
     @elseif(isset($component_type) && $component_type == "top_image_bottom_text_component")
         @include('admin.new-pages.components.common-field.multi-item.line-count', ['title' => 'Item', 'index' => $key + 1])
