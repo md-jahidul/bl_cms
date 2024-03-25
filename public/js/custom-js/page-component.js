@@ -795,6 +795,25 @@
                     multiItemTitle() +
                     multiItemDescription() +
                 `</slot>`;
+        }else if(componentType === "4g_eligibility_check"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeImage() +
+                `</slot>`;
+        }else if(componentType === "4g_internet_offers"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                    attributeButton +
+                `</slot>`;
+        }else if(componentType === "4g_coverage"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributeTitle +
+                    attributeTitleSubTitle +
+                `</slot>`;
         }else if(componentType === "icon_text_component"){
             componentData +=
                 `<slot class="page_component_multi_item">` +
@@ -1003,6 +1022,13 @@
                     attributeTitle +
                     attributeTitleSubTitle +
                     attributeButton +
+                `</slot>`;
+        }else if(componentType === "digital_service_product"){
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    // attributeTitle +
+                    // attributeTitleSubTitle +
+                    // attributeButton +
                 `</slot>`;
         }else if(componentType === "digital_world"){
             componentData +=

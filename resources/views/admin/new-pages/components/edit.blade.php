@@ -591,6 +591,37 @@
                                         </slot>
                                     @endif
 
+                                    {{-- Digital Service Product (Stattic Component) --}}
+                                    @if($component->type == "digital_service_product")
+                                        <slot id="digital_service_product" data-offer-type="digital_service_product">
+                                        </slot>
+                                    @endif
+
+                                    {{-- 4G Eligibility Check (Static Component) --}}
+                                    @if($component->type == "4g_eligibility_check")
+                                        <slot id="4g_eligibility_check" data-offer-type="4g_eligibility_check">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.button')
+                                        </slot>
+                                    @endif
+
+                                    {{-- 4G Internet Offers (Static Component) --}}
+                                    @if($component->type == "4g_internet_offers")
+                                        <slot id="4g_internet_offers" data-offer-type="4g_internet_offers">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                            @include('admin.new-pages.components.common-field.attribute.button')
+                                        </slot>
+                                    @endif
+
+                                    {{-- 4G Coverage (Static Component) --}}
+                                    @if($component->type == "4g_coverage")
+                                        <slot id="4g_coverage" data-offer-type="4g_coverage">
+                                            @include('admin.new-pages.components.common-field.attribute.title')
+                                            @include('admin.new-pages.components.common-field.attribute.description', ['is_editor' => false])
+                                        </slot>
+                                    @endif
+
                                     {{--digital_world--}}
                                     @if($component->type == "digital_world")
                                         <slot id="digital_world" data-offer-type="digital_world">
