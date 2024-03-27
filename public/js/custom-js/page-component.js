@@ -2,7 +2,7 @@
     let configBgImage = `
         <div class="form-group col-md-4">
             <label for="editor_en">Background Image</label>
-            <select name="config[bg_image]" class="form-control required" required>
+            <select name="config[is_bg_image]" class="form-control required" required>
                 <option value="yes">Yes</option>
                 <option value="no" selected>No</option>
             </select>
@@ -1127,6 +1127,23 @@
                     config +
                     cardLine('Button Info') +
                     attributeButton +
+                `</slot>`;
+        }else if(componentType === "separator"){
+            let attributes = `
+                <div class="form-group col-md-6">
+                    <label for="editor_en" class="">Desktop View Height (Pixel)</label>
+                    <input type="number" name="attribute[desktop_height][en]" class="form-control" placeholder="Enter mobile view height in pixel">
+                    <small class="warning">Example: 300</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="editor_en" class="">Mobile View Height (Pixel)</label>
+                    <input type="number" name="attribute[mobile_height][en]" class="form-control" placeholder="Enter mobile view height in pixel">
+                    <small class="warning">Example: 300</small>
+                </div>
+            `
+            componentData +=
+                `<slot class="page_component_multi_item">` +
+                    attributes +
                 `</slot>`;
         }else{
             console.log('No component found!!')
