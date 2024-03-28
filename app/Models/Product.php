@@ -16,6 +16,7 @@ class Product extends Model
     protected $fillable =
         [
             'product_code',
+            'app_product_code',
             'url_slug',
             'url_slug_bn',
             'schema_markup',

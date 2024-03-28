@@ -68,13 +68,22 @@
                                             <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
                                         @endforeach
                                     </select>
-                                    <span class="text-warning">If product existing in core product. select dropdown. otherwise type than enter</span>
+{{--                                    <span class="text-warning">If product existing in core product. select dropdown. otherwise type than enter</span>--}}
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
+
                                 <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>App Product Code</label>
+                                        <input class="form-control" name="app_product_code"
+                                               value="{{ old("app_product_code") ? old("app_product_code") : '' }}">
+                                    </div>
+                                </div>
+
+                                    <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Please Select Category</label>
                                         <select multiple
