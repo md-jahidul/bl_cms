@@ -108,6 +108,7 @@ class ProductService
             $data['sim_category_id'] = $simId;
             $data['created_by'] = Auth::id();
             $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+            $data['app_product_code'] = str_replace(' ', '', strtoupper($data['app_product_code']));
 
             #Image store
             if (request()->hasFile('image')) {
@@ -246,6 +247,7 @@ class ProductService
         $data['is_not_purchasable'] = (isset($data['is_not_purchasable']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
         $data['product_code'] = strtoupper($data['product_code']);
+        $data['app_product_code'] = strtoupper($data['app_product_code']);
         $data['show_in_multi_cat'] = $data['show_in_multi_cat'] ?? null;
 //        $data['show_in_multi_cat'] = array_map('intval', $data['show_in_multi_cat']) ?? null;
 

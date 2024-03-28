@@ -38,8 +38,9 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="25%">Product Name</th>
-                                <th width="3%">Product Code</th>
+                                <th width="35%">Product Name</th>
+                                <th width="2%">Product Code</th>
+                                <th width="3%">App Product Code</th>
                                 <th width="3%">USSD</th>
                                 <th width="2%">Offer Type</th>
                                 <th width="15%" class="text-center">URL Slug</th>
@@ -61,6 +62,7 @@
                                         {!! $product->is_recharge == 1 ? '<span class="primary pl-1"><strong> (Recharge Offer)</strong></span>' : '' !!}
                                     </td>
                                     <td>{{ $product->product_code }}</td>
+                                    <td>{{ $product->app_product_code }}</td>
                                     <td>{{ $product->product_core['activation_ussd'] }}</td>
                                     <td>{{ $product->offer_category->name_en }} {{ $product->is_four_g_offer == 1 ? "(4G Offer)" : ''}}</td>
                                     <td>{{ $product->url_slug }}</td>

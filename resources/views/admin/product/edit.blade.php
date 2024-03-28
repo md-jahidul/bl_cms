@@ -65,28 +65,36 @@
                                     <div class="help-block">{{ $errors->first('product_code') }}</div>
                                 @endif
                             </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Please Select Category</label>
-                                        <select multiple
-                                                class="form-control data-section"
-                                                name="offer_categories[]">
-                                            <option value="">Please Select Category</option>
 
-                                            @foreach ($offerCategory as $key => $category)
-                                                <option
-                                                    value="{{ $category['id'] }}" @if(in_array($category['id'], $selectedCategory)) selected @endif >  {{$category['name']}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>App Product Code</label>
+                                    <input class="form-control" name="app_product_code" value="{{ $product->app_product_code }}">
                                 </div>
+                            </div>
 
-                                <div class="col-md-12">
-                                    <span><h4><strong>Offer Info</strong></h4></span>
-                                    <div class="form-actions col-md-12 mt-0 type-line"></div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Please Select Category</label>
+                                    <select multiple
+                                            class="form-control data-section"
+                                            name="offer_categories[]">
+                                        <option value="">Please Select Category</option>
+
+                                        @foreach ($offerCategory as $key => $category)
+                                            <option
+                                                value="{{ $category['id'] }}" @if(in_array($category['id'], $selectedCategory)) selected @endif >  {{$category['name']}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <span><h4><strong>Offer Info</strong></h4></span>
+                                <div class="form-actions col-md-12 mt-0 type-line"></div>
+                            </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en">Offer Name</label>
