@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/users/change-password', 'AssetLite\UserController@changePasswordForm');
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
+Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 //Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
 Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     # Al Banner =========================================================
@@ -1534,6 +1535,20 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         Route::resource('startup-stage', 'AssetLite\BlLab\BlLabStartupStageController')->except('show', 'destroy');
         Route::get('startup-stage/destroy/{id}', 'AssetLite\BlLab\BlLabStartupStageController@destroy');
     });
+
+    // Page and Component
+    Route::resource('/pages', 'AssetLite\Page\PageController');
+    Route::get('page/destroy/{id}', 'AssetLite\Page\PageController@deletePage');
+    Route::get('/page-components/{pageId}', 'AssetLite\Page\PageComponentController@index')->name('page-components');
+    Route::get('/page-components/{pageId}/create', 'AssetLite\Page\PageComponentController@create')->name('page-components-create');
+    Route::post('/page-components/{pageId}/store-or-update/{id?}', 'AssetLite\Page\PageComponentController@storeOrUpdate')->name('page-components-store-or-update');
+    Route::get('/page-components/{pageId}/edit/{id}', 'AssetLite\Page\PageComponentController@edit')->name('page-components-edit');
+    Route::get('/page-components/{pageId}/update', 'AssetLite\Page\PageComponentController@update')->name('page-components-update');
+    Route::get('/page-components/{pageId}/destroy/{id}', 'AssetLite\Page\PageComponentController@destroy')->name('page-components-destroy');
+    Route::get('/page-components-save-sorted/{pageId}', 'AssetLite\Page\PageComponentController@componentOrderingSave');
+
+    // Page Repeatable Item Delete
+    Route::get('/page-components-data-destroy/{pageId}', 'AssetLite\Page\PageComponentController@componentDataItemDelete')->name('components-data-destroy');
 
     // Site Map Generator
     Route::get('sitemap', 'AssetLite\SitemapController@showSiteMap');
