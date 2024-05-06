@@ -15,8 +15,11 @@
                 </div>
             </div>
             <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
+                <div class="col-md-8 col-xs-12 pull-right mb-2">
+                    <a href="#" class="btn btn-danger all_locator_delete float-right">Delete All</a>
+                </div>
 
+                <div class="card-body card-dashboard">
                     <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -120,10 +123,51 @@
                         });
                     }
                 });
+            });
 
+            //delete all Store Locator
+            $('.all_locator_delete').on('click', function (e) {
+                e.preventDefault();
+                var deleteUrl = "{{ URL('store-locations-delete-all') }}";
+                var cnfrm = confirm("Do you want to delete all data?");
+                if (cnfrm) {
+                    $.ajax({
+                        url: deleteUrl,
+                        cache: false,
+                        type: "GET",
+                        success: function (result) {
+                            console.log(result)
+                            if (result.success == 1) {
+                                swal.fire({
+                                    title: 'All store locations are deleted!',
+                                    type: 'success',
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                });
+
+                                // $('#device_offer_list').DataTable().ajax.reload();
+
+                            } else {
+                                swal.close();
+                                swal.fire({
+                                    title: result.message,
+                                    timer: 3000,
+                                    type: 'error',
+                                });
+                            }
+
+                        },
+                        error: function (data) {
+                            swal.fire({
+                                title: 'Delete process failed!',
+                                type: 'error',
+                            });
+                        }
+                    });
+                }
+                e.preventDefault();
             });
         });
-
     </script>
 @endpush
 

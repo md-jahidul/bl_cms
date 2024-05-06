@@ -1499,6 +1499,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     #Emergency Balance
     Route::get('emergency-balance', 'AssetLite\EmergencyBalanceController@index');
 
+    // Store Locator
+    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
+    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
+    Route::get('store-locations-delete-all', 'StoreLocatorEntryController@deleteAllLocators')->name('store-locations.delete-all');
 
     /*
      * terms and conditions

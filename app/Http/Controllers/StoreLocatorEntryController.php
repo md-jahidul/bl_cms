@@ -13,11 +13,15 @@ class StoreLocatorEntryController extends Controller
      * @var ProductCoreService
      */
     protected $service;
+    /**
+     * @var StoreLocatorService
+     */
+    private $storeLocatorService;
 
-    public function __construct(StoreLocatorService $service)
+    public function __construct(StoreLocatorService $storeLocatorService)
     {
         $this->middleware('auth');
-        $this->service = $service;
+        $this->storeLocatorService = $storeLocatorService;
     }
 
     public function create()
@@ -37,7 +41,7 @@ class StoreLocatorEntryController extends Controller
 
             $path = Storage::disk('public')->path($path);
 
-            $this->service->mapDataFromExcel($path);
+            $this->storeLocatorService->mapDataFromExcel($path);
 
             $response = [
                 'success' => 'SUCCESS'
@@ -50,5 +54,10 @@ class StoreLocatorEntryController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+
+    public function deleteAllLocators()
+    {
+        return $this->storeLocatorService->deleteAllData();
     }
 }

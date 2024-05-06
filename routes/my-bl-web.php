@@ -411,8 +411,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');
-    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
-    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
@@ -1333,7 +1331,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/course-transaction-status-report-view', 'CMS\MyblTransactionStatusController@index')->name('mybl.transaction-status.course');
     Route::get('mybl/course-transaction-status-report', 'CMS\MyblTransactionStatusController@getCourseTransaction')
         ->name('mybl.transaction-status.course.list');
-        
+
     #Music
     Route::get('mybl/music-transaction-status-report-view', 'CMS\MyblTransactionStatusController@musicTransactionList')->name('mybl.transaction-status.music');
     Route::get('mybl/music-transaction-status-report', 'CMS\MyblTransactionStatusController@getMusicTransaction')
@@ -1348,7 +1346,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('mybl/doctime-transaction-status-report-view', 'CMS\MyblTransactionStatusController@doctimeTransactionList')->name('mybl.transaction-status.doctime');
     Route::get('mybl/doctime-transaction-status-report', 'CMS\MyblTransactionStatusController@getDoctimeTransaction')
         ->name('mybl.transaction-status.doctime.list');
-        
+
     /**
      * Generic Carousel
      * Live content
