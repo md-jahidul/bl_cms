@@ -1498,6 +1498,14 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('csr-component.destroy');
     Route::get('csr-component-sort', 'AssetLite\CsrDetailsController@componentSortable');
 
+    #Emergency Balance
+    Route::get('emergency-balance', 'AssetLite\EmergencyBalanceController@index');
+
+    // Store Locator
+    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
+    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
+    Route::get('store-locations-delete-all', 'StoreLocatorEntryController@deleteAllLocators')->name('store-locations.delete-all');
+
     #Cash Back Campaign
     Route::resource('al-cash-back-campaign', 'AssetLite\AlCashBackController')->except(['show', 'destroy']);
     Route::get('al-cash-back-campaign/destroy/{id}', 'AssetLite\AlCashBackController@destroy');
@@ -1507,9 +1515,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
      */
     Route::get('al-terms-conditions/{featureName}', 'AssetLite\TermsAndConditionsController@show')->name('al-terms-conditions.show');
     Route::post('al-terms-conditions', 'AssetLite\TermsAndConditionsController@store')->name('al-terms-conditions.store');
-
-    #Emergency Balance
-    Route::get('emergency-balance', 'AssetLite\EmergencyBalanceController@index');
 
     // BL Lab
     Route::group(['prefix' => 'bl-labs' ], function () {

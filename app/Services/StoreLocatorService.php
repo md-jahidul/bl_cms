@@ -7,6 +7,7 @@ use App\Models\StoreLocator;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\StoreLocatorRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
@@ -22,23 +23,29 @@ class StoreLocatorService
      * @var array
      */
     protected $config;
+    /**
+     * @var StoreLocatorRepository
+     */
+    private $storeLocatorRepository;
 
-    public function __construct()
+    public function __construct(StoreLocatorRepository $storeLocatorRepository)
     {
+        $this->storeLocatorRepository = $storeLocatorRepository;
         $this->config = [
-            'district' => 1,
-            'thana' => 2,
-            'cc_code' => 3,
-            'cc_name' => 4,
-            'longitude' => 5,
-            'latitude' => 6,
-            'opening_time' => 7,
-            'closing_time' => 8,
-            'holiday' => 9,
-            'half_holiday' => 10,
-            'half_holiday_opening_time' => 11,
-            'half_holiday_closing_time' => 12,
-            'address' => 13,
+            'district' => 2,
+            'thana' => 3,
+            'cc_code' => 4,
+            'cc_name' => 5,
+            'longitude' => 6,
+            'latitude' => 7,
+            'opening_time' => 8,
+            'closing_time' => 9,
+            'holiday' => 10,
+            'half_holiday' => 11,
+            'half_holiday_opening_time' => 12,
+            'half_holiday_closing_time' => 13,
+            'address' => 14,
+            'additional_info' => 15
         ];
     }
 
@@ -97,6 +104,21 @@ class StoreLocatorService
         } catch (\Exception $e) {
             dd($e->getMessage());
             Log::error('Store Locator Entry Error' . $e->getMessage());
+        }
+    }
+
+    public function deleteAllData()
+    {
+        try {
+            $this->storeLocatorRepository->deleteStoreLocator();
+            return [
+                'success' => true
+            ];
+        }catch (\Exception $exception){
+            return [
+                'success' => false,
+                'message' => $exception->getMessage()
+            ];
         }
     }
 }

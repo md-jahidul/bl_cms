@@ -957,6 +957,12 @@
         </ul>
     </li>
     {{--    @endif--}}
+
+    <li class="{{ is_active_url('pages') }}">
+        <a class="menu-item" href="{{ url('pages') }}"
+           data-i18n="nav.templates.vert.classic_menu"><i
+                class="la la-play"></i>Pages</a>
+    </li>
     <li class="{{ is_active_url(route('meta-tag.index')) }}">
         <a class="menu-item" href="{{ route('meta-tag.index') }}"
            data-i18n="nav.templates.vert.classic_menu"><i
@@ -964,11 +970,9 @@
     </li>
 
 
-    <li class="{{ is_active_url('pages') }}">
-        <a class="menu-item" href="{{ url('pages') }}"
-           data-i18n="nav.templates.vert.classic_menu"><i
-                class="la la-play"></i>Pages</a>
-    </li>
+    <hr>
+    <hr>
+    <hr>
 @endif
 {{--------------------------------------------------------------------------------------------------------------------}}
 {{---------------------------------------------------------Asset Lite End---------------------------------------------}}
