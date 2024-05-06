@@ -53,6 +53,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
     Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
 
+    Route::resource('generic-shortcut-master', 'CMS\GenericShortcutMasterController');
+    Route::get('generic-shortcut-master/destroy/{id}', 'CMS\GenericShortcutMasterController@destroy');
+
+    Route::get('generic-shortcut/{id}', 'CMS\GenericShortcutController@index')->name('generic-shortcut');
+    Route::get('generic-shortcut/{id}/create', 'CMS\GenericShortcutController@create')->name('generic-shortcut.create');
+    Route::post('generic-shortcut/store', 'CMS\GenericShortcutController@store')->name('generic-shortcut.store');
+    Route::get('generic-shortcut/edit/{id}', 'CMS\GenericShortcutController@edit')->name('generic-shortcut.edit');
+    Route::put('generic-shortcut/update/{id}', 'CMS\GenericShortcutController@update')->name('generic-shortcut.update');
+    Route::get('generic-shortcut/delete/{id}', 'CMS\GenericShortcutController@delete')->name('generic-shortcut.delete');
+    Route::get('generic-shortcut-update-position', 'CMS\GenericShortcutController@updatePosition');
+
     //------ shortcuts -----------//
 
     // Banner
@@ -122,7 +133,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Slider Image
     /*Route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
-    Route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::match(['GET', 'POST'], 'myblService/addService/update-position', 'CMS\MyblServiceController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
@@ -218,9 +230,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('notification', 'CMS\NotificationController');
     Route::get('notification-duplicate/{notificationId}', 'CMS\NotificationController@duplicateNotification')->name('notification.duplicate');
     Route::get('quick-notification', 'CMS\NotificationController@quickNotificationIndex')->name('quick-notification.index');
-    Route::get('quick-notification/create', 'CMS\NotificationController@quickNotificationCreate')->name('quick-notification.create');
+    Route::get('quick-notification/crneweate', 'CMS\NotificationController@quickNotificationCreate')->name('quick-notification.create');
     Route::post('quick-notification/store', 'CMS\PushNotificationController@quickNotificationStoreAndSend')->name('quick-notification.store');
     Route::get('quick-notification/all/{id}', 'CMS\NotificationController@quickNotificationShowAll')->name('quick-notification.show-all');
+    Route::get('quick-notification/destroy/{id}', 'CMS\NotificationController@quickNotificationDelete');
 
     Route::get('notification/productlist/dropdown', 'CMS\NotificationController@getProductList')->name('notification.productlist.dropdown');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
@@ -393,6 +406,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('redis-reset-schedules.toggle-status');
 
 
+    /**
+     * Roaming Transactions
+     */
+    Route::get('roaming/transactions', 'CMS\RoamingTransactionController@index')->name('roaming.transactions');
+    Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
+    Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
+
+    /**
+     * Roaming Transactions
+     */
+    Route::get('roaming/transactions', 'CMS\RoamingTransactionController@index')->name('roaming.transactions');
+    Route::get('roaming/transactions/list', 'CMS\RoamingTransactionController@getRoamingTransactions')->name('roaming.transactions.list');
+    Route::get('roaming/dispatch-payment-job/{trx_id}', 'CMS\RoamingTransactionController@dispatchRoamingPaymentJob');
+
     Route::post(
         'mybl/core-product/download',
         'CMS\MyblProductEntryController@downloadMyblProducts'
@@ -411,20 +438,24 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');
+//    Route::get('store-locations/entry', 'CMS\StoreLocatorEntryController@index');
+//    Route::post('store-locations', 'CMS\StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
     Route::get('product-image-remove/{id}', 'CMS\MyblProductEntryController@imageRemove')
         ->name('product.img.remove');
 
+    Route::get('pin-to-top-products', 'CMS\MyblProductEntryController@pinToTopProducts')->name('pin-to-top.products');
+    Route::get('pin-to-top-products/sort-auto-save', 'CMS\MyblProductEntryController@productSortable');
     /*
      * Product Tags Routes
      */
-    Route::get('mybl/product/tags', 'ProductTagController@index')->name('product-tags.index');
-    Route::get('mybl/product/tags/{tag}/edit', 'ProductTagController@edit')->name('product-tags.edit');
-    Route::put('mybl/product/tags/{id}', 'ProductTagController@update')->name('product-tags.update');
-    Route::post('mybl/product/tags', 'ProductTagController@store')->name('product-tags.store');
-    Route::delete('mybl/product/tags/{id}', 'ProductTagController@destroy')->name('product-tags.destroy');
+    Route::get('mybl/product/tags', 'CMS\ProductTagController@index')->name('product-tags.index');
+    Route::get('mybl/product/tags/{tag}/edit', 'CMS\ProductTagController@edit')->name('product-tags.edit');
+    Route::put('mybl/product/tags/{id}', 'CMS\ProductTagController@update')->name('product-tags.update');
+    Route::post('mybl/product/tags', 'CMS\ProductTagController@store')->name('product-tags.store');
+    Route::delete('mybl/product/tags/{id}', 'CMS\ProductTagController@destroy')->name('product-tags.destroy');
 
     //Deep link
     Route::get(
@@ -1239,15 +1270,83 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::resource('popup-banner', 'CMS\PopupBannerController');
     Route::get('popup-banner-sort-auto-save', 'CMS\PopupBannerController@bannerSortable');
     Route::get('popup-banner/destroy/{id}', 'CMS\PopupBannerController@destroy');
+    Route::resource('popup-sequence', 'CMS\PopupPrioritizationController');
 
     Route::resource('gamification', 'CMS\TriviaGamificationController');
     Route::get('gamification-list', 'CMS\TriviaGamificationController@getGamificationForAjax')->name('gamification.ajax.request');
 
+    /**
+     * Gamification Type
+     */
 
+     Route::resource('gamification-type', 'CMS\GamificationTypeController');
+     Route::match(['GET', 'POST'],'gamification-type/order/update-position', 'CMS\GamificationTypeController@updatePosition');
 
-    //PGW Routes
+    // PGW Routes
     Route::resource('pgw-gateway', 'CMS\PgwGatewayController');
     Route::get('pgw-gateway/destroy/{id}', 'CMS\PgwGatewayController@destroy')->name('pgw-gateway.destroy');
+
+    //Payment Gateway
+    Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
+    Route::get('payment-gateways/destroy/{id}', 'CMS\PaymentGatewayController@destroy')->name('payment-gateways.destroy');
+    Route::get('payment-gateways/sort-auto-save', 'CMS\PaymentGatewayController@categorySortable');
+
+    Route::resource('generic-slider', 'CMS\GenericSliderController');
+    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+    Route::get(
+        'generic-slider/{slider_id}/images/create',
+        'CMS\GenericSliderImageController@create'
+    )->name('generic-slider.images.create');
+    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
+    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::put(
+        'generic-slider/images/{id}/update',
+        'CMS\GenericSliderImageController@update'
+    )->name('generic-slider.images.update');
+    Route::delete(
+        'generic-slider/images/{id}/delete',
+        'CMS\GenericSliderImageController@destroy'
+    )->name('generic-slider.images.destroy');
+    Route::match(['GET', 'POST'], 'generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+    //Active new Product Code
+    Route::get('redis-key-update-view', 'CMS\MyblProductEntryController@redisKeyUpdateView')->name('active-product-redis-key.update.view');
+    Route::get('redis-key-update', 'CMS\MyblProductEntryController@redisKeyUpdate')->name('active-product-redis-key.update');
+
+
+    // Group Components
+    Route::get('group-components', 'CMS\GroupComponentController@index')->name('group.components');
+    Route::get('group-components/create', 'CMS\GroupComponentController@create')->name('group.components.create');
+    Route::post('group-components/store', 'CMS\GroupComponentController@store')->name('group.components.store');
+    Route::get('group-components/edit{id}', 'CMS\GroupComponentController@edit')->name('group.components.edit');
+    Route::post('group-components/update/{id}', 'CMS\GroupComponentController@update')->name('group.components.update');
+    Route::get('group-components/destroy/{id}', 'CMS\GroupComponentController@destroy')->name('group.components.destroy');
+    Route::get('group-components-status-update/{id}', 'CMS\GroupComponentController@componentStatusUpdate')->name('group.components.status.update');
+
+
+    // Non Bl Components
+    Route::get('non-bl-components', 'CMS\NonBlComponentController@index')->name('nonbl.components');
+    Route::get('non-bl-components-sort', 'CMS\NonBlComponentController@componentSort');
+    Route::get('non-bl-components-status-update/{id}', 'CMS\NonBlComponentController@componentStatusUpdate')->name('nonbl.components.status.update');
+    Route::post('non-bl-components/store', 'CMS\NonBlComponentController@store')->name('nonbl.components.store');
+    Route::get('non-bl-components/edit/{id}', 'CMS\NonBlComponentController@edit')->name('nonbl.components.edit');
+    Route::post('non-bl-components/update', 'CMS\NonBlComponentController@update')->name('nonbl.components.update');
+    Route::get('non-bl-components/destroy/{id}', 'CMS\NonBlComponentController@destroy')->name('nonbl.components.destroy');
+
+    Route::get('/non-bl-offers', 'CMS\NonBlOfferController@index')->name('nonbl.offers');
+    Route::get('non-bl-offers-status-update/{id}', 'CMS\NonBlOfferController@offerStatusUpdate')->name('nonbl.offers.status.update');
+    Route::get('non-bl-offers-components-sort', 'CMS\NonBlOfferController@componentSort');
+
+    Route::resource('nonbl-navigation-rail', 'CMS\NonBlNavigationRailController');
+    Route::get('nonbl-navigation-rail-sortable', 'CMS\NonBlNavigationRailController@navigationMenuSortable')
+        ->name('nonbl-navigation-rail.sort');
+    Route::get('nonbl-navigation-rail/destroy/{id}', 'CMS\NonBlNavigationRailController@destroy')
+        ->name('nonbl-navigation-rail.destroy');
 
     //Payment Gateway
     Route::resource('payment-gateways', 'CMS\PaymentGatewayController')->except(['show', 'destroy']);
@@ -1299,30 +1398,54 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('commerce-navigation-rail/destroy/{id}', 'CMS\CommerceNavigationRailController@destroy')
         ->name('commerce-navigation-rail.destroy');
 
-    Route::resource('generic-slider', 'CMS\GenericSliderController');
-    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
-    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
-    Route::get(
-        'generic-slider/{slider_id}/images/create',
-        'CMS\GenericSliderImageController@create'
-    )->name('generic-slider.images.create');
-    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
-    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
-    Route::put(
-        'generic-slider/images/{id}/update',
-        'CMS\GenericSliderImageController@update'
-    )->name('generic-slider.images.update');
-    Route::put(
-        'generic-slider/images/{id}/update',
-        'CMS\GenericSliderImageController@update'
-    )->name('generic-slider.images.update');
-    Route::delete(
-        'generic-slider/images/{id}/delete',
-        'CMS\GenericSliderImageController@destroy'
-    )->name('generic-slider.images.destroy');
-    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+//    Route::resource('generic-slider', 'CMS\GenericSliderController');
+//    Route::get('generic-slider/destroy/{id}', 'CMS\GenericSliderController@destroy');
+//    Route::get('generic-slider/{slider_id}/images', 'CMS\GenericSliderImageController@index')->name('generic-slider.images.index');
+//    Route::get(
+//        'generic-slider/{slider_id}/images/create',
+//        'CMS\GenericSliderImageController@create'
+//    )->name('generic-slider.images.create');
+//    Route::post('generic-slider/images/store', 'CMS\GenericSliderImageController@store')->name('generic-slider.images.store');
+//    Route::get('generic-slider/images/{id}/edit', 'CMS\GenericSliderImageController@edit')->name('generic-slider.images.edit');
+//    Route::put(
+//        'generic-slider/images/{id}/update',
+//        'CMS\GenericSliderImageController@update'
+//    )->name('generic-slider.images.update');
+//    Route::put(
+//        'generic-slider/images/{id}/update',
+//        'CMS\GenericSliderImageController@update'
+//    )->name('generic-slider.images.update');
+//    Route::delete(
+//        'generic-slider/images/{id}/delete',
+//        'CMS\GenericSliderImageController@destroy'
+//    )->name('generic-slider.images.destroy');
+//    Route::get('generic-slider/addImage/update-position', 'CMS\GenericSliderImageController@updatePosition');
+
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
+
+    /* * Generic Carousel
+     * Live content
+     */
+    Route::resource('generic-carousel', 'CMS\GenericCarouselController');
+    Route::get('generic-carousel/destroy/{id}', 'CMS\GenericCarouselController@destroy');
+    Route::get('generic-carousel/addImage/update-position', 'CMS\GenericCarouselController@updatePosition');
 
 
+    /*
+     * Veon Ad Tech
+     */
+
+    Route::get('veon-adtech', 'CMS\VeonAdTechController@index');
+    Route::get('veon-adtech/create', 'CMS\VeonAdTechController@create')->name('veon-adtech.create');
+    Route::post('veon-adtech/store', 'CMS\VeonAdTechController@store')->name('veon-adtech.store');
+    Route::get('veon-adtech/{id}/edit', 'CMS\VeonAdTechController@edit')->name('veon-adtech.edit');
+    Route::put('veon-adtech/{id}/update', 'CMS\VeonAdTechController@update')->name('veon-adtech.update');
+    Route::get('veon-adtech/destroy/{id}', 'CMS\VeonAdTechController@destroy');
     /*
      *  Transaction status report
      */
@@ -1348,6 +1471,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('mybl.transaction-status.doctime.list');
 
     /**
+     * Have Plane to put all transaction status under one controller and service
+     * onmobile
+     */
+    Route::get('mybl/{type}/transaction-status-report-view', 'CMS\MyblTransactionStatusController@getTransactionList')->name('mybl.transaction-status');
+    Route::get('mybl/{type}/transaction-status-report', 'CMS\MyblTransactionStatusController@getTransaction')
+        ->name('mybl.transaction-status.list');
+    /**
      * Generic Carousel
      * Live content
      */
@@ -1363,8 +1493,130 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('internet-gift-content/destroy/{id}', 'CMS\InternetGiftContentController@destroy');
     Route::get('internet-gift-content/addImage/update-position', 'CMS\InternetGiftContentController@updatePosition');
 
+    Route::resource('global-settings', 'CMS\GlobalSettingController');
+    Route::resource('media', 'CMS\MediaController');
 
-//
+    /**
+     * Product Special Type
+     */
+    Route::resource('product-special-types', 'CMS\MyBlSpecialTypeController');
+    Route::get('product-special-types/destroy/{id}', 'CMS\MyBlSpecialTypeController@destroy');
+    Route::get('product-special-types/addImage/update-position', 'CMS\MyBlSpecialTypeController@updatePosition');
+
+    /**
+     * Free Product Disburse file Upload
+     */
+    Route::get('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseUploadPanel')->name('free-product-disburse');
+    Route::post('free-product-disburse', 'CMS\MyBlFreeProductDisburseController@uploadFreeProductDisburseExcel')->name('free-product-disburse.save');
+    Route::get('free-product-disburse-report-view', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReportView')->name('free-product-disburse-report');
+    Route::get('free-product-disburse-report', 'CMS\MyBlFreeProductDisburseController@freeProductDisburseReport')->name('free-product-disburse-report.list');
+
+
+
+    /**
+     * Digital Services
+     */
+    Route::resource('digital-service', 'CMS\MyBlDigitalServiceController');
+    Route::get('digital-service/destroy/{id}', 'CMS\MyBlDigitalServiceController@destroy')
+        ->name('digital-service.destroy');
+
+    /**
+     * Toffee Product
+     */
+
+    Route::resource('toffee-product', 'CMS\ToffeeProductController');
+    Route::get('toffee-product/destroy/{id}', 'CMS\ToffeeProductController@destroy')
+        ->name('toffee-product.destroy');
+
+    Route::resource('toffee-subscription-types', 'CMS\ToffeeSubscriptionTypeController');
+    Route::get('toffee-subscription-types/destroy/{id}', 'CMS\ToffeeSubscriptionTypeController@destroy');
+
+    Route::resource('toffee-premium-products', 'CMS\ToffeePremiumProductController');
+    Route::get('toffee-premium-products/destroy/{id}', 'CMS\ToffeePremiumProductController@destroy');
+
+    /**
+     * MyBL Plan Routes
+     */
+    Route::get('mybl-plan/products', 'CMS\MyBlPlan\MyBlPlanProductController@index')->name('mybl-plan.products');
+    Route::get('mybl-plan/products/create', 'CMS\MyBlPlan\MyBlPlanProductController@create')->name("mybl-plan.products.create");
+    Route::get('mybl-plan/products/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@edit')->name("mybl-plan.products.edit");
+    Route::post('mybl-plan/products/store', 'CMS\MyBlPlan\MyBlPlanProductController@store')->name("mybl-plan.products.store");
+    Route::put('mybl-plan/products/update/{id}', 'CMS\MyBlPlan\MyBlPlanProductController@update')->name("mybl-plan.products.update");
+    Route::post('mybl-plan/upload-products', 'CMS\MyBlPlan\MyBlPlanProductController@uploadPlanProductExcel')->name("mybl-plan.upload-products");
+    Route::post('mybl-plan/products/download', 'CMS\MyBlPlan\MyBlPlanProductController@downloadPlanProducts')->name('mybl-plan.products.download');
+    Route::post("mybl-plan/clear-redis-key", 'CMS\MyBlPlan\MyBlPlanProductController@clearRedisKey')->name('mybl-plan.clear-redis-key');
+
+    /**
+     * VAS Product
+     */
+
+    Route::resource('vas-products', 'CMS\VasProductController');
+    Route::match(['GET', 'POST'],'vas-products/order/update-position', 'CMS\VasProductController@updatePosition');
+    Route::get('vas-products/destroy/{id}', 'CMS\VasProductController@destroy')
+        ->name('vas-product.destroy');
+
+    /**
+     * I Screen
+     */
+    Route::resource('generic-components', 'CMS\GenericComponentController')->except(['show', 'destroy']);
+    Route::get('generic-components/destroy/{id}', 'CMS\GenericComponentController@delete');
+    Route::get('generic-component/{componentId}/items', 'CMS\GenericComponentItemController@index')->name('generic-component-items-list.index');
+//    Route::get('generic-component-items', 'CMS\MyblHomeComponentController@index')->name('mybl.home.components');
+    Route::get('generic-component-items/edit/{id}', 'CMS\GenericComponentItemController@edit')
+        ->name('generic-component-items.edit');
+    Route::post('generic-component-items/store', 'CMS\GenericComponentItemController@store')
+        ->name('generic-component-items.store');
+    Route::post('generic-component-items/update', 'CMS\GenericComponentItemController@update')
+        ->name('generic-component-items.update');
+    Route::get('generic-component-items-sort', 'CMS\GenericComponentItemController@componentSort');
+    Route::get('generic-component-items-status-update/{id}', 'CMS\GenericComponentItemController@componentStatusUpdate')
+        ->name('generic-component-items.status.update');
+    Route::get('generic-component-items/destroy/{id}', 'CMS\GenericComponentItemController@destroy')
+        ->name('generic-component-items.destroy');
+    /**
+     * Generic Rail
+     */
+
+    Route::resource('generic-rail', 'CMS\GenericRailController');
+    Route::get('generic-rail/destroy/{id}', 'CMS\GenericRailController@destroy');
+    Route::get('generic-rail/{rail_id}/items', 'CMS\GenericRailItemController@index')->name('generic-rail.items.index');
+
+    Route::resource('generic-rail-items', 'CMS\GenericRailItemController');
+    Route::get('generic-rail/{rail_id}/items/create', 'CMS\GenericRailItemController@create')->name('generic-rail.items.create');
+    Route::post('generic-rail-items/store', 'CMS\GenericRailItemController@store')->name('generic-rail.items.store');
+    Route::match(['GET', 'POST'],'generic-rail-item/update-position', 'CMS\GenericRailItemController@updatePosition');
+    Route::get('generic-rail-item/destroy/{id}', 'CMS\GenericRailItemController@destroy');
+    /**  mybl services
+     *
+     */
+    Route::resource('my-bl-services', 'CMS\MyBlServiceController');
+    Route::get('my-bl-services/destroy/{id}', 'CMS\MyBlServiceController@destroy');
+    Route::get('my-bl-services/{service_id}/items', 'CMS\MyBlServiceItemsController@index')->name('my-bl-services.items.index');
+    Route::get(
+        'my-bl-services/{service_id}/items/create',
+        'CMS\MyBlServiceItemsController@create'
+    )->name('my-bl-services.items.create');
+    Route::post('my-bl-services/items/store', 'CMS\MyBlServiceItemsController@store')->name('my-bl-services.items.store');
+    Route::get('my-bl-services/items/{id}/edit', 'CMS\MyBlServiceItemsController@edit')->name('my-bl-services.items.edit');
+    Route::put(
+        'my-bl-services/items/{id}/update',
+        'CMS\MyBlServiceItemsController@update'
+    )->name('my-bl-services.items.update');
+
+    Route::match(['GET', 'POST'], 'myblService-addService/update-position', 'CMS\MyBlServiceController@updatePosition');
+    Route::delete(
+        'my-bl-services/items/{id}/delete',
+        'CMS\MyBlServiceItemsController@destroy'
+    )->name('my-bl-services.items.destroy');
+    Route::match(['GET', 'POST'], 'my-bl-services/add-items/update-position', 'CMS\MyBlServiceItemsController@updatePosition');
+
+    /**
+     *  Content Filter
+     */
+
+    Route::resource('content-filter', 'CMS\ContentFilterController')->except(['show', 'destroy']);
+    Route::get('content-filter/destroy/{id}', 'CMS\ContentFilterController@destroy')->name('content-filter.destroy');
+    Route::match(['GET', 'POST'], 'content-filter/sort-auto-save', 'CMS\ContentFilterController@categorySortable');
 });
 
 // 4G Map View Route
@@ -1386,6 +1638,11 @@ Route::get('customer-remove-uat', function (\Illuminate\Http\Request $request) {
         return "Customer not found";
     }
 });
+
+/**
+ * New CMS Token Generate
+ */
+Route::get('new-cms/verify-token', "Auth\NewCMSAuthController@verifyToken");
 
 Route::get( 'winner-test', function() {
     $myBlCampaignWinnerSelectionService = resolve(MyBlCampaignWinnerSelectionService::class);
