@@ -222,6 +222,17 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'show',
         'destroy'
     ]);
+
+    /**
+     * Deeplink Redirection Routes
+     */
+    Route::resource('deeplink-redirection', 'AssetLite\DeeplinkRedirectionController')->except([
+        'show',
+        'destroy'
+    ]);
+    Route::get('deeplink-redirection/toggle-status/{id}/{status}',
+        'AssetLite\DeeplinkRedirectionController@toggleStatus')->name('deeplink-redirection.toggle-status');
+
     Route::get('dynamic-url-redirection/toggle-status/{id}/{status}',
         'AssetLite\DynamicUrlRedirectionController@toggleStatus')->name('dynamic-url-redirection.toggle-status');
 

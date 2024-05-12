@@ -105,6 +105,12 @@
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-tags"></i>URL Redirection</a>
             </li>
+
+            <li class="{{ is_active_match(route('deeplink-redirection.index')) }}">
+                <a class="menu-item" href="{{ route('deeplink-redirection.index') }}"
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-link"></i>Deeplink Redirection</a>
+            </li>
         </ul>
     </li>
 
