@@ -42,7 +42,7 @@ class OfferCategory extends Model
 
     public function scopePackageType($query, $type = 'prepaid')
     {
-        return  (strtolower($type) == 'prepaid') ? $query->where('parent_id', 0) : $query->whereIn('alias', ['internet', 'voice', 'bundles', 'packages', 'others', 'postpaid_select'])->where('parent_id', 0);
+        return  (strtolower($type) == 'prepaid') ? $query->where('parent_id', 0) : $query->whereIn('alias', ['internet', 'voice', 'bundles', 'packages', 'others', 'postpaid_select', 'world_cup_offer'])->where('parent_id', 0);
     }
 
     public function type()
